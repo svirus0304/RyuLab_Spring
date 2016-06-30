@@ -52,24 +52,6 @@
 			<version>${org.aspectj-version}</version>
 		</dependency>
 		
-	<!-- oracle Driver -->
-	<dependency>
-		<groupId>com.oracle</groupId>
-		<artifactId>ojdbc6</artifactId>
-		<version>11.1.0.7.0</version>
-		<scope>system</scope>
-		<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath>
-	</dependency>
-	
-	<!-- miplatform-3.2 -->
-	<dependency>
-		<groupId>miplatform</groupId>
-		<artifactId>miplatform</artifactId>
-		<version>3.2</version>
-		<scope>system</scope>
-		<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/miplatform-3.2.jar</systemPath>
-	</dependency>
-	
 	<!-- mybatis -->
 	<dependency>
 		<groupId>org.mybatis</groupId>
@@ -225,6 +207,7 @@
                 </configuration>
             </plugin>
             
+            <!-- oracle ojdbc6 -->
             <plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-install-plugin</artifactId>
@@ -249,7 +232,8 @@
 			        </executions>
 		   	 </plugin>
 		   	 
-		   	 <plugin>
+		   	 <!-- miplatform-3.2 -->
+		   	  <plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-install-plugin</artifactId>
 			    <version>2.5.2</version>
