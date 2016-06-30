@@ -198,7 +198,7 @@
                 <executions>
                 	 <!-- oracle ojdbc6 -->
               	 	 <execution>
-		                <id>install-external</id>
+		                <id>install-ojdbc6</id>
 		                <phase>clean</phase>
 		                <configuration>
 		                    <file>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</file>
@@ -215,7 +215,7 @@
 		            </execution>
                	 	<!-- miplatform-3.2 -->
 		            <execution>
-		                <id>install-external</id>
+		                <id>install-miplatform</id>
 		                <phase>clean</phase>
 		                <configuration>
 		                    <file>${basedir}/src/main/webapp/WEB-INF/lib/miplatform-3.2.jar</file>
