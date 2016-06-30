@@ -169,7 +169,6 @@
 	<!-- plugins -->
     <build>
         <plugins>
-        
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <version>2.9</version>
@@ -196,10 +195,46 @@
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
+                <executions>
+                	 <!-- oracle ojdbc6 -->
+              	 	 <execution>
+		                <id>install-external</id>
+		                <phase>clean</phase>
+		                <configuration>
+		                    <file>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</file>
+		                    <repositoryLayout>default</repositoryLayout>
+		                    <groupId>com.oracle</groupId>
+		                    <artifactId>ojdbc6</artifactId>
+		                    <version>11.1.0.7.0</version>
+		                    <packaging>jar</packaging>
+		                    <generatePom>true</generatePom>
+		                </configuration>
+		                <goals>
+		                    <goal>install-file</goal>
+		                </goals>
+		            </execution>
+               	 	<!-- miplatform-3.2 -->
+		            <execution>
+		                <id>install-external</id>
+		                <phase>clean</phase>
+		                <configuration>
+		                    <file>${basedir}/src/main/webapp/WEB-INF/lib/miplatform-3.2.jar</file>
+		                    <repositoryLayout>default</repositoryLayout>
+		                   <groupId>com.miplatform</groupId>
+							<artifactId>miplatform</artifactId>
+							<version>3.2</version>
+		                    <packaging>jar</packaging>
+		                    <generatePom>true</generatePom>
+		                </configuration>
+		                <goals>
+		                    <goal>install-file</goal>
+		                </goals>
+		            </execution>
+		        </executions>
             </plugin>
             
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+               	<groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <configuration>
@@ -207,56 +242,6 @@
                 </configuration>
             </plugin>
             
-            <!-- oracle ojdbc6 -->
-            <plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-install-plugin</artifactId>
-			    <version>2.5.2</version>
-			        <executions>
-			            <execution>
-			                <id>install-external</id>
-			                <phase>clean</phase>
-			                <configuration>
-			                    <file>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</file>
-			                    <repositoryLayout>default</repositoryLayout>
-			                    <groupId>com.oracle</groupId>
-			                    <artifactId>ojdbc6</artifactId>
-			                    <version>11.1.0.7.0</version>
-			                    <packaging>jar</packaging>
-			                    <generatePom>true</generatePom>
-			                </configuration>
-			                <goals>
-			                    <goal>install-file</goal>
-			                </goals>
-			            </execution>
-			        </executions>
-		   	 </plugin>
-		   	 
-		   	 <!-- miplatform-3.2 -->
-		   	  <plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-install-plugin</artifactId>
-			    <version>2.5.2</version>
-			        <executions>
-			            <execution>
-			                <id>install-external</id>
-			                <phase>clean</phase>
-			                <configuration>
-			                    <file>${basedir}/src/main/webapp/WEB-INF/lib/miplatform-3.2.jar</file>
-			                    <repositoryLayout>default</repositoryLayout>
-			                   <groupId>com.miplatform</groupId>
-								<artifactId>miplatform</artifactId>
-								<version>3.2</version>
-			                    <packaging>jar</packaging>
-			                    <generatePom>true</generatePom>
-			                </configuration>
-			                <goals>
-			                    <goal>install-file</goal>
-			                </goals>
-			            </execution>
-			        </executions>
-		   	 </plugin>
-		
 		</plugins>
     </build>
 </project>
