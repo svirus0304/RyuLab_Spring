@@ -85,7 +85,13 @@
          <artifactId>commons-io</artifactId>
          <version>2.4</version>
       </dependency>
-      <!-- apache commons-io end -->
+      
+      <!-- heroku - postgre (DB) -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1208</version>
+		</dependency>
 			
 		
 		<!-- Logging -->
