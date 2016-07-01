@@ -32,6 +32,9 @@
 	cursor: pointer;
 	background-color: white;
 }
+.btn5{
+	width:120px;
+}
 
 .result {
 	border-radius:0px 0px 20px 20px;

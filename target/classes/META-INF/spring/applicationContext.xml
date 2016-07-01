@@ -15,6 +15,26 @@
     <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
     <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
 </bean>
+
+<!-- http://groups.google.com/group/ksug/browse_thread/thread/766cd1fd8ba39c96 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:sql/mybatis/mapper/**/*.xml" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
 	
 <!-- 	<bean id="matchDao" class="com.GoalMate.www.DAO.Match.MatchDAOImp">
 		<property name="sqlSession" ref="sqlSession" />
