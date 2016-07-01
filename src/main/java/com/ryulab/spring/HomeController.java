@@ -30,7 +30,7 @@ public class HomeController {
 		
 		model.addAttribute("name",name);
 		model.addAttribute("age",age);
-		return "ajax1";
+		return "main";
 	}
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/json", method = RequestMethod.GET)
