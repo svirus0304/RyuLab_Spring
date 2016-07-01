@@ -10,6 +10,5 @@
 </head>
 <body>
 <h2>ajax3.jsp</h2>
-</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.ryulab.spring.DAO;
+package com.ryulab.spring.DAO.Random;
 
 import java.util.List;
 import java.util.Map;

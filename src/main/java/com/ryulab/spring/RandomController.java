@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ryulab.spring.DAO.RandomDAOImp;
+import com.ryulab.spring.DAO.Random.RandomDAOImp;
 
 @Controller
 public class RandomController {

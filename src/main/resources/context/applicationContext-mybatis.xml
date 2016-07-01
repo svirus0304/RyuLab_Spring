@@ -42,7 +42,7 @@
 		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 	
-	<bean id="randomDao" class="com.ryulab.spring.DAO.RandomDAOImp">
+	<bean id="randomDao" class="com.ryulab.spring.DAO.Random.RandomDAOImp">
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
 	
