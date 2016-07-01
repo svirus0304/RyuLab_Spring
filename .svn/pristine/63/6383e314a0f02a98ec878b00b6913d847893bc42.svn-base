@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>classpath:configuration/mybatis/config.properties</value>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+
+	<!-- http://groups.google.com/group/ksug/browse_thread/thread/766cd1fd8ba39c96 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:sql/mybatis/mapper/**/*.xml" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	
+	<bean id="randomDao" class="com.ryulab.spring.DAO.RandomDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	
+<!-- 	<bean id="matchDao" class="com.GoalMate.www.DAO.Match.MatchDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="bannerDao" class="com.GoalMate.www.DAO.Banner.BannerDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="scoreDao" class="com.GoalMate.www.DAO.Score.ScoreDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="staDao" class="com.GoalMate.www.DAO.Stadium.StaDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="merDao" class="com.GoalMate.www.DAO.Mercenary.MerDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="clubDao" class="com.GoalMate.www.DAO.Club.ClubDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="rankDao" class="com.GoalMate.www.DAO.Rank.RankDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="noticeDao" class="com.GoalMate.www.DAO.Notice.NoticeDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="freeDao" class="com.GoalMate.www.DAO.Free.FreeDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="findClubDao" class="com.GoalMate.www.DAO.FindClub.FindClubDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="findMercenaryDao" class="com.GoalMate.www.DAO.FindMercenary.FindMercenaryDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="imageListDao" class="com.GoalMate.www.DAO.ImageList.ImageListDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="logIoDao" class="com.GoalMate.www.DAO.LogIO.LogIoDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="memDao" class="com.GoalMate.www.DAO.Mem.MemDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="msgDao" class="com.GoalMate.www.DAO.Msg.MsgDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	  추가
+    <bean id="clubMemDao" class="com.GoalMate.www.DAO.ClubMem.ClubMemDAOImp">
+      <property name="sqlSession" ref="sqlSession"/>
+     </bean> -->
+	
+
+
+</beans>
