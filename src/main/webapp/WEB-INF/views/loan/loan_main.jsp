@@ -11,6 +11,7 @@
 .motherDiv{
 	text-align:center;
 	padding-top: 150px;
+	transition:all 0.5s ease-in-out;
 }
 .groupDiv{
 	text-align: center;
@@ -41,7 +42,7 @@
 .initDiv input{
 	text-align: center;
 	font-size: 15px;
-	width: 100px;
+	width: 50px;
 	height: 30px;
 }
 .initDiv input[name=member]{
@@ -50,16 +51,42 @@
 	width: 300px;
 	height:30px;
 }
+.initDiv .resultDiv{
+	height:10px;
+	font-size: 10px;
+	color: #FF3636;
+}
+
+/* fadeIn */
+@-webkit-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+
+.fade-in {
+	opacity:0;  /* make things invisible upon start */
+	-webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+	-moz-animation:fadeIn ease-in 1;
+	animation:fadeIn ease-in 1;
+
+	-webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+	-moz-animation-fill-mode:forwards;
+	animation-fill-mode:forwards;
+
+	-webkit-animation-duration:0.5s;
+	-moz-animation-duration:0.5s;
+	animation-duration:0.5s;
+}
+.tableDiv{
+	display:none;
+}
 </style>
 <script>
 $(document).ready(function(){
 	//로고,div 크기조정
 	var initDiv_height=parseInt($(".initDiv").css("height").split("px")[0]);
 	$(".logoDiv img").css("height",initDiv_height);
-
 	var logoDiv_width=parseInt($(".logoDiv").css("width").split("px")[0]);
 	$(".logoDiv").css("width",logoDiv_width);
-	
 	var initDiv_width=parseInt($(".initDiv").css("width").split("px")[0]);
 	$(".groupDiv").css("width",logoDiv_width+initDiv_width+10);
 	
@@ -77,11 +104,39 @@ $(document).ready(function(){
 			},
 			success:function(data){
 				$(".motherDiv").css("padding-top","10px");
+				$(".tableDiv").css("display","block");
 				$(".tableDiv").html("<hr>");
 				$(".tableDiv").append(data);
 			}//success
 		})//ajax
 	})//initBtn Click
+	
+	//placeNum focus
+	var $placeNum=$(".initDiv input[name=placeNum]");
+	$placeNum.select();
+	
+	//몇 차 최대수 제한 (10)
+	$placeNum.on("keyup",function(){
+		$(".initDiv .resultDiv").text("");
+		if($(this).val()<1 || $(this).val()>10){
+			$(".initDiv .resultDiv").text("최소1차, 최대10차까지 가능하단다.");
+			$(this).val(1);
+			$(this).select();
+		}//if
+	})//onkeyup
+	
+	//enter
+	$placeNum.on("keydown",function(e){
+		if(e.keyCode==13){
+			$(".initDiv input[name=member]").select();
+		}//if
+	})//onkeydown placeNUM
+	var $member=$(".initDiv input[name=member]");
+	$member.on("keydown",function(e){
+		if(e.keyCode==13){
+			$(".initBtn").click();
+		}//if
+	})//onkeydown member
 	
 })//ready
 </script>
@@ -90,21 +145,21 @@ $(document).ready(function(){
 <div class="motherDiv">
 	<div class="groupDiv">
 		<div class="logoDiv">
-			<img src="resources/img/logo.jpg">
+			<img src="resources/img/logo4.jpg">
 		</div>
 		<div class="initDiv">
 			<table align="center">
 				<tr>
 					<td>
-						총 몇차?<br>
-						<input type="number" name="placeNum">
+						몇차까지갔노~ <input type="number" name="placeNum" value=5 min=1 max=10>차
+						<div class="resultDiv"></div>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						모든 참석 인원 이름<br>
-						<font size="2">(스페이스로 구분  ex)슬메 지혜 )</font><br>
-						<input type="text" name="member">
+						<font size="2">(스페이스로 구분  [ex]슬메 지혜 인석기 식환 왕구 )</font><br>
+						<input type="text" name="member" value="슬메 지혜 인석기 식환 왕구">
 					</td>
 				</tr>
 				<tr>
@@ -116,6 +171,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-<div class="tableDiv"></div>
+<div class="tableDiv fade-in"></div>
 </body>
 </html>
