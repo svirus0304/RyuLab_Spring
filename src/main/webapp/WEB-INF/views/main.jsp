@@ -110,6 +110,17 @@ $(document).ready(function(){
 		});//ajax
 	})//btn4
 	
+	$(".btn6").click(function(){
+		$.ajax({
+				url:"loan_main",
+				type:"get",
+				dataType:"text",
+				success:function(data){
+					$(".result").html(data);
+				}
+		});//ajax
+	})//btn4
+	
 });
 </script>
 </head>
