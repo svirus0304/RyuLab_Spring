@@ -3,7 +3,7 @@ package com.ryulab.spring.DAO.Board;
 import java.util.List;
 import java.util.Map;
 
-import com.ryulab.spring.DTO.BannerDTO;
+import com.ryulab.spring.DTO.LoanDTO;
 
 public interface BoardDAO {
 	

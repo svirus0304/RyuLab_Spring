@@ -46,6 +46,10 @@
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
 	
+	<bean id="loanDao" class="com.ryulab.spring.DAO.Loan.LoanDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	
 <!-- 	<bean id="matchDao" class="com.GoalMate.www.DAO.Match.MatchDAOImp">
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
