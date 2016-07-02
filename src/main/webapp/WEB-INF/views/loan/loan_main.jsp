@@ -69,7 +69,7 @@ $(document).ready(function(){
 		</tr>
 		<tr>
 			<td>
-				모든 참석 인원 이름<font size="2">( ,로 구분  ex)슬메,지혜 )</font><br>
+				모든 참석 인원 이름<font size="2">(스페이스로 구분  ex)슬메 지혜 )</font><br>
 				<input type="text" name="member">
 			</td>
 		</tr>

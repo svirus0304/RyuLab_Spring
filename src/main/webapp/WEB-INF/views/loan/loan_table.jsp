@@ -43,14 +43,12 @@
 		<td class="placeTd">
 			${status.index }차<br>
 			장소 : 
-			<input type="text" name="placeName">
-			결제한사람 : 
+			<input type="text" name="placeName"><br>
 			<select>
-				<optgroup label="결제자 선택">
+				<option>-- 결제자 선택 --</option>
 				<c:forEach var="fors" items="${memList }">
 					<option>${fors.name}</option>
 				</c:forEach>
-				</optgroup>
 			</select>
 		</td>
 		<c:forEach var="fors" items="${memList }">

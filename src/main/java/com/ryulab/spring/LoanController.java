@@ -37,7 +37,7 @@ public class LoanController {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/loan_table - placeNum : "+placeNum+" / member : "+member);
 		//맴버 리스트 만들기
-		String[] memListArray=member.split(",");
+		String[] memListArray=member.split(" ");
 		List<LoanDTO> memList=new ArrayList<LoanDTO>();
 		for (int i = 0; i < memListArray.length; i++) {
 			System.out.println(memListArray[i]);
