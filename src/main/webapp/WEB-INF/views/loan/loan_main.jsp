@@ -89,6 +89,10 @@ $(document).ready(function(){
 	$(".logoDiv").css("width",logoDiv_width);
 	var initDiv_width=parseInt($(".initDiv").css("width").split("px")[0]);
 	$(".groupDiv").css("width",logoDiv_width+initDiv_width+10);
+	//input focus 시 select
+	$("input").on("focus",function(){
+		$(this).select();
+	})
 	
 	//'확인' 버튼 클릭 시
 	$(".initBtn").click(function(){
