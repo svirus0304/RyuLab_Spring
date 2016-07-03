@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>슬메론</title>
+<script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
 <style>
 .motherDiv{
 	text-align:center;
