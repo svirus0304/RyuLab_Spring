@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>슬메론</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 .motherDiv{
 	text-align:center;
@@ -110,7 +110,7 @@ $(document).ready(function(){
 			success:function(data){
 				$(".motherDiv").css("padding-top","10px");
 				$(".tableDiv").css("display","block");
-				$(".tableDiv").html("<hr>");
+				$(".tableDiv").html("<hr><br>");
 				$(".tableDiv").append(data);
 			}//success
 		})//ajax

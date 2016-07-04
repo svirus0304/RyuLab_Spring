@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>슬메론</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="resources/js/SMLoan.js"></script>
 <style>
 .table{
@@ -115,7 +115,6 @@
 			</select>
 			<input type="text" name="deductAmount" value="공제금액(원)" disabled="disabled"><br>
 			<span class="onePlaceResult"></span>
-			
 		</td>
 	</c:forEach>
 		<td class="nBbangTd">

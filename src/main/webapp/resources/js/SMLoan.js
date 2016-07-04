@@ -1,7 +1,7 @@
 $(document).ready(function(){
-	
 	//-------------------------------------------------------------------------------------------------------------------------
 	function toggleCheck(obj,trIndex,tdIndex){
+		console.log("--------------------------- toggleCheck ---------------------------");
 		var $trList=$(".table tr");
 		var status=obj.prop("checked");
 		 console.log("$trList.length : "+$trList.length+" / status : "+status+" / trIndex : "+trIndex+" / tdIndex : "+tdIndex);
@@ -24,6 +24,7 @@ $(document).ready(function(){
 	
 	//-------------------------------------------------------------------------------------------------------------------------
 	function ssom(trIndex){
+		console.log("--------------------------- ssom ---------------------------");
 		var $tr=$(".table tr").eq(trIndex);//해당tr
 		var $treat=$tr.find("input[name=treat]");//'쏨'checkbox
 		var $deductSelect=$tr.find("select[name=deductSelect]");//공제유형
@@ -61,16 +62,18 @@ $(document).ready(function(){
 
 	//-------------------------------------------------------------------------------------------------------------------------
 	function setDeductSelDisable(obj,status,trIndex){
+		console.log("--------------------------- setDeductSelDisable ---------------------------");
 		console.log("setDeductSelDisable1 - obj : "+obj+" / status"+status);
 		if(status==true){
 			obj.val("공제: 없음");
-		}
+		}//if
 		obj.prop("disabled",status);
 		setDeductAmoDisable(obj,trIndex);
 	}//setDeductDisable
 	
 	//-------------------------------------------------------------------------------------------------------------------------
 	function setDeductAmoDisable(selObj,trIndex){
+		console.log("--------------------------- setDeductAmoDisable ---------------------------");
 		var obj=selObj.parent().find("input[name=deductAmount]");
 		if(selObj.val()=="공제: 없음"){
 			obj.prop("disabled",true);
@@ -81,7 +84,7 @@ $(document).ready(function(){
 			obj.prop("disabled",false);
 			obj.val("0");
 			nBbang(trIndex);
-		}
+		}//else
 	}//setDeductDisable
 	
 	//-------------------------------------------------------------------------------------------------------------------------
@@ -103,7 +106,7 @@ $(document).ready(function(){
 			$thanks.text(payer+"잘뭇다!!");
 		}else{//'안쏠때'
 			$per.text("각");
-		}
+		}//else
 		//공제정산 deductSum/(n-notDeductNum) [총 공제액 / 공제:없음인 사람들 수]
 		console.log("placePay : "+placePay+" / n : "+n+" / treat : "+treat+" / payer : "+payer);
 		var deductSum=0;
@@ -120,14 +123,13 @@ $(document).ready(function(){
 			}//if
 		})//each
 		console.log("deductSum : "+deductSum+" / notDeductNum : "+notDeductNum);
-		
 		//n빵에 뿌리기
 		var result=(placePay/n)+(deductSum/notDeductNum);
 		if(deductSum>0){//공제 있을 시 식 적어주기
-			$tr.find(".formula").text(placePay/n+"+"+(deductSum/notDeductNum)+"=");
+			$tr.find(".formula").text((placePay/n)+"+"+(deductSum/notDeductNum)+"=");
 		}else{//공제 없을 시 식 삭제
 			$tr.find(".formula").text("");
-		}
+		}//else
 		$tr.find(".nBbangSpan").text(result);//n빵에 가격 적어주기
 		onePlaceResult(trIndex);//공제부분으로 넘어가기
 		console.log("--------------------------- nBbang END---------------------------");
@@ -136,6 +138,7 @@ $(document).ready(function(){
 	//-------------------------------------------------------------------------------------------------------------------------
 	//onePlaceResult 1차 정산
 	function onePlaceResult(trIndex){
+		console.log("--------------------------- onePlaceResult ---------------------------");
 		console.log("onePlaceResult - trIndex : "+trIndex);
 		var $tr=$(".table tr:eq("+trIndex+")");
 		var $deductSelect=$tr.find("select[name=deductSelect]");
@@ -145,23 +148,23 @@ $(document).ready(function(){
 			var $onePlaceResult=$tr.find(".onePlaceResult:eq("+itemIndex+")");//결과표시하는곳
 			var price=parseInt($tr.find("input[name=placePay]").val());//총액
 			var deductAmount=parseInt($tr.find("input[name=deductAmount]:eq("+itemIndex+")").val());//공제액
-			var $treat=$tr.find("input[name=treat]")//쏨여부
+			var $treat=$tr.find("input[name=treat]");//쏨여부
 			var resultPrice=parseInt($tr.find(".nBbangSpan").text());
 			//"쏨"일때 - 똑같노?
 			if($treat.prop("checked")==true){
 				if($(this).val()=="공제: 없음"){//공제:없음 일때 (결제자(쏜사람))
 					$onePlaceResult.text(resultPrice+"원");
 				}else{//공제받는놈들
-					$onePlaceResult.html((price/n)+"-"+deductAmount+"<br>="+((price/n)-deductAmount)+" 원");
+					$onePlaceResult.html((price/n)+"-"+deductAmount+"<br>="+((price/n)-deductAmount)+"원");
 				}//else
 			//"쏨" 아닐때
 			}else if($treat.prop("checked")==false){
 				if($(this).val()=="공제: 없음"){//공제: 없음 일때
 					$onePlaceResult.text(resultPrice+"원");
 				}else{//공제받는놈들
-					$onePlaceResult.html((price/n)+"-"+deductAmount+"<br>="+((price/n)-deductAmount)+" 원");
+					$onePlaceResult.html((price/n)+"-"+deductAmount+"<br>="+((price/n)-deductAmount)+"원");
 				}//else
-			}//else
+			}//elseif
 			//'불참'이면 onePlaceResult 에 결과 지우기
 			if($checkBox.prop("checked")==false){
 				$onePlaceResult.text("");
@@ -178,14 +181,14 @@ $(document).ready(function(){
 	//floatRight input focus 시 자동 select
 	$("input").on("focus",function(){
 		$(this).select();
-	})
+	})//onfocus
 	
 	//결제자 선택 시 나머지 결제자(밑으로만) 모두 바뀌게
 	$("select[name=payerSelect]").each(function(itemIndex){//select 대기(index 얻기 위함)
 		var trIndex=itemIndex+2;
 		$(this).on("change",function(){//한개가 바뀌었을때
 			/*var test=$(this).find(":selected").index();//젤 간편(밑에 두개도 됨)
-*/			/*var test=$(this).find("option").index($(this).find(":selected"));*/
+			/*var test=$(this).find("option").index($(this).find(":selected"));*/
 			/*var test=$("select[name=payerSelect] :selected").index();*/
 			var list=$("select[name=payerSelect]");
 			var payer=$(this).val();
@@ -228,15 +231,10 @@ $(document).ready(function(){
 	
 	//공제금액 입력 시
 	$(".table tr").each(function(trIndex){
-		console.log("공제금액입력 1- trIndex : "+trIndex);
 		$deductAmount=$(this).find("input[name=deductAmount]");
-		console.log("공제금액입력 2");
 		$deductAmount.each(function(itemIndex){
-		console.log("공제금액입력 3");
 			$(this).on("keyup",function(e){
-		console.log("공제금액입력 4 - trIndex : "+trIndex);
 				nBbang(trIndex);
-		console.log("공제금액입력 5");
 			})//onchange
 		})//each
 	})//each
@@ -247,5 +245,4 @@ $(document).ready(function(){
 				nBbang(trIndex);
 			})//onkeyup
 	})//each
-	
 })//ready
