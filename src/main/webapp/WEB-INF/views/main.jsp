@@ -134,7 +134,7 @@ $(document).ready(function(){
 	<div class="btn btn3">ajax2</div>
 	<div class="btn btn3">ajax3</div>
 	<div class="btn btn4">게시판</div>
-	<div class="btn btn5">랜덤숫자만들기</div>
+	<div class="btn btn5">로또번호뽑기</div>
 	<div class="btn btn6">슬메론</div>
 </div>
 <div class="result">
