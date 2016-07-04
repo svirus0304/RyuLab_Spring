@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	alert("hi");
 	//-------------------------------------------------------------------------------------------------------------------------
 	function toggleCheck(obj,trIndex,tdIndex){
 		console.log("--------------------------- toggleCheck ---------------------------");
@@ -36,7 +37,7 @@ $(document).ready(function(){
 		var $payerSelect=$tr.find("select[name=payerSelect]:eq("+(trIndex-2)+")");//결제자
 		var payerIdx=$payerSelect.find(":selected").index()-1;//결제자 index
 		var test=$tr.text();
-		console.log("trdIndex : "+trIndex+" /payerIdx : "+payerIdx+"/ price : "+price+" / n : "+n+" / .text() : "+test);
+		console.log("trdIndex : "+trIndex+" /payerIdx : "+payerIdx+"/ price : "+price+" / n : "+n+" / text() : "+test);
 		if($treat.prop("checked")==true){//쏨 true
 			//공제 - "쏘임공제"로 바꾸기
 			$deductSelect.each(function(itemIndex){//공제유형들 돌리기 대기
@@ -44,7 +45,7 @@ $(document).ready(function(){
 					$(this).val("쏘임공제");
 					setDeductSelDisable($(this),false,trIndex);
 					//공제금액 자동으로 적어주기
-					$deductAmount.val(price/n);/*(price/n)+"-"+(price/n)+"<br>= "+(price/n)-(price/n)*/
+					$deductAmount.val(price/n);(price/n)+"-"+(price/n)+"<br>= "+(price/n)-(price/n)
 				}//if
 			})//each
 			//결제자 다시 세팅 - attend-check,deductSelect-공제: 없음
@@ -107,6 +108,7 @@ $(document).ready(function(){
 		}else{//'안쏠때'
 			$per.text("각");
 		}//else
+		
 		//공제정산 deductSum/(n-notDeductNum) [총 공제액 / 공제:없음인 사람들 수]
 		console.log("placePay : "+placePay+" / n : "+n+" / treat : "+treat+" / payer : "+payer);
 		var deductSum=0;
@@ -114,7 +116,7 @@ $(document).ready(function(){
 		var $deductSelect=$tr.find("select[name=deductSelect]");
 		$deductSelect.each(function(itemIndex){
 			var $deductAmount=$(this).parent().find("input[name=deductAmount]");
-			var $attend=$(this)parent().find("input[name=attend]");
+			var $attend=$(this).parent().find("input[name=attend]");
 			if($(this).val()!="공제: 없음"){//공제받는 사람 공제액 합산
 				 deductSum+=parseInt($deductAmount.val());
 			}//if
@@ -122,6 +124,7 @@ $(document).ready(function(){
 			notDeductNum+=1;
 			}//if
 		})//each
+		
 		console.log("deductSum : "+deductSum+" / notDeductNum : "+notDeductNum);
 		//n빵에 뿌리기
 		var result=(placePay/n)+(deductSum/notDeductNum);
@@ -171,7 +174,6 @@ $(document).ready(function(){
 			}//if
 		})//each
 	}//onePlaceResult()
-	
 	////////////////////////////////////////////////////////////////////////////
 	
 	//stage 높이 자동설정 (floatRight에 맞춰)
@@ -245,4 +247,5 @@ $(document).ready(function(){
 				nBbang(trIndex);
 			})//onkeyup
 	})//each
+	
 })//ready
