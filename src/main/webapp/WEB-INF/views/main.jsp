@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Ryu Lab</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style type="text/css">
 .btnGroup {
 	display:block;
@@ -40,7 +40,7 @@
 	border-radius:0px 0px 20px 20px;
 	overflow:auto;
 	width: 80%;
-	height: 550px;
+	min-height:550px;
 	background-color: lightyellow;
 	margin:auto;
 }

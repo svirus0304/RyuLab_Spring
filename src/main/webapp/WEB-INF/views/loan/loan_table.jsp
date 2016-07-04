@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>슬메론</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="resources/js/SMLoan.js"></script>
 <style>
 .table{
@@ -54,7 +54,10 @@
 .nBbangTd{
 	width:100px;
 }
-
+.thanks{
+	color:#FFBB00;
+	font-size: 20px;
+}
 </style>
 <script>
 </script>
@@ -115,7 +118,13 @@
 			
 		</td>
 	</c:forEach>
-		<td class="nBbangTd"><div class="nBbangDiv">각 <span class="nBbangSpan">0</span>원</div></td>
+		<td class="nBbangTd">
+			<div class="nBbangDiv">
+				<span class="formula"></span><br>
+				<span class="per">각</span><span class="nBbangSpan">0</span>원<br>
+				<span class="thanks"></span>
+			</div>
+		</td>
 	</tr>
 	</c:forEach>
 </table>
