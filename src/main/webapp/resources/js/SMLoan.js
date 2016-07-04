@@ -133,8 +133,9 @@ $(document).ready(function(){
 		}else{//공제 없을 시 식 삭제
 			$tr.find(".formula").text("");
 		}//else
-		$tr.find(".nBbangSpan").text(result);//n빵에 가격 적어주기
-		onePlaceResult(trIndex);//공제부분으로 넘어가기
+		$tr.find(".nBbang").val(result);//n빵에 가격 적어주기
+/*		$tr.find(".nBbangSpan").val(result);//n빵에 가격 적어주기
+*/		onePlaceResult(trIndex);//공제부분으로 넘어가기
 		console.log("--------------------------- nBbang END---------------------------");
 	}//nBbang()
 	
@@ -152,7 +153,7 @@ $(document).ready(function(){
 			var price=parseInt($tr.find("input[name=placePay]").val());//총액
 			var deductAmount=parseInt($tr.find("input[name=deductAmount]:eq("+itemIndex+")").val());//공제액
 			var $treat=$tr.find("input[name=treat]");//쏨여부
-			var resultPrice=parseInt($tr.find(".nBbangSpan").text());
+			var resultPrice=parseInt($tr.find(".nBbangSpan").val());
 			//"쏨"일때 - 똑같노?
 			if($treat.prop("checked")==true){
 				if($(this).val()=="공제: 없음"){//공제:없음 일때 (결제자(쏜사람))

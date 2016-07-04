@@ -120,7 +120,7 @@
 		<td class="nBbangTd">
 			<div class="nBbangDiv">
 				<span class="formula"></span><br>
-				<span class="per">각</span><span class="nBbangSpan">0</span>원<br>
+				<span class="per">각</span><fmt:formatNumber type="currency" value="10000"  class="nBbang"/>원<br>
 				<span class="thanks"></span>
 			</div>
 		</td>
