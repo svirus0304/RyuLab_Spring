@@ -14,15 +14,13 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	
-	<!-- repositories ** -->
-	<!-- <repositories>
+	<repositories>
 		<repository>
-			<id>mesir-repo</id>
-			<url>http://mesir.googlecode.com/svn/trunk/mavenrepo</url>
+			<id>oracle</id>
+			<name>ORACLE JDBC Repository</name> 
+			<url>http://maven.jahia.org/maven2</url>
 		</repository>
-	</repositories> -->
-
-	<!-- /repositories 갱신된 의존 파일의 정보를 가져온다** -->
+	</repositories>
 	
 	
 	<dependencies>
@@ -85,6 +83,13 @@
          <artifactId>commons-io</artifactId>
          <version>2.4</version>
       </dependency>
+      
+      <!-- oracle ojdbc6 - 위에 repository 추가해야됨 -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.1.0.7.0</version>
+		</dependency>
       
       <!-- heroku - postgre (DB) -->
 		<dependency>
@@ -216,24 +221,7 @@
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-install-plugin</artifactId>
 			    <version>2.5.2</version>
-			         <executions>
-                	 <!-- oracle ojdbc6 -->
-              	 	 <execution>
-		                <id>install-external</id>
-		                <phase>clean</phase>
-		                <configuration>
-		                    <file>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6-11.1.0.7.0.jar</file>
-		                    <repositoryLayout>default</repositoryLayout>
-		                    <groupId>com.oracle</groupId>
-		                    <artifactId>ojdbc6</artifactId>
-		                    <version>11.1.0.7.0</version>
-		                    <packaging>jar</packaging>
-		                    <generatePom>true</generatePom>
-		                </configuration>
-		                <goals>
-		                    <goal>install-file</goal>
-		                </goals>
-		            </execution>
+		        <executions>
                	 	<!-- miplatform-3.2 -->
 		            <execution>
 		                <id>install-miplatform</id>

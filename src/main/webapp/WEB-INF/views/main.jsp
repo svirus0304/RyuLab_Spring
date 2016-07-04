@@ -7,14 +7,13 @@
 <title>Ryu Lab</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
 <style type="text/css">
-.btnGroup2 {
+.btnGroup {
+	display:block;
 	border-radius:20px 20px 0px 0px;
 	margin:auto;
 	width:80%;
-	height:60px;
 	text-align: center;
 	background-color:#F6F6F6;
-	
 }
 .btn {
 	border-radius:5px;
@@ -37,6 +36,7 @@
 }
 
 .result {
+	display:block;
 	border-radius:0px 0px 20px 20px;
 	overflow:auto;
 	width: 80%;
@@ -110,17 +110,29 @@ $(document).ready(function(){
 		});//ajax
 	})//btn4
 	
+	$(".btn6").click(function(){
+		$.ajax({
+				url:"loan_main",
+				type:"get",
+				dataType:"text",
+				success:function(data){
+					$(".result").html(data);
+				}
+		});//ajax
+	})//btn4
+	
 });
 </script>
 </head>
 <body>
-<div class="btnGroup2">
+<div class="btnGroup">
 	<div class="btn btn1">버튼1</div>
 	<div class="btn btn2">버튼2</div>
 	<div class="btn btn3">ajax2</div>
 	<div class="btn btn3">ajax3</div>
 	<div class="btn btn4">게시판</div>
 	<div class="btn btn5">랜덤숫자만들기</div>
+	<div class="btn btn6">슬메론</div>
 </div>
 <div class="result">
 이름 : <span class="name">${name }</span><br>

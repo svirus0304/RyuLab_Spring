@@ -1,4 +1,4 @@
-package com.ryulab.spring.DAO;
+package com.ryulab.spring.DAO.Random;
 
 import java.util.ArrayList;
 import java.util.HashMap;
