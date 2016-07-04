@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	alert("hi");
 	//-------------------------------------------------------------------------------------------------------------------------
 	function toggleCheck(obj,trIndex,tdIndex){
 		console.log("--------------------------- toggleCheck ---------------------------");
@@ -103,10 +102,11 @@ $(document).ready(function(){
 		var $thanks=$tr.find(".thanks");//"각"->"혼자"
 		var payer=$tr.find("select[name=payerSelect]").val();//결제자
 		if(treat==true){//'쏨' 일때	
-			$per.text(payer+"하트");
+			$per.text(payer+"♥");
 			$thanks.text(payer+"잘뭇다!!");
 		}else{//'안쏠때'
 			$per.text("각");
+			$thanks.text("");
 		}//else
 		
 		//공제정산 deductSum/(n-notDeductNum) [총 공제액 / 공제:없음인 사람들 수]

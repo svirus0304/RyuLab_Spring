@@ -12,8 +12,10 @@
 	border-radius:20px 20px 0px 0px;
 	margin:auto;
 	width:80%;
+	min-width:800px;
 	text-align: center;
 	background-color:#F6F6F6;
+	overflow: auto;
 }
 .btn {
 	border-radius:5px;
@@ -39,7 +41,8 @@
 	display:block;
 	border-radius:0px 0px 20px 20px;
 	overflow:auto;
-	width: 80%;
+	width:80%;
+	min-width:800px;
 	min-height:550px;
 	background-color: lightyellow;
 	margin:auto;
