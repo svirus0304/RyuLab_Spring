@@ -24,6 +24,7 @@
 	border-radius:100px;
 }
 .numbers{
+	color:#FFBB00;
 	font-size:80px;
 	width: 100px;
 	text-align: center;
