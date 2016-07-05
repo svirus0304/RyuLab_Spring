@@ -54,6 +54,9 @@
 .nBbangTd{
 	width:100px;
 }
+.nBbangDiv{
+	font-size:17px;
+}
 .thanks{
 	color:#FFBB00;
 	font-size: 20px;
@@ -120,7 +123,9 @@
 		<td class="nBbangTd">
 			<div class="nBbangDiv">
 				<span class="formula"></span><br>
-				<span class="per">각</span><span class="nBbang"></span>원<br>
+				<div class="bBbangDiv">
+					<span class="per">각</span><span class="nBbang"></span>원<br>
+				</div>
 				<span class="thanks"></span>
 			</div>
 		</td>
