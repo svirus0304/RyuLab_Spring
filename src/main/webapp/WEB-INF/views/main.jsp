@@ -16,6 +16,8 @@
 	text-align: center;
 	background-color:#F6F6F6;
 	overflow: auto;
+	padding-left:10px;
+	padding-right:10px;
 }
 .btn {
 	border-radius:5px;
@@ -46,6 +48,10 @@
 	min-height:550px;
 	background-color: lightyellow;
 	margin:auto;
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	margin-bottom: 30px;
 }
 </style>
 <script type="text/javascript">
