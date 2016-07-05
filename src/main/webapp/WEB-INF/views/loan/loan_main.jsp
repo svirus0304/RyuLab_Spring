@@ -156,13 +156,13 @@ $(document).ready(function(){
 			<table align="center">
 				<tr>
 					<td>
-						몇차까지갔노~ <input type="number" name="placeNum" value=5 min=1 max=10>차
+						몇차까지갔노~ <input type="number" name="placeNum" value=3 min=1 max=10>차
 						<div class="resultDiv"></div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						모든 참석 인원 이름<br>
+						모든 참석자 이름<br>
 						<font size="2">(스페이스로 구분  [ex]슬메 지혜 인석기 식환 왕구 )</font><br>
 						<input type="text" name="member" value="슬메 지혜 인석기 식환 왕구">
 					</td>

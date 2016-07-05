@@ -37,13 +37,15 @@ $(document).ready(function(){
 			$checkBox.prop("checked",status);
 			var $attendSpan=$trList.eq(i).find(".attendSpan:eq("+itemIndex+")");
 			var $deductSelect=$trList.eq(i).find("select[name=deductSelect]:eq("+itemIndex+")");
-			var $onePlaceResult=$trList.eq(i).find(".onePlaceResult:eq("+itemIndex+")");
+			var $oneFormula=$trList.eq(i).find(".oneFormula:eq("+itemIndex+")");
+			var $oneResult=$trList.eq(i).find(".oneResult:eq("+itemIndex+")");
 			if($checkBox.prop("checked")==true){//참석시
 				$attendSpan.text("(참석)").css("color","green");
 				setDeductSelDisable($deductSelect,false);//공제선택enable
 			}else{//불참시
 				$attendSpan.text("(불참)").css("color","gray");
-				$onePlaceResult.text("");//결과span 내용 지운다.
+				$oneFormula.text(" ");//결과span 내용 지운다.
+				$oneResult.text(" ");//결과span 내용 지운다.
 				setDeductSelDisable($deductSelect,true);//공제선택disable
 			}//else
 		}//for
@@ -111,7 +113,8 @@ $(document).ready(function(){
 		if(selObj.val()=="공제: 없음"){
 			obj.prop("disabled",true);
 			obj.val("공제금액(원)");
-			obj.parent().find(".onePlaceResult").text("");
+			obj.parent().find(".oneFormula").text(" ");
+			obj.parent().find(".oneResult").text(" ");
 			nBbang(trIndex);
 		}else {
 			obj.prop("disabled",false);
@@ -135,7 +138,7 @@ $(document).ready(function(){
 		var $thanks=$tr.find(".thanks");//"각"->"혼자"
 		var payer=$tr.find("select[name=payerSelect]").val();//결제자
 		if(treat==true){//'쏨' 일때	
-			$per.text(payer+"♥");
+			$per.text("♥"+payer+"♥");
 			$thanks.text(payer+" 잘뭇다!!");
 		}else{//'안쏠때'
 			$per.text("각");
@@ -164,7 +167,7 @@ $(document).ready(function(){
 		if(deductSum>0){//공제 있을 시 식 적어주기
 			$tr.find(".formula").text(toCurrency((placePay/n).toFixed(0))+"+"+toCurrency((deductSum/notDeductNum).toFixed(0))+"=");
 		}else{//공제 없을 시 식 삭제
-			$tr.find(".formula").text("");
+			$tr.find(".formula").text(" ");
 		}//else
 		$tr.find(".nBbang").text(toCurrency(result.toFixed(0)));//n빵에 가격 적어주기
 //		$(this).text($(this).text().split(/(?=(?:\d{3})+(?:\.|$))/g).join(','));//통화표시  
@@ -184,7 +187,8 @@ $(document).ready(function(){
 		var n=$tr.find("input[name=attend]:checked").length;//참석자 수
 		$deductSelect.each(function(itemIndex){
 			var $checkBox=$tr.find("input[name=attend]:eq("+itemIndex+")");//참석여부
-			var $onePlaceResult=$tr.find(".onePlaceResult:eq("+itemIndex+")");//결과표시하는곳
+			var $oneFormula=$tr.find(".oneFormula:eq("+itemIndex+")");//결과표시하는곳
+			var $oneResult=$tr.find(".oneResult:eq("+itemIndex+")");//결과표시하는곳
 			var price=toNum($tr.find("input[name=placePay]").val());//총액
 			var deductAmount=toNum($tr.find("input[name=deductAmount]:eq("+itemIndex+")").val());//공제액
 			var $treat=$tr.find("input[name=treat]");//쏨여부
@@ -192,26 +196,92 @@ $(document).ready(function(){
 			//"쏨"일때 - 똑같노?
 			if($treat.prop("checked")==true){
 				if($(this).val()=="공제: 없음"){//공제:없음 일때 (결제자(쏜사람))
-					$onePlaceResult.text(toCurrency(resultPrice)+"원");
+					$oneFormula.text(" ");
+					$oneResult.text(toCurrency(resultPrice));
 				}else{//공제받는놈들
-					$onePlaceResult.html(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount)+"<br>="+toCurrency(((price/n).toFixed(0)-deductAmount))+"원");
+					$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
+					$oneResult.text(toCurrency(((price/n).toFixed(0)-deductAmount)));
 				}//else
 			//"쏨" 아닐때
 			}else if($treat.prop("checked")==false){
 				if($(this).val()=="공제: 없음"){//공제: 없음 일때
-					$onePlaceResult.text(toCurrency(resultPrice)+"원");
+					$oneFormula.text(" ");
+					$oneResult.text(toCurrency(resultPrice));
 				}else{//공제받는놈들
-					$onePlaceResult.html(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount)+"<br>="+toCurrency(((price/n).toFixed(0)-deductAmount))+"원");
+					$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
+					$oneResult.text(toCurrency(((price/n).toFixed(0)-deductAmount)));
 				}//else
 			}//elseif
 			//'불참'이면 onePlaceResult 에 결과 지우기
 			if($checkBox.prop("checked")==false){
-				$onePlaceResult.text("");
+				$oneFormula.text(" ");
+				$oneResult.text(" ");
 			}//if
 		})//each
+		finalResult();
 	}//onePlaceResult()
-	////////////////////////////////////////////////////////////////////////////
 	
+	function finalResult(){
+		console.log("--------------------------- finalResult ---------------------------");
+		var $tr=$(".table tr");//행
+		//tr 갯수 구하기
+		var $payerSelect=$("select[name=payerSelect]");
+		var $finalResultDiv=$(".finalResultDiv");
+		var payerList=new Array();//tr 갯수(결제자list) (payerSelect 의 idx 0이 아닌거중에 안겹치는 결제자 갯수)
+		console.log("1");
+		$payerSelect.each(function(){
+			console.log("11");
+			if($(this).find(":selected").index()!=0){
+				console.log("12 - $(this).find(\":selected\").index() : "+$(this).find(":selected").index()+" / payerList.length : "+payerList.length);
+				if(payerList.length==0){//최초 - 리스트에 담는다
+					payerList.push($(this).val());
+					console.log("13 - payerList.length : "+payerList.length+" / payerList[0] : "+payerList[0]);
+				}else if(payerList.length>0){//두번째 부터는 - 중복체크
+					var flag=true;
+					for(var i=0;i<payerList.length;i++){//한바퀴 돌려보고
+						console.log("14");
+						if(payerList[i]==$(this).val()){//중복이면
+							flag=false;//중복 - false 가 된다.
+							console.log("flag : "+flag);
+						}//if
+					}//for
+					if(flag==true){//중복 아니면
+						console.log("15");
+						payerList.push($(this).val());//담는다.
+						console.log("payerList["+i+"] : "+payerList[i]);
+					}//if
+				}//if
+			}//if
+		})//payerSelect each
+		//
+		console.log("payerList.length : "+payerList.length);
+		//td갯수 구하기
+		var memNum=parseInt($("input[name=hidden_memNum]").val());//총 맴바 몇명?
+		console.log("2");
+		console.log("memNum : "+memNum);
+		//표 그리기
+		console.log("3");
+		var table="";
+		table+="<table class='finalResultTable' align='center' border=1>";
+		for(var i=0;i<payerList.length;i++){
+			console.log("4");
+			table+="	<tr>";
+			table+="		<td>"+payerList[i]+"에게</td>";
+			for(var j=0;j<memNum;j++){
+				table+="		<td>";
+				table+="		</td>";
+			}
+			table+="	</tr>";
+		}
+		console.log("5");
+		
+		table+="</table>";
+		console.log("6");
+		$finalResultDiv.html(table);//표 붙여넣기
+		console.log("7");
+	}//finalResult();
+	
+	////////////////////////////////////////////////////////////////////////////
 	//stage 높이 자동설정 (floatRight에 맞춰)
 	$(".table .placeTd .stage").css("height",$(".table .placeTd .floatRight").css("height"));
 	//floatRight input 길이 자동설정(select에 맞춰)
@@ -275,7 +345,7 @@ $(document).ready(function(){
 				var num=toNum($(this).val());
 				var cur=toCurrency(num);
 				$(this).val(cur);
-				ssom(trIndex);
+				nBbang(trIndex);
 			})//onchange
 		})//each
 	})//each
