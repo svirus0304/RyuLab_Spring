@@ -15,40 +15,6 @@ public class LoanDAOImp implements LoanDAO{
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-
-	public List<Integer> makeNumbers() {
-		List<Integer> numbers=new ArrayList<Integer>();
-		Random random=new Random();
-		int num;
-		
-		for(int i=0;true;i++){
-			num=random.nextInt(10);
-			System.out.println("num "+i+" : "+num);
-			numbers.add(num);
-			if (numbers.get(0)==0) {//첫번째 0이면 삭제 후 빠꾸
-				numbers.remove(0);
-				i-=1;
-				continue;
-			}//if
-			for (int j = 0; j < numbers.size()-1; j++) {//중복검사(중복이면 삭제)
-				if (numbers.get(i)==numbers.get(j)) {
-					numbers.remove(i);
-					i-=1;
-				}//if
-			}//for
-			if (numbers.size()==3) {//숫자 세개 다 채워지면 break;
-				break;
-			}//if
-		}//for
-		
-		//test
-		System.out.println("*********** numbers ************");
-		for (int i = 0; i < numbers.size(); i++) {
-			System.out.println(numbers.get(i));
-		}//test
-		
-		return numbers;
-	}
 	
 	/*@Override
 	public List<BannerDTO> bannerList() {

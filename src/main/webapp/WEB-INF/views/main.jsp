@@ -5,15 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Ryu Lab</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style type="text/css">
 .btnGroup {
 	display:block;
 	border-radius:20px 20px 0px 0px;
 	margin:auto;
 	width:80%;
+	min-width:800px;
 	text-align: center;
 	background-color:#F6F6F6;
+	overflow: auto;
 }
 .btn {
 	border-radius:5px;
@@ -39,7 +41,8 @@
 	display:block;
 	border-radius:0px 0px 20px 20px;
 	overflow:auto;
-	width: 80%;
+	width:80%;
+	min-width:800px;
 	min-height:550px;
 	background-color: lightyellow;
 	margin:auto;
@@ -131,7 +134,7 @@ $(document).ready(function(){
 	<div class="btn btn3">ajax2</div>
 	<div class="btn btn3">ajax3</div>
 	<div class="btn btn4">게시판</div>
-	<div class="btn btn5">랜덤숫자만들기</div>
+	<div class="btn btn5">로또번호뽑기</div>
 	<div class="btn btn6">슬메론</div>
 </div>
 <div class="result">

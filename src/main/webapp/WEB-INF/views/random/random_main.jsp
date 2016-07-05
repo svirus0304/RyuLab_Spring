@@ -12,29 +12,43 @@
 <title>RANDOM</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
 <style type="text/css">
+.wrapDiv{
+	padding-top: 200px;
+	padding-bottom: 200px;
+}
 .numbersDiv{
-	width:400px;
+	width:800px;
 	margin:auto;
 	text-align: center;
 	background-color: black;
 	border-radius:100px;
 }
 .numbers{
-	font-size:100px;
+	color:#FFBB00;
+	font-size:80px;
 	width: 100px;
 	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
+	$("input").each(function(idx){
+		$(this).click(function(){
+			alert("name : "+$(this).prop("name"));
+		})
+	})
 });
 </script>
 </head>
 <body>
-<div class="numbersDiv">
-	<c:forEach var="fors" items="${numbers }" varStatus="status">
-		<input type="text" name="num+status.index" class="numbers" value="${fors }">
-	</c:forEach>
+<div class="wrapDiv">
+	<div class="numbersDiv">
+		<c:forEach var="fors" items="${numbers }" varStatus="status">
+			<input type="text" name="num${status.index}" class="numbers" value="${fors }">
+		</c:forEach>
+	</div>
 </div>
 </body>
 </html>
