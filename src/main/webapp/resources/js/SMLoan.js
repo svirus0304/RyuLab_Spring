@@ -114,7 +114,7 @@ $(document).ready(function(){
 			obj.prop("disabled",true);
 			obj.val("공제금액(원)");
 			obj.parent().find(".oneFormula").text(" ");
-			obj.parent().find(".oneResult").text(" ");
+			obj.parent().find(".oneResult").text("0");
 			nBbang(trIndex);
 		}else {
 			obj.prop("disabled",false);
@@ -215,7 +215,7 @@ $(document).ready(function(){
 			//'불참'이면 onePlaceResult 에 결과 지우기
 			if($checkBox.prop("checked")==false){
 				$oneFormula.text(" ");
-				$oneResult.text(" ");
+				$oneResult.text("0");
 			}//if
 		})//each
 		finalResult();
@@ -259,6 +259,41 @@ $(document).ready(function(){
 		var memNum=parseInt($("input[name=hidden_memNum]").val());//총 맴바 몇명?
 		console.log("2");
 		console.log("memNum : "+memNum);
+		//합산 구하기 - 누구한테 총 얼마줘야되는지
+			//2차원배열 숫자(0)로 초기화 - tr : payerList / td : memNum
+		var sumList=new Array();
+		for(var i=0;i<payerList.length;i++){
+			sumList[i]=new Array();
+			for(var j=0;j<memNum;j++){
+				sumList[i][j]=0;
+				console.log("데이타 배열 0으로 초기화 - sumList["+i+"]["+j+"] : "+sumList[i][j]);
+			}//for i
+		}//for j
+			//tr 돌려서 tr결제자 == payerList 결제자 라면 sumList에 합산
+		for(var i=0;i<payerList.length;i++){
+			console.log("데이타구하기1");
+			$tr.each(function(trIndex){
+				console.log("데이타구하기2");
+				var $payerSelect=$(this).find("select[name=payerSelect]");
+				var $oneResult=$(this).find(".oneResult");
+				if($payerSelect.val()==payerList[i]){
+					console.log("데이타구하기3 - $payerSelect.val() : "+$payerSelect.val()+" / payerList : "+payerList[i]);
+					$oneResult.each(function(itemIndex){
+						console.log("데이타구하기4");
+						sumList[i][itemIndex]+=toNum($(this).text());
+					})//oneResult each
+				}//if
+			})// tr each
+			console.log("데이타구하기5");
+		}//for
+
+		//test
+		for(var i=0;i<sumList.length;i++){
+			for(var j=0;j<sumList[0].length;j++){
+				console.log("sumList["+i+"]["+j+"] : "+sumList[i][j]);
+			}//for i
+		}//for j
+		
 		//표 그리기
 		console.log("3");
 		var table="";
@@ -268,8 +303,7 @@ $(document).ready(function(){
 			table+="	<tr>";
 			table+="		<td>"+payerList[i]+"에게</td>";
 			for(var j=0;j<memNum;j++){
-				table+="		<td>";
-				table+="		</td>";
+				table+="		<td>"+sumList[i][j]+"</td>";
 			}
 			table+="	</tr>";
 		}
