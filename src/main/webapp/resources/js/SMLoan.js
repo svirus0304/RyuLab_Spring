@@ -214,7 +214,7 @@ $(document).ready(function(){
 					if($(this).val()=="공제: 없음"){//공제:없음 일때 (결제자(쏜사람))
 //						alert("5-5")
 						$oneFormula.text(" ");
-						$oneResult.text(toCurrency(resultPrice));
+						$oneResult.text(toCurrency(resultPrice.toFixed(0)));
 					}else if ($(this).val()!="공제: 없음"){//공제받는놈들(쏘인놈들)
 //						alert("5-6")
 						$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
@@ -225,7 +225,7 @@ $(document).ready(function(){
 					if($(this).val()=="공제: 없음"){//참가자중 공제: 없음 일때(지돈다낼때)
 //						alert("5-8")
 						$oneFormula.text(" ");
-						$oneResult.text(toCurrency((price/n))) ;
+						$oneResult.text(toCurrency((price/n).toFixed(0))) ;
 					}else if($(this).val()!="공제: 없음"){//참가자중 공제받는놈들
 //						alert("5-9")
 						$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
@@ -308,13 +308,24 @@ $(document).ready(function(){
 		}//for j
 		
 		//표 그리기
+			//맴버배열 구하기
+		var member=$("input[name=member]").val().split(" ");
 		var table="";
+		table+="<div class='finalResult'>최종결과</div>";
 		table+="<table class='finalResultTable' align='center' border=1>";
+		table+="	<tr>";
+		table+="		<td></td>";
+		for(var i=0;i<member.length;i++){
+			table+="		<td>"+member[i]+"</td>";
+			console.log("member[i] : "+member[i]);
+		}//for
+		table+="	</tr>";
+		
 		for(var i=0;i<payerList.length;i++){
 			table+="	<tr>";
 			table+="		<td>"+payerList[i]+"에게</td>";
 			for(var j=0;j<memNum;j++){
-				table+="		<td>"+sumList[i][j]+"</td>";
+				table+="		<td>"+toCurrency(sumList[i][j])+" 원</td>";
 			}//for
 			table+="	</tr>";
 		}//for
@@ -363,7 +374,7 @@ $(document).ready(function(){
 			$(this).on("change",function(){
 				toggleCheck($(this),trIndex,itemIndex);
 //				nBbang(trIndex);
-			});//onchange
+			})//onchange
 		})//checkBox each
 	})//tr each
 	
