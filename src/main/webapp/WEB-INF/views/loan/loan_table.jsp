@@ -131,14 +131,14 @@ $(document).ready(function(){
 				</select>
 				<input type="text" name="deductAmount" value="공제금액(원)" disabled="disabled"><br>
 				<span class="oneFormula">  </span><br>
-				=<span class="oneResult">  </span>원
+				=<span class="oneResult">0</span>원
 			</td>
 		</c:forEach>
 			<td class="nBbangTd">
 				<div class="nBbangDiv">
 					<span class="formula"></span><br>
 					<div class="nBbangDiv">
-						<span class="per">각</span><span class="nBbang"></span>원<br>
+						<span class="per">각</span><span class="nBbang">0</span>원<br>
 					</div>
 					<span class="thanks"></span>
 				</div>
