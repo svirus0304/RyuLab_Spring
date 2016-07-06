@@ -32,24 +32,24 @@ $(document).ready(function(){
 		var status=obj.prop("checked");
 		 console.log("$trList.length : "+$trList.length+" / status : "+status+" / trIndex : "+trIndex+" / itemIndex : "+itemIndex);
 		for(var i=parseInt(trIndex);i<$trList.length;i++){//밑으로 다 적용
-			console.log("toggleCheck : "+i);
-			var $checkBox=$trList.eq(i).find("input[name=attend]:eq("+itemIndex+")");
-			$checkBox.prop("checked",status);
-			var $attendSpan=$trList.eq(i).find(".attendSpan:eq("+itemIndex+")");
-			var $deductSelect=$trList.eq(i).find("select[name=deductSelect]:eq("+itemIndex+")");
-			var $oneFormula=$trList.eq(i).find(".oneFormula:eq("+itemIndex+")");
-			var $oneResult=$trList.eq(i).find(".oneResult:eq("+itemIndex+")");
-			if($checkBox.prop("checked")==true){//참석시
+			console.log(">>>>>>>>>>>>>>>>>> toggleCheck : "+i);
+			var $tr=$trList.eq(i);
+			var $attend=$tr.find("input[name=attend]:eq("+itemIndex+")");
+			$attend.prop("checked",status);//체크박스 상태 바꾼다.
+//			alert("toggleCheck : "+$attend.prop("checked"));
+			var $attendSpan=$tr.find(".attendSpan:eq("+itemIndex+")");
+			var $deductSelect=$tr.find("select[name=deductSelect]:eq("+itemIndex+")");
+			var $oneFormula=$tr.find(".oneFormula:eq("+itemIndex+")");
+			var $oneResult=$tr.find(".oneResult:eq("+itemIndex+")");
+			if($attend.prop("checked")==true){//참석시
 				$attendSpan.text("(참석)").css("color","green");
-				setDeductSelDisable($deductSelect,false);//공제선택enable
+				setDeductSelDisable($deductSelect,false,trIndex);//공제선택enable
 			}else{//불참시
 				$attendSpan.text("(불참)").css("color","gray");
-				$oneFormula.text(" ");//결과span 내용 지운다.
-				$oneResult.text(" ");//결과span 내용 지운다.
-				setDeductSelDisable($deductSelect,true);//공제선택disable
+				setDeductSelDisable($deductSelect,true,trIndex);//공제선택disable
 			}//else
 		}//for
-		nBbang(trIndex);
+//		nBbang(trIndex);
 	}//toggleCheck
 	
 	//-------------------------------------------------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ $(document).ready(function(){
 		//결제자 '참석'으로 바꾸기
 		$attend.eq(payerIdx).prop("checked",true);
 		toggleCheck($attend.eq(payerIdx), trIndex, payerIdx);
-		console.log("trdIndex : "+trIndex+" /payerIdx : "+payerIdx+"/ price : "+price+" / n : "+n);
+		console.log("trIndex : "+trIndex+" /payerIdx : "+payerIdx+"/ price : "+price+" / n : "+n);
 		//쏨 true
 		if($treat.prop("checked")==true){//
 			//공제 - "쏘임공제"로 바꾸기
@@ -97,8 +97,9 @@ $(document).ready(function(){
 
 	//-------------------------------------------------------------------------------------------------------------------------
 	function setDeductSelDisable(obj,status,trIndex){
+//		alert("2 setDeductSelDisable - obj.val() : "+obj.val()+" / status : "+status);
 		console.log("--------------------------- setDeductSelDisable ---------------------------");
-		console.log("setDeductSelDisable1 - obj : "+obj+" / status"+status);
+		console.log("setDeductSelDisable1 - obj.val() : "+obj.val()+" / status : "+status);
 		if(status==true){
 			obj.val("공제: 없음");
 		}//if
@@ -109,24 +110,33 @@ $(document).ready(function(){
 	//-------------------------------------------------------------------------------------------------------------------------
 	function setDeductAmoDisable(selObj,trIndex){
 		console.log("--------------------------- setDeductAmoDisable ---------------------------");
-		var obj=selObj.parent().find("input[name=deductAmount]");
+		console.log("selObj.val() : "+selObj.val()+" / trIndex : "+trIndex);
+		var $obj=selObj.parent().find("input[name=deductAmount]");
+//		alert("3 setDeductAmoDisable - $obj.val() : "+$obj.val()+" / trIndex : "+trIndex);
+		var $attend=$obj.parent().find("input[name=attend]");
 		if(selObj.val()=="공제: 없음"){
-			obj.prop("disabled",true);
-			obj.val("공제금액(원)");
-			obj.parent().find(".oneFormula").text(" ");
-			obj.parent().find(".oneResult").text("0");
-			nBbang(trIndex);
+			$obj.prop("disabled",true);
+			$obj.val("공제금액(원)");
+			$obj.parent().find(".oneFormula").text(" ");
+//			$obj.parent().find(".oneResult").text("0");
 		}else {
-			obj.prop("disabled",false);
-			obj.val("0");
-			nBbang(trIndex);
+			$obj.prop("disabled",false);
+			$obj.val("0");
 		}//else
+		//'불참'이면 onePlaceResult 에 결과 지우기
+		if($attend.prop("checked")==false){
+			$obj.parent().find(".oneFormula").text(" ");
+			$obj.parent().find(".oneResult").text("0");
+		}//if
+		nBbang(trIndex);
 	}//setDeductDisable
 	
 	//-------------------------------------------------------------------------------------------------------------------------
 	//nBbang stage당 n빵 계산 [.nBbangTd / .nBbangDiv / .table tr]
 	function nBbang(trIndex){
+//		alert("4 nBbang - trIndex : "+trIndex);
 		console.log("--------------------------- nBbang ---------------------------");
+		console.log("trIndex : "+trIndex);
 		//해당 행
 		var $tr=$(".table tr:eq("+trIndex+")");
 		//금액(placePay)
@@ -153,11 +163,13 @@ $(document).ready(function(){
 		$deductSelect.each(function(itemIndex){
 			var $deductAmount=$(this).parent().find("input[name=deductAmount]");
 			var $attend=$(this).parent().find("input[name=attend]");
-			if($(this).val()!="공제: 없음"){//공제받는 사람 공제액 합산
-				 deductSum+=toNum($deductAmount.val());
-			}//if
-			if($attend.prop("checked")==true && $(this).val()=="공제: 없음"){//참석자중 '공제:없음' 일때
-			notDeductNum+=1;
+			if($attend.prop("checked")==true){//참석자중
+				if($(this).val()!="공제: 없음"){//공제받는 사람 공제액 합산
+					deductSum+=toNum($deductAmount.val());
+				}//if
+				if($(this).val()=="공제: 없음"){//'공제:없음' 일때
+					notDeductNum+=1;
+				}//if
 			}//if
 		})//each
 		
@@ -172,93 +184,98 @@ $(document).ready(function(){
 		$tr.find(".nBbang").text(toCurrency(result.toFixed(0)));//n빵에 가격 적어주기
 //		$(this).text($(this).text().split(/(?=(?:\d{3})+(?:\.|$))/g).join(','));//통화표시  
 //		$tr.find(".nBbang").html("<fmt:formatNumber type='currency' value='"+result.toFixed(0)+"'/>");//n빵에 가격 적어주기
-		console.log($tr.find(".nBbang").html());
 		onePlaceResult(trIndex);//공제부분으로 넘어가기
-		console.log("--------------------------- nBbang END---------------------------");
 	}//nBbang()
 	
 	//-------------------------------------------------------------------------------------------------------------------------
 	//onePlaceResult 1차 정산
 	function onePlaceResult(trIndex){
+//		alert("5 onePlaceResult : "+trIndex);
+//		alert("5-1")
 		console.log("--------------------------- onePlaceResult ---------------------------");
-		console.log("onePlaceResult - trIndex : "+trIndex);
 		var $tr=$(".table tr:eq("+trIndex+")");
 		var $deductSelect=$tr.find("select[name=deductSelect]");
 		var n=$tr.find("input[name=attend]:checked").length;//참석자 수
+		console.log("onePlaceResult - trIndex : "+trIndex+" / n : "+n);
 		$deductSelect.each(function(itemIndex){
-			var $checkBox=$tr.find("input[name=attend]:eq("+itemIndex+")");//참석여부
+//			alert("5-2")
+			var $attend=$tr.find("input[name=attend]:eq("+itemIndex+")");//참석여부
 			var $oneFormula=$tr.find(".oneFormula:eq("+itemIndex+")");//결과표시하는곳
 			var $oneResult=$tr.find(".oneResult:eq("+itemIndex+")");//결과표시하는곳
 			var price=toNum($tr.find("input[name=placePay]").val());//총액
 			var deductAmount=toNum($tr.find("input[name=deductAmount]:eq("+itemIndex+")").val());//공제액
 			var $treat=$tr.find("input[name=treat]");//쏨여부
 			var resultPrice=toNum($tr.find(".nBbang").text());
-			//"쏨"일때 - 똑같노?
-			if($treat.prop("checked")==true){
-				if($(this).val()=="공제: 없음"){//공제:없음 일때 (결제자(쏜사람))
-					$oneFormula.text(" ");
-					$oneResult.text(toCurrency(resultPrice));
-				}else{//공제받는놈들
-					$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
-					$oneResult.text(toCurrency(((price/n).toFixed(0)-deductAmount)));
-				}//else
-			//"쏨" 아닐때
-			}else if($treat.prop("checked")==false){
-				if($(this).val()=="공제: 없음"){//공제: 없음 일때
-					$oneFormula.text(" ");
-					$oneResult.text(toCurrency(resultPrice));
-				}else{//공제받는놈들
-					$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
-					$oneResult.text(toCurrency(((price/n).toFixed(0)-deductAmount)));
-				}//else
-			}//elseif
-			//'불참'이면 onePlaceResult 에 결과 지우기
-			if($checkBox.prop("checked")==false){
-				$oneFormula.text(" ");
-				$oneResult.text("0");
+			//참가자중(불참이면 넘어간다)
+			if($attend.prop("checked")==true){
+//				alert("5-3")
+				if($treat.prop("checked")==true){//"쏨"일때 - 똑같노?
+//					alert("5-4")
+					if($(this).val()=="공제: 없음"){//공제:없음 일때 (결제자(쏜사람))
+//						alert("5-5")
+						$oneFormula.text(" ");
+						$oneResult.text(toCurrency(resultPrice));
+					}else if ($(this).val()!="공제: 없음"){//공제받는놈들(쏘인놈들)
+//						alert("5-6")
+						$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
+						$oneResult.text(toCurrency(((price/n).toFixed(0)-deductAmount)));
+					}//elseif
+				}else if($treat.prop("checked")==false){//"쏨" 아닐때
+//					alert("5-7")
+					if($(this).val()=="공제: 없음"){//참가자중 공제: 없음 일때(지돈다낼때)
+//						alert("5-8")
+						$oneFormula.text(" ");
+						$oneResult.text(toCurrency((price/n))) ;
+					}else if($(this).val()!="공제: 없음"){//참가자중 공제받는놈들
+//						alert("5-9")
+						$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
+						$oneResult.text(toCurrency(((price/n).toFixed(0)-deductAmount)));
+					}//else
+				}//elseif
 			}//if
+			//'불참'이면 onePlaceResult 에 결과 지우기
+//			if($attend.prop("checked")==false){
+//				$oneFormula.text(" ");
+//				$oneResult.text("0");
+//			}//if
 		})//each
 		finalResult();
 	}//onePlaceResult()
 	
 	function finalResult(){
+//		alert("6 finalResult() ");
 		console.log("--------------------------- finalResult ---------------------------");
 		var $tr=$(".table tr");//행
 		//tr 갯수 구하기
 		var $payerSelect=$("select[name=payerSelect]");
 		var $finalResultDiv=$(".finalResultDiv");
 		var payerList=new Array();//tr 갯수(결제자list) (payerSelect 의 idx 0이 아닌거중에 안겹치는 결제자 갯수)
-		console.log("1");
 		$payerSelect.each(function(){
-			console.log("11");
 			if($(this).find(":selected").index()!=0){
-				console.log("12 - $(this).find(\":selected\").index() : "+$(this).find(":selected").index()+" / payerList.length : "+payerList.length);
+				console.log("1 - $(this).find(\":selected\").index() : "+$(this).find(":selected").index()+" / payerList.length : "+payerList.length);
 				if(payerList.length==0){//최초 - 리스트에 담는다
 					payerList.push($(this).val());
-					console.log("13 - payerList.length : "+payerList.length+" / payerList[0] : "+payerList[0]);
+					console.log("2 - payerList.length : "+payerList.length+" / payerList[0] : "+payerList[0]);
 				}else if(payerList.length>0){//두번째 부터는 - 중복체크
 					var flag=true;
 					for(var i=0;i<payerList.length;i++){//한바퀴 돌려보고
-						console.log("14");
 						if(payerList[i]==$(this).val()){//중복이면
 							flag=false;//중복 - false 가 된다.
-							console.log("flag : "+flag);
+							console.log("3 - flag : "+flag);
 						}//if
 					}//for
 					if(flag==true){//중복 아니면
-						console.log("15");
 						payerList.push($(this).val());//담는다.
-						console.log("payerList["+i+"] : "+payerList[i]);
+						console.log("4 - payerList["+i+"] : "+payerList[i]);
 					}//if
 				}//if
 			}//if
 		})//payerSelect each
 		//
-		console.log("payerList.length : "+payerList.length);
+		console.log("5 - payerList.length : "+payerList.length);
 		//td갯수 구하기
 		var memNum=parseInt($("input[name=hidden_memNum]").val());//총 맴바 몇명?
-		console.log("2");
-		console.log("memNum : "+memNum);
+		console.log("6 - memNum : "+memNum);
 		//합산 구하기 - 누구한테 총 얼마줘야되는지
 			//2차원배열 숫자(0)로 초기화 - tr : payerList / td : memNum
 		var sumList=new Array();
@@ -266,53 +283,43 @@ $(document).ready(function(){
 			sumList[i]=new Array();
 			for(var j=0;j<memNum;j++){
 				sumList[i][j]=0;
-				console.log("데이타 배열 0으로 초기화 - sumList["+i+"]["+j+"] : "+sumList[i][j]);
+				console.log("7 - 데이타 배열 0으로 초기화 - sumList["+i+"]["+j+"] : "+sumList[i][j]);
 			}//for i
 		}//for j
 			//tr 돌려서 tr결제자 == payerList 결제자 라면 sumList에 합산
 		for(var i=0;i<payerList.length;i++){
-			console.log("데이타구하기1");
 			$tr.each(function(trIndex){
-				console.log("데이타구하기2");
 				var $payerSelect=$(this).find("select[name=payerSelect]");
 				var $oneResult=$(this).find(".oneResult");
 				if($payerSelect.val()==payerList[i]){
-					console.log("데이타구하기3 - $payerSelect.val() : "+$payerSelect.val()+" / payerList : "+payerList[i]);
+					console.log("8 - $payerSelect.val() : "+$payerSelect.val()+" / payerList[i] : "+payerList[i]);
 					$oneResult.each(function(itemIndex){
-						console.log("데이타구하기4");
 						sumList[i][itemIndex]+=toNum($(this).text());
 					})//oneResult each
 				}//if
 			})// tr each
-			console.log("데이타구하기5");
 		}//for
 
 		//test
 		for(var i=0;i<sumList.length;i++){
 			for(var j=0;j<sumList[0].length;j++){
-				console.log("sumList["+i+"]["+j+"] : "+sumList[i][j]);
+				console.log("9 - sumList["+i+"]["+j+"] : "+sumList[i][j]);
 			}//for i
 		}//for j
 		
 		//표 그리기
-		console.log("3");
 		var table="";
 		table+="<table class='finalResultTable' align='center' border=1>";
 		for(var i=0;i<payerList.length;i++){
-			console.log("4");
 			table+="	<tr>";
 			table+="		<td>"+payerList[i]+"에게</td>";
 			for(var j=0;j<memNum;j++){
 				table+="		<td>"+sumList[i][j]+"</td>";
-			}
+			}//for
 			table+="	</tr>";
-		}
-		console.log("5");
-		
+		}//for
 		table+="</table>";
-		console.log("6");
 		$finalResultDiv.html(table);//표 붙여넣기
-		console.log("7");
 	}//finalResult();
 	
 	////////////////////////////////////////////////////////////////////////////
@@ -352,10 +359,9 @@ $(document).ready(function(){
 	
 	//참석 선택/해제 시 나머지 결제자(밑으로만) 모두 바뀌게
 	$(".table tr").each(function(trIndex){
-		var $checkBox=$(this).find("input[name=attend]");
-		$checkBox.each(function(tdIndex){
+		$(this).find("input[name=attend]").each(function(itemIndex){
 			$(this).on("change",function(){
-				toggleCheck($(this),trIndex,tdIndex);
+				toggleCheck($(this),trIndex,itemIndex);
 //				nBbang(trIndex);
 			});//onchange
 		})//checkBox each

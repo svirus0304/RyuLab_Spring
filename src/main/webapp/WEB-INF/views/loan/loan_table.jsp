@@ -111,7 +111,8 @@ $(document).ready(function(){
 							</c:forEach>
 						</select>
 					</div>
-					<div><input type="text" name="placePay" value="금액(원)"></div>
+					<div><input type="text" name="placePay" value="50000"></div>
+<!-- 					<div><input type="text" name="placePay" value="금액(원)"></div> -->
 				</div>
 			</td>
 			<c:forEach var="fors" items="${memList }" varStatus="colStatus">
