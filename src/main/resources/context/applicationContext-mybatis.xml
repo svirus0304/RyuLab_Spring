@@ -45,8 +45,10 @@
 	<bean id="randomDao" class="com.ryulab.spring.DAO.Random.RandomDAOImp">
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
-	
 	<bean id="loanDao" class="com.ryulab.spring.DAO.Loan.LoanDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	<bean id="boardDao" class="com.ryulab.spring.DAO.Board.BoardDAOImp">
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
 	

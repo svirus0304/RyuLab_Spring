@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.ryulab.spring.DTO.LoanDTO;
+import com.ryulab.spring.DTO.MemberDTO;
 
 public interface BoardDAO {
 	
+	List<MemberDTO> getAllMember();
 	/*List<BannerDTO> bannerList();
 	BannerDTO bannerDto(String bann_num);
 	void imgModi(Map<String, String> map);

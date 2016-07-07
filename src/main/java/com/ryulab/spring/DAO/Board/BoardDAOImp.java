@@ -5,12 +5,20 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.ryulab.spring.DTO.MemberDTO;
+
 public class BoardDAOImp implements BoardDAO{
 	
 	private SqlSession sqlSession;
 
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+
+	@Override
+	public List<MemberDTO> getAllMember() {
+		List<MemberDTO> mem_list=sqlSession.selectList("getAllMember");
+		return mem_list;
 	}
 
 
