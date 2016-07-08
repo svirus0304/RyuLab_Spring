@@ -7,11 +7,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script>
+$(document).ready(function(){
+	/* 
+	$.ajax({
+		url:"board_test",
+		type:"post",
+		dataType:"json",
+		data:{
+			sql:"select * from member;"
+		},
+		success:function(data){
+			$(".table").text(data.id);
+		},
+		error:function(jqXHR){
+			$(".table").html("board_board.jsp AJAX에러 : ["+jqXHR.status+"] "+jqXHR.responseText);
+		}//error
+	})//ajax
+	 */
+})//ready
+</script>
 </head>
 <body>
 <h2>board_board.jsp</h2>
 
 <p>page : ${page }</p>
+<p>json : ${json }</p>
 <table border=1>
 	<tr>
 		<td>id</td>
@@ -26,5 +47,6 @@
 		</tr>
 	</c:forEach>
 </table>
+<div class="table"></div>
 </body>
 </html>

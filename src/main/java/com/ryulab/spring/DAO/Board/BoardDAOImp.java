@@ -1,15 +1,24 @@
 package com.ryulab.spring.DAO.Board;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import com.ryulab.spring.DTO.MemberDTO;
 
-public class BoardDAOImp implements BoardDAO{
-	
+public class BoardDAOImp implements BoardDAO {
+
 	private SqlSession sqlSession;
 
 	public void setSqlSession(SqlSession sqlSession) {
@@ -19,7 +28,7 @@ public class BoardDAOImp implements BoardDAO{
 	@Override
 	public List<MemberDTO> getAllMember() {
 		/*List<MemberDTO> mem_list=sqlSession.selectList("getAllMember");*/
-		
+
 		//test
 		List<MemberDTO> mem_list=new ArrayList<MemberDTO>();
 		MemberDTO mem_dto=new MemberDTO();
@@ -29,12 +38,52 @@ public class BoardDAOImp implements BoardDAO{
 		mem_dto.setMem_nickname("테스트");
 		mem_list.add(mem_dto);
 		//test END
-				
 		return mem_list;
 	}
 
-
 	
+	//http 열고 소스 가져오기 //////////////////////////////////////////////////////
+	@Override
+	public String getHttpHTML(String op) {
+		URL url;
+		HttpURLConnection conn;
+		BufferedReader rd;
+		String line;
+		String result = "";
+		try {
+			url = new URL("http://svirus0304.cafe24.com");
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2)");
+
+			String postParam = "pw=fbtmfap&op="+op;
+			conn.setDoOutput(true);
+			OutputStream out_stream = conn.getOutputStream();
+			out_stream.write( postParam.getBytes("UTF-8") );
+			out_stream.flush();
+			out_stream.close();
+			conn.getInputStream();
+
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			while ((line = rd.readLine()) != null) {
+				result += line + "\n";
+			}
+			rd.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(result);
+		
+		//JSON 읽기 - json-siple-1.1.1.jar 추가 (java build path)
+		JSONObject jsonVal=(JSONObject)JSONValue.parse(result);
+		JSONArray jsonArr=new JSONArray();
+		return result;
+	}
+
+
+
 	/*@Override
 	public List<BannerDTO> bannerList() {
 		List<BannerDTO> list=sqlSession.selectList("bannerList");
@@ -92,5 +141,5 @@ public class BoardDAOImp implements BoardDAO{
 		List<BannerDTO> list=sqlSession.selectList("bannerUseList");
 		return list;
 	}*/
-	
+
 }

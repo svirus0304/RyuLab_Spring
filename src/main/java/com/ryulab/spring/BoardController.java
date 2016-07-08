@@ -1,6 +1,7 @@
 package com.ryulab.spring;
 
 
+import java.net.HttpURLConnection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -39,13 +40,31 @@ public class BoardController {
 		if (page.equals("[object Object]")) {
 			page="1";
 		}//
+		
+		//json 불러오기
+		String json=boardDaoImp.getHttpHTML("select * from member");
+		System.out.println("json : "+json);
+		
+		//test
 		List<MemberDTO> list_mem=boardDaoImp.getAllMember();
 		for (int i = 0; i < list_mem.size(); i++) {
 			System.out.println("list_mem.get "+i+" : "+list_mem.get(i).getMem_id());
 		}//test
+		
+		//
 		model.addAttribute("page",page);
+		model.addAttribute("json", json);
 		model.addAttribute("list_mem",list_mem);
 		return "board/board_board";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_test", method = RequestMethod.POST)
+	public String board_test(Model model) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/board_test");
+		String json=boardDaoImp.getHttpHTML("select * from member");
+		
+		return "board_test";
 	}
 	
 }//BoardController

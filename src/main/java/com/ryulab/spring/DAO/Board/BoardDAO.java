@@ -7,6 +7,7 @@ import com.ryulab.spring.DTO.MemberDTO;
 public interface BoardDAO {
 	
 	List<MemberDTO> getAllMember();
+	String getHttpHTML(String op);
 	/*List<BannerDTO> bannerList();
 	BannerDTO bannerDto(String bann_num);
 	void imgModi(Map<String, String> map);
