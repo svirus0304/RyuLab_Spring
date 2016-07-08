@@ -1,6 +1,7 @@
 package com.ryulab.spring.DAO.Board;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -17,7 +18,18 @@ public class BoardDAOImp implements BoardDAO{
 
 	@Override
 	public List<MemberDTO> getAllMember() {
-		List<MemberDTO> mem_list=sqlSession.selectList("getAllMember");
+		/*List<MemberDTO> mem_list=sqlSession.selectList("getAllMember");*/
+		
+		//test
+		List<MemberDTO> mem_list=new ArrayList<MemberDTO>();
+		MemberDTO mem_dto=new MemberDTO();
+		mem_dto.setMem_id("test");
+		mem_dto.setMem_pw("1234");
+		mem_dto.setMem_email("test@test.com");
+		mem_dto.setMem_nickname("테스트");
+		mem_list.add(mem_dto);
+		//test END
+				
 		return mem_list;
 	}
 
