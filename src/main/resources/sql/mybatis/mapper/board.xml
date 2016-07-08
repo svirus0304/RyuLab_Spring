@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryulab.spring.mapper">
 	<select id="getAllMember" resultType="com.ryulab.spring.DTO.MemberDTO">
-		SELECT * FROM MEMBER
+		SELECT * FROM member
 	</select>
 <!-- 	 <select id="cal_today" resultType="com.GoalMate.www.DTO.MatchDTO">
 		SELECT * FROM mat WHERE mat_date=#{today} ORDER BY mat_time

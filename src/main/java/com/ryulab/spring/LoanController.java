@@ -21,8 +21,8 @@ public class LoanController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoanController.class);
 	
-	@Resource(name="loanDao")
-	private LoanDAOImp loanDAOImp;
+	/*@Resource(name="loanDao")
+	private LoanDAOImp loanDAOImp;*/
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/loan_main", method = RequestMethod.GET)
 	public String loan_main(Model model) {

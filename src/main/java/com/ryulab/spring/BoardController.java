@@ -1,11 +1,7 @@
 package com.ryulab.spring;
 
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Resource;
 
@@ -15,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryulab.spring.DAO.Board.BoardDAOImp;
 import com.ryulab.spring.DTO.MemberDTO;
@@ -26,11 +20,9 @@ import com.ryulab.spring.DTO.MemberDTO;
  */
 @Controller
 public class BoardController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	
 	@Resource(name="boardDao")
 	private BoardDAOImp boardDaoImp;
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_main", method = RequestMethod.GET)
 	public String board_main(Model model) {
@@ -49,7 +41,7 @@ public class BoardController {
 		}//
 		List<MemberDTO> list_mem=boardDaoImp.getAllMember();
 		for (int i = 0; i < list_mem.size(); i++) {
-			System.out.println("list_mem.get "+i+" : "+list_mem.get(i));
+			System.out.println("list_mem.get "+i+" : "+list_mem.get(i).getMem_id());
 		}//test
 		model.addAttribute("page",page);
 		model.addAttribute("list_mem",list_mem);
