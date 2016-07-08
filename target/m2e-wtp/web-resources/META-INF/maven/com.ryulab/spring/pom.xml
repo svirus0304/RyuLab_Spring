@@ -251,6 +251,23 @@
 		                    <goal>install-file</goal>
 		                </goals>
 		            </execution>
+               	 	<!-- json-simple-1.1.1.jar -->
+		            <execution>
+		                <id>install-json-simple</id>
+		                <phase>clean</phase>
+		                <configuration>
+		                    <file>${basedir}/src/main/webapp/WEB-INF/lib/json-simple-1.1.1.jar</file>
+		                    <repositoryLayout>default</repositoryLayout>
+		                   <groupId>com.json-simple</groupId>
+							<artifactId>json-simple</artifactId>
+							<version>1.1.1</version>
+		                    <packaging>jar</packaging>
+		                    <generatePom>true</generatePom>
+		                </configuration>
+		                <goals>
+		                    <goal>install-file</goal>
+		                </goals>
+		            </execution>
 		            
 		        </executions>
 		    </plugin>
