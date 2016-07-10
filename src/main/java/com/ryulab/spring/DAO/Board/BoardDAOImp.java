@@ -14,6 +14,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.ryulab.spring.DTO.MemberDTO;
 
@@ -76,9 +78,23 @@ public class BoardDAOImp implements BoardDAO {
 		}
 		System.out.println(result);
 		
-		//JSON 읽기 - json-siple-1.1.1.jar 추가 (java build path)
-		JSONObject jsonVal=(JSONObject)JSONValue.parse(result);
-		JSONArray jsonArr=new JSONArray();
+		//JSON 읽기 - json-simple-1.1.1.jar 추가
+		//parsing하기
+		JSONParser parser=new JSONParser();
+		try {
+			Object obj=JSONValue.parseWithException(result);
+			JSONObject jsonObj=(JSONObject)obj;
+//			JSONArray jsonArr=(JSONArray)obj;
+//			JSONObject jsonObj=(JSONObject)parser.parse(result);
+//			JSONArray jsonArr=(JSONArray)parser.parse(result);
+			System.out.println("오브젝트 갯수 : "+jsonObj.size());//갯수
+		} catch (Exception e) {
+			System.out.println("---------------- json parsing error ---------------");
+			e.printStackTrace();
+		}
+		
+		
+		
 		return result;
 	}
 
