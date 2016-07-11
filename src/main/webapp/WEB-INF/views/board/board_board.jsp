@@ -32,14 +32,13 @@ $(document).ready(function(){
 <h2>board_board.jsp</h2>
 
 <p>page : ${page }</p>
-<p>json : ${json }</p>
 <table border=1>
 	<tr>
 		<td>id</td>
 		<td>email</td>
 		<td>nickname</td>
 	</tr>
-	<c:forEach var="fors" items="${list_mem }">
+	<c:forEach var="fors" items="${mem_list }">
 		<tr>
 			<td>${fors.mem_id }</td>
 			<td>${fors.mem_email }</td>

@@ -42,19 +42,20 @@ public class BoardController {
 		}//
 		
 		//json 불러오기
-		String json=boardDaoImp.getHttpHTML("select * from member");
+		String json=boardDaoImp.getHttpHTML("select * from member");//op 형태로 바꾸기
+		List<MemberDTO> mem_list=boardDaoImp.getAllMember(json);
 		System.out.println("json : "+json);
 		
-		//test
-		List<MemberDTO> list_mem=boardDaoImp.getAllMember();
-		for (int i = 0; i < list_mem.size(); i++) {
-			System.out.println("list_mem.get "+i+" : "+list_mem.get(i).getMem_id());
-		}//test
+//		//test
+//		List<MemberDTO> list_mem=boardDaoImp.getAllMember();
+//		for (int i = 0; i < list_mem.size(); i++) {
+//			System.out.println("list_mem.get "+i+" : "+list_mem.get(i).getMem_id());
+//		}//test
 		
 		//
 		model.addAttribute("page",page);
 		model.addAttribute("json", json);
-		model.addAttribute("list_mem",list_mem);
+		model.addAttribute("mem_list",mem_list);
 		return "board/board_board";
 	}
 	//////////////////////////////////////////////////////////////////
