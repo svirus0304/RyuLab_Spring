@@ -40,7 +40,7 @@ public class BoardDAOImp implements BoardDAO {
 		String result = "";
 		try {
 			result+=" [1]\n";
-			url = new URL("http://svirus0304.cafe24.com");
+			url = new URL("https://www.google.co.kr");
 			result+="[2]\n";
 			conn = (HttpURLConnection) url.openConnection();
 			result+="[3]\n";
