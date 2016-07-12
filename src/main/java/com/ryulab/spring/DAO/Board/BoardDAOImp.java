@@ -2,6 +2,7 @@ package com.ryulab.spring.DAO.Board;
 
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -38,7 +39,7 @@ public class BoardDAOImp implements BoardDAO {
 		String line;
 		String result = "";
 		try {
-			url = new URL("http://svirus0304.cafe24.com");
+			url = new URL("http://naver.com");
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2)");
