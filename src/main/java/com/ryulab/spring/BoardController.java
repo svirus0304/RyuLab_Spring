@@ -65,7 +65,7 @@ public class BoardController {
 		System.out.println("/board_test");
 		String json=boardDaoImp.getHttpHTML("select * from member");
 		
-		return "board_test";
+		return "board/board_test";
 	}
 	
 }//BoardController

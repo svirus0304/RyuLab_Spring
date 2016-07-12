@@ -32,6 +32,7 @@ $(document).ready(function(){
 <h2>board_board.jsp</h2>
 
 <p>page : ${page }</p>
+<p>json : ${json }</p>
 <table border=1>
 	<tr>
 		<td>id</td>

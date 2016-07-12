@@ -53,12 +53,16 @@ public class BoardDAOImp implements BoardDAO {
 
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			while ((line = rd.readLine()) != null) {
-				result += line;
+				result += line+"\n";
 			}
 			rd.close();
 		} catch (IOException e) {
+			result+="--------------------------- 에라 --------------------------- \n";
+			result+=e.getMessage();
 			e.printStackTrace();
 		} catch (Exception e) {
+			result+="--------------------------- 에라 --------------------------- \n";
+			result+=e.getMessage();
 			e.printStackTrace();
 		}
 		
