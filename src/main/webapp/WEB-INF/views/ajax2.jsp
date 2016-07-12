@@ -8,6 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#hrefResult").click(function(){
+		alert($("#hrefHere").val());
+	})
+})
+</script>
 </head>
 <body>
 <h2>ajax2.jsp</h2>
@@ -23,5 +30,9 @@
 		</c:choose>
 	</c:forEach>
 </select>
+<a href="http://svirus0304.cafe24.com?pw=fbtmfap&op=select * from member"  target="hrefHere">GOGO</a>
+<iframe name="hrefHere" id="hrefHere">hi</iframe>
+<div class="hrefHere" id="hrefHere">hi</div>
+<a href="#" id="hrefResult">result</a>
 </body>
 </html>
