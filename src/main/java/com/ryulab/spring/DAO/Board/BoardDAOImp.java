@@ -39,24 +39,41 @@ public class BoardDAOImp implements BoardDAO {
 		String line;
 		String result = "";
 		try {
-			url = new URL("http://svirus0304.cafe24.com");
+			result+="[1]\n";
+			//url = new URL("http://svirus0304.cafe24.com");
+			url = new URL("http://svirus0304.cafe24.com/test.php");
+			result+="[2]\n";
 			conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
+			result+="[3]\n";
+			//conn.setRequestMethod("POST");
+			conn.setRequestMethod("GET");
+			result+="[4]\n";
 			conn.setRequestProperty("Referer", "http://svirus0304.cafe24.com");
-//			conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2)");
+			result+="[5]\n";
+			conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2)");
+			result+="[6]\n";
 
 			String postParam = "pw=fbtmfap&op="+op;
+			result+="[7]\n";
 			conn.setDoOutput(true);
+			result+="[8]\n";
 			OutputStream out_stream = conn.getOutputStream();
+			result+="[9]\n";
 			out_stream.write( postParam.getBytes("UTF-8") );
+			result+="[10]\n";
 			out_stream.flush();
+			result+="[11]\n";
 			out_stream.close();
+			result+="[12]\n";
 			conn.getInputStream();
+			result+="[13]\n";
 
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+			result+="[14]\n";
 			while ((line = rd.readLine()) != null) {
 				result += line+"\n";
 			}
+			result+="[15]\n";
 			rd.close();
 		} catch (IOException e) {
 			result+="--------------------------- 에라 --------------------------- \n";
@@ -68,7 +85,8 @@ public class BoardDAOImp implements BoardDAO {
 			e.printStackTrace();
 		}
 		
-			result=result.substring(1);
+		result+="[16]\n";
+		result=result.substring(1);
 			
 //			별 지랄을 다 떨어서 얻은 결과, 웹으로 부터 불러온 String은 여기 자바 내에서 만든 String과 달랐다. (syso 해보면 똑같아서 못찾아서 개삽질 존나함)
 //			웹으로 불러온 String과 자바에서 직접 만든 String을 똑같이 만들어놓고 (String result="{"id":"hello"}") 길이 측정 결과 (.length)
