@@ -25,7 +25,7 @@ h2{text-align:center;}
 $(document).ready(function board(page){
 	$.ajax({
 		url:"board_board",
-		type:"get",
+		type:"post",
 		dataType:"text",
 		data:{
 				page:page

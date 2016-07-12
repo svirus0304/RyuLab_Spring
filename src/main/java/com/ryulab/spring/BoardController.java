@@ -33,7 +33,7 @@ public class BoardController {
 		return "board/board_main";
 	}
 	//////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/board_board", method = RequestMethod.GET)
+	@RequestMapping(value = "/board_board", method = RequestMethod.POST)
 	public String board_board(Model model, String page) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_board - page : "+page);
