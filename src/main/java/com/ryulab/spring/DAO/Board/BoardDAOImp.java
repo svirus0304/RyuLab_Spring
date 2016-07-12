@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -34,15 +36,16 @@ public class BoardDAOImp implements BoardDAO {
 	@Override
 	public String getHttpHTML(String op) {
 		URL url;
-		HttpURLConnection conn;
+//		HttpURLConnection conn;
+		HttpsURLConnection conn;
 		BufferedReader rd;
 		String line;
 		String result = "";
 		try {
 			result+=" [1]\n";
-			url = new URL("http://www.naver.com");
+			url = new URL("https://www.google.co.kr");
 			result+="[2]\n";
-			conn = (HttpURLConnection) url.openConnection();
+			conn = (HttpsURLConnection) url.openConnection();
 			result+="[3]\n";
 			conn.setRequestMethod("POST");
 			result+="[4]\n";
