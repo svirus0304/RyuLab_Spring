@@ -36,16 +36,16 @@ public class BoardDAOImp implements BoardDAO {
 	@Override
 	public String getHttpHTML(String op) {
 		URL url;
-//		HttpURLConnection conn;
-		HttpsURLConnection conn;
+		HttpURLConnection conn;
+//		HttpsURLConnection conn;
 		BufferedReader rd;
 		String line;
 		String result = "";
 		try {
 			result+=" [1]\n";
-			url = new URL("https://www.google.co.kr");
+			url = new URL("http://cafe24.com");
 			result+="[2]\n";
-			conn = (HttpsURLConnection) url.openConnection();
+			conn = (HttpURLConnection) url.openConnection();
 			result+="[3]\n";
 			conn.setRequestMethod("POST");
 			result+="[4]\n";
@@ -66,7 +66,7 @@ public class BoardDAOImp implements BoardDAO {
 			result+="[11]\n";
 			out_stream.close();
 			result+="[12]\n";
-			conn.getInputStream();
+//			conn.getInputStream();
 			result+="[13]\n";
 
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
@@ -89,52 +89,10 @@ public class BoardDAOImp implements BoardDAO {
 		result+="[16]\n";
 		result=result.substring(1);
 			
-//			별 지랄을 다 떨어서 얻은 결과, 웹으로 부터 불러온 String은 여기 자바 내에서 만든 String과 달랐다. (syso 해보면 똑같아서 못찾아서 개삽질 존나함)
+//			웹으로 부터 불러온 String은 여기 자바 내에서 만든 String과 달랐다. (syso 해보면 똑같아서 못찾음)
 //			웹으로 불러온 String과 자바에서 직접 만든 String을 똑같이 만들어놓고 (String result="{"id":"hello"}") 길이 측정 결과 (.length)
 //			웹String이 1개가 더 많다고 나왔다. 그래서 계속 unexpected character ( ) at position 0 에러가 떴던 것이다.
-//			해결 : 웹String 젤 앞글자를 잘라버리면 된다. 시발.. 이게 내 삶의 3일을 가져갔다
-//			어쨌든 지금은 존나 행복하다
-//			
-//			String result2="      {\"id\":\"result2\"}";
-//			String result2=result.getBytes("UTF-8").toString();
-//			String test="{\"id\":\"hello\"}";
-//			byte bytes1[]=result.getBytes("utf-8");
-//			byte bytes2[]=result2.getBytes("utf-8");
-//			byte bytes3[]=result3.getBytes("utf-8");
-//			byte bytesT[]=test.getBytes("utf-8");
-//			
-//			char char1=result.charAt(0);
-//			char char2=result2.charAt(0);
-//			char char3=result3.charAt(0);
-//			char charT=test.charAt(0);
-//			
-//			String nResult1=result.substring(1);
-//			String nResult2=result.substring(1);
-//			String nResult3=result.substring(1);
-//			String nResultT=test.substring(1);
-//			
-//			System.out.println("result : "+result+"/ length : "+result.length()+" / byte : "+bytes1[0]+" / char : "+char1+" / nResult : "+nResult1);
-//			System.out.println("result2 : "+result2+"/ length : "+result2.length()+" / byte : "+bytes2[0]+" / char : "+char2+" / nResult : "+nResult2);
-//			System.out.println("result3 : "+result3+"/ length : "+result3.length()+" / byte : "+bytes3[0]+" / char : "+char3+" / nResult : "+nResult3);
-//			System.out.println("test : "+test+"/ length : "+test.length()+" / byte : "+bytesT[0]+" / char : "+charT+" / nResult : "+nResultT);
-			/////////////////////////////////////////////////////////////////
-//			ArrayList availableCharset = new ArrayList();
-//			String[] charsetArray = {"utf-8", "euc-kr","ksc5601","x-windows-949","iso-8859-1", "x-IBM949","x-IBM949C"};  //한글 CHARSET
-//			String testStr = result2;
-//
-//			//모든 Charset 조회
-//			Iterator it = Charset.availableCharsets().keySet().iterator(); 
-//			while (it.hasNext()) {
-//				availableCharset.add((String) it.next());
-//			}
-//
-//			for (int i = 0; i < charsetArray.length; i++) {
-//				for (int j = 0; j < charsetArray.length; j++) {
-//					System.out.println(charsetArray[i]+"로 문자를 읽어서 " + charsetArray[j] +"로 변경-->" +new String(testStr.getBytes(charsetArray[i]), charsetArray[j]));
-//				}
-//			}
-			/////////////////////////////////////////////////////////////////
-			
+//			해결 : 웹String 젤 앞글자를 잘라버리면 된다.
 		return result;
 	}//
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
