@@ -39,14 +39,12 @@ public class BoardDAOImp implements BoardDAO {
 		String line;
 		String result = "";
 		try {
-			result+="[1]\n";
-			//url = new URL("http://svirus0304.cafe24.com");
-			url = new URL("http://svirus0304.cafe24.com/test.php");
+			result+=" [1]\n";
+			url = new URL("http://svirus0304.cafe24.com");
 			result+="[2]\n";
 			conn = (HttpURLConnection) url.openConnection();
 			result+="[3]\n";
-			//conn.setRequestMethod("POST");
-			conn.setRequestMethod("GET");
+			conn.setRequestMethod("POST");
 			result+="[4]\n";
 			conn.setRequestProperty("Referer", "http://svirus0304.cafe24.com");
 			result+="[5]\n";
