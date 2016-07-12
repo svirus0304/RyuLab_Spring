@@ -10,8 +10,11 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
 <script>
 $(document).ready(function(){
-	$("#hrefResult").click(function(){
-		alert($("#hrefHere").val());
+	$("#hrefResult1").click(function(){
+		alert($("#hrefHere1").contents().find("body").html());
+	})
+	$("#hrefResult2").click(function(){
+		alert($("#hrefHere2").contents().find("body").html());
 	})
 })
 </script>
@@ -30,9 +33,9 @@ $(document).ready(function(){
 		</c:choose>
 	</c:forEach>
 </select>
-<a href="http://svirus0304.cafe24.com?pw=fbtmfap&op=select * from member"  target="hrefHere">GOGO</a>
-<iframe name="hrefHere" id="hrefHere">hi</iframe>
-<div class="hrefHere" id="hrefHere">hi</div>
-<a href="#" id="hrefResult">result</a>
+<iframe name="hrefHere1" id="hrefHere1" src="http://svirus0304.cafe24.com?pw=fbtmfap&op=select * from member">hi1</iframe>
+<a href="#" id="hrefResult1">result1</a>
+<iframe name="hrefHere2" id="hrefHere2" src="#">hi2</iframe>
+<a href="#" id="hrefResult2">result2</a>
 </body>
 </html>

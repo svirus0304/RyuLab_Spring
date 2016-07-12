@@ -43,7 +43,7 @@ public class BoardDAOImp implements BoardDAO {
 		String result = "";
 		try {
 			result+=" [1]\n";
-			url = new URL("http://cafe24.com");
+			url = new URL("http://svirus0304.cafe24.com");
 			result+="[2]\n";
 			conn = (HttpURLConnection) url.openConnection();
 			result+="[3]\n";
@@ -66,10 +66,10 @@ public class BoardDAOImp implements BoardDAO {
 			result+="[11]\n";
 			out_stream.close();
 			result+="[12]\n";
-//			conn.getInputStream();
+			conn.getInputStream();
 			result+="[13]\n";
 
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			result+="[14]\n";
 			while ((line = rd.readLine()) != null) {
 				result += line+"\n";
