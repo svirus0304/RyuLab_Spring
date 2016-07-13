@@ -42,40 +42,25 @@ public class BoardDAOImp implements BoardDAO {
 		String line;
 		String result = "";
 		try {
-			result+=" [1]\n";
 			url = new URL("http://svirus0304.cafe24.com");
-			result+="[2]\n";
 			conn = (HttpURLConnection) url.openConnection();
-			result+="[3]\n";
 			conn.setRequestMethod("POST");
-			result+="[4]\n";
 			conn.setRequestProperty("Referer", "http://svirus0304.cafe24.com");
-			result+="[5]\n";
 //			conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2)");
 			conn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36");
-			result+="[6]\n";
 
 			String postParam = "pw=fbtmfap&op="+op;
-			result+="[7]\n";
 			conn.setDoOutput(true);
-			result+="[8]\n";
 			OutputStream out_stream = conn.getOutputStream();
-			result+="[9]\n";
 			out_stream.write( postParam.getBytes("UTF-8") );
-			result+="[10]\n";
 			out_stream.flush();
-			result+="[11]\n";
 			out_stream.close();
-			result+="[12]\n";
 			conn.getInputStream();
-			result+="[13]\n";
 
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			result+="[14]\n";
 			while ((line = rd.readLine()) != null) {
 				result += line+"\n";
 			}
-			result+="[15]\n";
 			rd.close();
 		} catch (IOException e) {
 			result+="--------------------------- 에라 --------------------------- \n";
@@ -87,7 +72,6 @@ public class BoardDAOImp implements BoardDAO {
 			e.printStackTrace();
 		}
 		
-		result+="[16]\n";
 		result=result.substring(1);
 			
 //			웹으로 부터 불러온 String은 여기 자바 내에서 만든 String과 달랐다. (syso 해보면 똑같아서 못찾음)

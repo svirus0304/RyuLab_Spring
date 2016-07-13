@@ -5,6 +5,7 @@ public class MemberDTO {
 	private String mem_pw;
 	private String mem_email;
 	private String mem_nickname;
+	private int mem_use;
 	
 	public String getMem_id() {
 		return mem_id;
@@ -29,6 +30,12 @@ public class MemberDTO {
 	}
 	public void setMem_nickname(String mem_nickname) {
 		this.mem_nickname = mem_nickname;
+	}
+	public int getMem_use() {
+		return mem_use;
+	}
+	public void setMem_use(int mem_use) {
+		this.mem_use = mem_use;
 	}
 	
 }

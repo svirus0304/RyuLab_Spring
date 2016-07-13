@@ -35,15 +35,16 @@ $(document).ready(function(){
 <p>json : ${json }</p>
 <table border=1>
 	<tr>
-		<td>id</td>
-		<td>email</td>
-		<td>nickname</td>
+		<td>글번호</td>
+		<td>제목</td>
+		<td>작성자</td>
+		<td></td>
+		<td></td>
 	</tr>
 	<c:forEach var="fors" items="${mem_list }">
 		<tr>
-			<td>${fors.mem_id }</td>
-			<td>${fors.mem_email }</td>
-			<td>${fors.mem_nickname }</td>
+			<td>${fors.mem_nickname }(${fors.mem_id })</td>
+			<td></td>
 		</tr>
 	</c:forEach>
 </table>
