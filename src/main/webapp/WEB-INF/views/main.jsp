@@ -31,6 +31,11 @@
 	text-align: center;
 	line-height: 50px;
 }
+.btnWrap{
+	width: 100px;
+	height: 50px;
+	display:inline-block;
+}
 .btn:hover {
 	cursor: pointer;
 	background-color: white;
@@ -52,40 +57,35 @@
 	padding-right:10px;
 	padding-bottom:20px;
 	margin-bottom: 30px;
+	text-align: center;
 }
 .mainTitle{
 	position:relative;
 	z-index: 10;
 }
+.aboveTheMoney{
+	margin-top:80px;
+}
 .pigBG{
-	margin-left:-20px;
-	margin-top:-40px;
-	width:150px;
+	margin-left:0px;
+	margin-top:-15px;
+	width:100px;
 	position: absolute;
 }
 .smloan{
-	margin-left:-45px;
-	margin-top:-40px;
-	width:140px;
-	height:250px;
+	margin-left:-25px;
+	margin-top:-5px;
+	width:100px;
+	height:60px;
 	position: absolute;
+	z-index: 5;
 }
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
 	
 	$(".btn1").click(function(){//버튼1 클릭 시
-		$.get(//get 방식으로 ajax 사용
-			"json",//컨트롤러의 /json로 보낸다.
-			{
-				idx:"1"//idx라는 파라미터를 1로 보내준다.
-			},//-> 컨트롤러의 /json으로 넘어간다
-			function(res){//컨트롤러 갔다와서 성공시 할 행동들.
-				$(".name").text(res.name);//name클래스 div에 json.jsp에서 불러온 name을 적는다.
-				$(".age").text(res.age);//age클래스 div에 json.jsp에서 불러온 age를 적는다.
-			},
-			"json"//json 형태로 불러온다. ("text"(기본) / "json" / "xml") - 주로 json 쓴다. / 페이지 전체 불러오려면 text로 불러와야된다.
-		);
+		$(".result").html("<img src='resources/img/aboveTheMoney.png' class='aboveTheMoney'>")
 	});//btn1
 	
 	$(".btn2").click(function(){//버튼2 클릭시
@@ -167,8 +167,7 @@ $(document).ready(function(){
 	</div>
 </div>
 <div class="result">
-이름 : <span class="name">${name }</span><br>
-나이 : <span class="age">${age }</span><br>
+	<img src="resources/img/aboveTheMoney.png" class="aboveTheMoney">
 </div>
 
 </body>
