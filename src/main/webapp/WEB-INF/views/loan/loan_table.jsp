@@ -22,6 +22,12 @@
 	font-size:12px;
 	text-align: center;
 }
+.trTitle{
+	font-size:18px;
+}
+.trName{
+	font-size:15px;
+}
 .table .nameTd{
 	width:50px;
 }
@@ -48,14 +54,21 @@
 	font-size:15px;
 }
 .table .placeTd .stageInner .treatDiv input{
-	width:15px;
-	height:15px;
+	width:16px;
+	height:16px;
 }
 .nBbangTd{
 	width:100px;
 }
 .nBbangDiv{
 	font-size:17px;
+}
+.desc{
+	font-size:12px;
+	color: gray;
+}
+.formula{
+	font-size:15px;
 }
 .thanks{
 	color:#FFBB00;
@@ -80,12 +93,12 @@ $(document).ready(function(){
 <body>
 <input type="hidden" name="hidden_memNum" value="${memList.size() }"> 
 	<table class="table" align="center" border=1 style="width:initial;">
-		<tr>
+		<tr class="trTitle">
 			<td rowspan=2></td>
 			<td colspan="${memList.size() }">맴바</td>
 			<td rowspan=2 class="nBbangTd">n빵</td>
 		</tr>
-		<tr>
+		<tr class="trName">
 		<c:forEach var="fors" items="${memList }">
 			<td class="nameTd">
 				${fors.name}
@@ -111,12 +124,12 @@ $(document).ready(function(){
 							</c:forEach>
 						</select>
 					</div>
-					<div><input type="text" name="placePay" value="50000"></div>
+					<div><input type="text" name="placePay" value="0"></div>
 <!-- 					<div><input type="text" name="placePay" value="금액(원)"></div> -->
 				</div>
 			</td>
 			<c:forEach var="fors" items="${memList }" varStatus="colStatus">
-			<td class="member${colStatus.index }"><!-- 열 관리를 위해 열에 클래스 이름을 부여한다. -->
+			<td class="member${colStatus.index }" ><!-- 열 관리를 위해 열에 클래스 이름을 부여한다. -->
 				<input type="checkbox" name="attend" checked="checked" style="width:30px;"><br>
 				<span class="attendSpan" style="color:green;font-size:11px;">(참석)</span><br>
 				<select name="deductSelect">
@@ -137,6 +150,7 @@ $(document).ready(function(){
 		</c:forEach>
 			<td class="nBbangTd">
 				<div class="nBbangDiv">
+					<span class="desc"></span><br>
 					<span class="formula"></span><br>
 					<div class="nBbangDiv">
 						<span class="per">각</span><span class="nBbang">0</span>원<br>

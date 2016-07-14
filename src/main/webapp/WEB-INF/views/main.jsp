@@ -53,6 +53,23 @@
 	padding-bottom:20px;
 	margin-bottom: 30px;
 }
+.mainTitle{
+	position:relative;
+	z-index: 10;
+}
+.pigBG{
+	margin-left:-20px;
+	margin-top:-40px;
+	width:150px;
+	position: absolute;
+}
+.smloan{
+	margin-left:-45px;
+	margin-top:-40px;
+	width:140px;
+	height:250px;
+	position: absolute;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -140,8 +157,14 @@ $(document).ready(function(){
 	<div class="btn btn3">ajax2</div>
 	<div class="btn btn3">ajax3</div>
 	<div class="btn btn4">게시판</div>
-	<div class="btn btn5">로또번호뽑기</div>
-	<div class="btn btn6">슬메론</div>
+	<div class="btn btn5">
+		<img src="resources/img/pigBG.png" class="pigBG">
+		<span class="mainTitle">로또번호뽑기</span>
+	</div>
+	<div class="btn btn6">
+		<img src="resources/img/smloan.png" class="smloan">
+		<span class="mainTitle">슬메론</span>
+	</div>
 </div>
 <div class="result">
 이름 : <span class="name">${name }</span><br>

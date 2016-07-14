@@ -25,13 +25,17 @@ public class RandomDAOImp implements RandomDAO{
 			num=random.nextInt(46);
 			System.out.println("num "+i+" : "+num);
 			numbers.add(num);
+			if(numbers.get(0)==0){//첫숫자 0이면 삭제
+				numbers.remove(0);
+				i-=1;
+			}//if
 			for (int j = 0; j < numbers.size()-1; j++) {//중복검사(중복이면 삭제)
-				if (numbers.get(i)==numbers.get(j) || numbers.get(i)==0) {
+				if (numbers.get(i)==numbers.get(j)) {
 					numbers.remove(i);
 					i-=1;
 				}//if
 			}//for
-			if (numbers.size()==6) {//숫자 세개 다 채워지면 break;
+			if (numbers.size()==6) {//숫자 6개 다 채워지면 break;
 				break;
 			}//if
 		}//for

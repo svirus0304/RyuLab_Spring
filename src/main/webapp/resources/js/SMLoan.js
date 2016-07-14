@@ -177,8 +177,10 @@ $(document).ready(function(){
 		//n빵에 뿌리기
 		var result=(placePay/n)+(deductSum/notDeductNum);
 		if(deductSum>0){//공제 있을 시 식 적어주기
+			$tr.find(".desc").text("(원래n빵 + 공제n빵)");
 			$tr.find(".formula").text(toCurrency((placePay/n).toFixed(0))+"+"+toCurrency((deductSum/notDeductNum).toFixed(0))+"=");
 		}else{//공제 없을 시 식 삭제
+			$tr.find(".desc").text(" ");
 			$tr.find(".formula").text(" ");
 		}//else
 		$tr.find(".nBbang").text(toCurrency(result.toFixed(0)));//n빵에 가격 적어주기
@@ -209,7 +211,7 @@ $(document).ready(function(){
 			//참가자중(불참이면 넘어간다)
 			if($attend.prop("checked")==true){
 //				alert("5-3")
-				if($treat.prop("checked")==true){//"쏨"일때 - 똑같노?
+				if($treat.prop("checked")==true){//"쏨"일때
 //					alert("5-4")
 					if($(this).val()=="공제: 없음"){//공제:없음 일때 (결제자(쏜사람))
 //						alert("5-5")
@@ -225,10 +227,10 @@ $(document).ready(function(){
 					if($(this).val()=="공제: 없음"){//참가자중 공제: 없음 일때(지돈다낼때)
 //						alert("5-8")
 						$oneFormula.text(" ");
-						$oneResult.text(toCurrency((price/n).toFixed(0))) ;
+						$oneResult.text(toCurrency(resultPrice.toFixed(0))) ;
 					}else if($(this).val()!="공제: 없음"){//참가자중 공제받는놈들
 //						alert("5-9")
-						$oneFormula.text(toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
+						$oneFormula.text(	toCurrency((price/n).toFixed(0))+"-"+toCurrency(deductAmount));
 						$oneResult.text(toCurrency(((price/n).toFixed(0)-deductAmount)));
 					}//else
 				}//elseif
@@ -342,6 +344,15 @@ $(document).ready(function(){
 	$("input").on("focus",function(){
 		$(this).select();
 	})//onfocus
+	//열색깔
+	$(".table tr").each(function(trIndex){
+		if(trIndex==1){
+			$(this).find("td:even").css("background-color","#FFFFF6");
+		}//if
+		if(trIndex>1){
+			$(this).find("td:odd").css("background-color","#FFFFF6");
+		}//if
+	})
 	
 	//결제자 선택 시 나머지 결제자(밑으로만) 모두 바뀌게
 	$("select[name=payerSelect]").each(function(itemIndex){//select 대기(index 얻기 위함)

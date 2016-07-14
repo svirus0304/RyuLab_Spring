@@ -31,21 +31,36 @@
 	margin-left: 5px;
 	margin-right: 5px;
 }
+.pigNum{
+	position: absolute;
+	width: 115px;
+	z-index: 1;
+	-webkit-transition:ease-in 1s;
+}
+.pigNum:HOVER{
+	cursor:pointer;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("input").each(function(idx){
+	$(".pigNum").each(function(idx){
 		$(this).click(function(){
-			alert("name : "+$(this).prop("name"));
-		})
-	})
-});
+			$(this).css("z-index","100");
+			$(this).css("margin","auto");
+			$(this).css("margin-left","-5000px");
+			$(this).css("margin-top","-5000px");
+			$(this).css("width","10000px");
+			setTimeout(function(){$(".pigNum:eq("+idx+")").hide()},1000);
+		})//click
+	})//each
+});//ready
 </script>
 </head>
 <body>
 <div class="wrapDiv">
 	<div class="numbersDiv">
 		<c:forEach var="fors" items="${numbers }" varStatus="status">
+			<img src="resources/img/pigNum.png" class="pigNum">		
 			<input type="text" name="num${status.index}" class="numbers" value="${fors }">
 		</c:forEach>
 	</div>
