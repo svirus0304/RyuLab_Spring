@@ -30,7 +30,7 @@ public class RandomDAOImp implements RandomDAO{
 				i-=1;
 			}//if
 			for (int j = 0; j < numbers.size()-1; j++) {//중복검사(중복이면 삭제)
-				if (numbers.get(i)==numbers.get(j)) {
+				if (numbers.get(i)==numbers.get(j) || numbers.get(i)==0) {
 					numbers.remove(i);
 					i-=1;
 				}//if
