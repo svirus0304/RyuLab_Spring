@@ -12,7 +12,6 @@ h2{text-align:center;}
 	margin:auto;
 	width:80%;
 	height:80%;
-	background-color:#E4F7BA;
 }
 .pageDiv{
 	margin:auto;

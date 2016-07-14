@@ -4,6 +4,7 @@ public class BoardDTO {
 	private int board_num;
 	private String board_id;
 	private String board_title;
+	private String board_content;
 	private String board_date;
 	private int board_view;
 	
@@ -24,6 +25,12 @@ public class BoardDTO {
 	}
 	public void setBoard_title(String board_title) {
 		this.board_title = board_title;
+	}
+	public String getBoard_content() {
+		return board_content;
+	}
+	public void setBoard_content(String board_content) {
+		this.board_content = board_content;
 	}
 	public String getBoard_date() {
 		return board_date;

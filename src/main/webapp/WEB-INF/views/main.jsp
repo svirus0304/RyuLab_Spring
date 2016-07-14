@@ -63,6 +63,13 @@
 	position:relative;
 	z-index: 10;
 }
+/* ---------------------------------------------------------- */
+.militaryMae{
+	width:150px;
+	margin-top:-20px;;
+	margin-left:-150px;;
+	position:absolute;
+}
 .aboveTheMoney{
 	margin-top:80px;
 }
@@ -152,6 +159,7 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="btnGroup">
+<img src="resources/img/militaryMae.png" class="militaryMae">
 	<div class="btn btn1">버튼1</div>
 	<div class="btn btn2">버튼2</div>
 	<div class="btn btn3">ajax2</div>

@@ -18,9 +18,11 @@ import javax.net.ssl.HttpsURLConnection;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.ryulab.spring.DTO.BoardDTO;
 import com.ryulab.spring.DTO.MemberDTO;
 
 public class BoardDAOImp implements BoardDAO {
@@ -102,7 +104,29 @@ public class BoardDAOImp implements BoardDAO {
 		}//catch
 		return mem_list;
 	}//getAllMember
+	
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public List<BoardDTO> getBoardList(String json_board) {
+		List<BoardDTO> board_list=new ArrayList<BoardDTO>();
+		System.out.println();
+		try {
+			JSONArray jsonArr=(JSONArray)JSONValue.parse(json_board);
+			for (int i = 0; i < jsonArr.size(); i++) {
+				JSONObject jsonObject=(JSONObject) jsonArr.get(i);
+				BoardDTO board_dto=new BoardDTO();
+				board_dto.setBoard_num(Integer.parseInt(jsonObject.get("board_num").toString()));
+				board_dto.setBoard_id(jsonObject.get("board_id").toString());
+				board_dto.setBoard_title(jsonObject.get("board_title").toString());
+				board_dto.setBoard_title(jsonObject.get("board_content").toString());
+				board_dto.setBoard_date(jsonObject.get("board_date").toString());
+				board_dto.setBoard_view(Integer.parseInt(jsonObject.get("board_view").toString()));
+				board_list.add(board_dto);
+			}//for
+		} catch (Exception e) {
+			e.printStackTrace();
+		}//catch
+		return board_list;
+	}//getBoardList
 
 
 	/*@Override

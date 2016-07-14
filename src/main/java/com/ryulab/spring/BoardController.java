@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ryulab.spring.DAO.Board.BoardDAOImp;
+import com.ryulab.spring.DTO.BoardDTO;
 import com.ryulab.spring.DTO.MemberDTO;
 
 /**
@@ -42,9 +43,14 @@ public class BoardController {
 		}//
 		
 		//json 불러오기
-		String json=boardDaoImp.getHttpHTML("select * from member");//op 형태로 바꾸기
-		List<MemberDTO> mem_list=boardDaoImp.getAllMember(json);
-		System.out.println("json : "+json);
+		String json_mem=boardDaoImp.getHttpHTML("select * from member");//op 형태로 바꾸기
+		System.out.println("json_mem : "+json_mem);
+		List<MemberDTO> mem_list=boardDaoImp.getAllMember(json_mem);
+		
+		//json_board 불러오기
+		String json_board=boardDaoImp.getHttpHTML("select * from board order by board_num desc");
+		System.out.println("json_board : "+json_board);
+		List<BoardDTO> board_list=boardDaoImp.getBoardList(json_board);
 		
 //		//test
 //		List<MemberDTO> list_mem=boardDaoImp.getAllMember();
@@ -54,8 +60,10 @@ public class BoardController {
 		
 		//
 		model.addAttribute("page",page);
-		model.addAttribute("json", json);
+		model.addAttribute("json_board", json_board);
+		model.addAttribute("json_mem", json_mem);
 		model.addAttribute("mem_list",mem_list);
+		model.addAttribute("board_list",board_list);
 		return "board/board_board";
 	}
 	//////////////////////////////////////////////////////////////////
