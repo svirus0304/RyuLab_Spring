@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ryulab.spring.DAO.Board.BoardDAOImp;
 import com.ryulab.spring.DTO.BoardDTO;
@@ -26,7 +27,7 @@ public class BoardController {
 	private BoardDAOImp boardDaoImp;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	//////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/board_main", method = RequestMethod.GET)
+	@RequestMapping(value = "/board_main", method = RequestMethod.POST)
 	public String board_main(Model model) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_main");
@@ -67,11 +68,26 @@ public class BoardController {
 		return "board/board_board";
 	}
 	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_write", method = RequestMethod.POST)
+	public String board_write(Model model) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/board_write");
+		
+		return "board/board_write";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_write_save", method = RequestMethod.POST)
+	public ModelAndView board_write_save(Model model,BoardDTO board_dto) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/board_write_save - board_dto. id : "+board_dto.getBoard_id()+" / title : "+board_dto.getBoard_title()+" / content : "+board_dto.getBoard_content());
+		ModelAndView mav=new ModelAndView("board_board");
+		return mav;
+	}
+	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_test", method = RequestMethod.POST)
 	public String board_test(Model model) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_test");
-		String json=boardDaoImp.getHttpHTML("select * from member");
 		
 		return "board/board_test";
 	}

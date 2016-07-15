@@ -9,6 +9,12 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="resources/js/board.js"></script>
 <style>
+.btnsDiv{
+	margin:auto;
+}
+.writeBtn{
+	float:right;
+}
 .boardTable{
 	margin:auto;
 	width:100%;
@@ -37,6 +43,11 @@
 .board_date{
 	width:15%;
 }
+.pageDiv{
+	margin:auto;
+	text-align:center;
+	background-color: #FFB2D9;
+}
 </style>
 <script>
 $(document).ready(function(){
@@ -56,12 +67,16 @@ $(document).ready(function(){
 		}//error
 	})//ajax
 	 */
+	
 })//ready
 </script>
 </head>
 <body>
 <%-- <p>json_mem : ${json_mem }</p>
 <p>json_board : ${json_board }</p> --%>
+<div class="btnsDiv">
+	<span class="writeBtn"><a href="#">글쓰기</a></span>
+</div>
 <table border=1 class="boardTable">
 	<tr class="trTitle">
 		<td class="board_num">번호</td>
@@ -80,6 +95,6 @@ $(document).ready(function(){
 		</tr>
 	</c:forEach>
 </table>
-<div class="table"></div>
+<div class="pageDiv"></div>
 </body>
 </html>

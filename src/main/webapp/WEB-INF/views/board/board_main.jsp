@@ -8,20 +8,18 @@
 
 <style>
 h2{text-align:center;}
+
 .boardDiv{
 	margin:auto;
 	width:80%;
 	height:80%;
 }
-.pageDiv{
-	margin:auto;
-	text-align:center;
-	background-color: #FFB2D9;
-}
+
 </style>
 
 <script>
 $(document).ready(function board(page){
+	//시작시 boardDiv에 첫페이지 불러온다.
 	$.ajax({
 		url:"board_board",
 		type:"post",
@@ -34,14 +32,12 @@ $(document).ready(function board(page){
 		},
 		error:function(){alert("에러");}
 	});//ajax
-})
+})//ready
 </script>
 
 </head>
 <body>
 <h2>board_main.jsp</h2>
-
 <div class="boardDiv"></div>
-<div class="pageDiv"></div>
 </body>
 </html>

@@ -124,7 +124,7 @@ $(document).ready(function(){
 	$(".btn4").click(function(){
 		$.ajax({
 				url:"board_main",
-				type:"get",
+				type:"post",
 				dataType:"text",
 				success:function(data){
 					$(".result").html(data);
