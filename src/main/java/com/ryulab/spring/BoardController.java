@@ -80,7 +80,8 @@ public class BoardController {
 	public ModelAndView board_write_save(Model model,BoardDTO board_dto) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_write_save - board_dto. id : "+board_dto.getBoard_id()+" / title : "+board_dto.getBoard_title()+" / content : "+board_dto.getBoard_content());
-		ModelAndView mav=new ModelAndView("board_board");
+		//insert 하기
+		ModelAndView mav=new ModelAndView("/board_board");
 		return mav;
 	}
 	//////////////////////////////////////////////////////////////////
