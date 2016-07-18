@@ -1,4 +1,4 @@
-package com.ryulab.spring.DAO.Board;
+package com.ryulab.spring.DAO.Member;
 
 
 import java.io.BufferedReader;
@@ -25,7 +25,7 @@ import org.json.simple.parser.ParseException;
 import com.ryulab.spring.DTO.BoardDTO;
 import com.ryulab.spring.DTO.MemberDTO;
 
-public class BoardDAOImp implements BoardDAO {
+public class MemberDAOImp implements MemberDAO {
 
 	private SqlSession sqlSession;
 
@@ -38,14 +38,10 @@ public class BoardDAOImp implements BoardDAO {
 		List<MemberDTO> mem_list=sqlSession.selectList("getAllMember");
 		return mem_list;
 	}
-	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public List<BoardDTO> getBoardList() {
-		List<BoardDTO> board_list=sqlSession.selectList("getBoardList");
-		return board_list;
-	}//getBoardList
-	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public void addBoard(BoardDTO board_dto) {
-		sqlSession.insert("addBoard", board_dto);
+
+	public int addMember(MemberDTO memberDTO) {
+		int sel=sqlSession.insert("addMember", memberDTO);
+		return sel;
 	}
 	
 	

@@ -7,6 +7,7 @@ public class BoardDTO {
 	private String board_content;
 	private String board_date;
 	private int board_view;
+	private String mem_nickname;
 	
 	public int getBoard_num() {
 		return board_num;
@@ -43,6 +44,12 @@ public class BoardDTO {
 	}
 	public void setBoard_view(int board_view) {
 		this.board_view = board_view;
+	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
 	}
 	
 }

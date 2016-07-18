@@ -51,6 +51,9 @@
 	<bean id="boardDao" class="com.ryulab.spring.DAO.Board.BoardDAOImp">
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
+	<bean id="memberDao" class="com.ryulab.spring.DAO.Member.MemberDAOImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
 	
 <!-- 	<bean id="matchDao" class="com.GoalMate.www.DAO.Match.MatchDAOImp">
 		<property name="sqlSession" ref="sqlSession" />

@@ -12,6 +12,9 @@
 .btnsDiv{
 	margin:auto;
 }
+.pageNum{
+	float:left;
+}
 .writeBtn{
 	float:right;
 }
@@ -75,6 +78,7 @@ $(document).ready(function(){
 <%-- <p>json_mem : ${json_mem }</p>
 <p>json_board : ${json_board }</p> --%>
 <div class="btnsDiv">
+	<span class="pageNum">page : ${page }</span>
 	<span class="writeBtn"><a href="#">글쓰기</a></span>
 </div>
 <table border=1 class="boardTable">
@@ -89,7 +93,7 @@ $(document).ready(function(){
 		<tr class="trItem">
 			<td class="board_num">${fors.board_num}</td>
 			<td class="board_title"><a href="#">${fors.board_title}</a></td>
-			<td class="board_id">${fors.board_id}</td>
+			<td class="board_id">${fors.mem_nickname}</td>
 			<td class="board_view">${fors.board_view}</td>
 			<td class="board_date">${fors.board_date}</td>
 		</tr>

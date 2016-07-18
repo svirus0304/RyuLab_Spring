@@ -72,6 +72,7 @@
 }
 .aboveTheMoney{
 	margin-top:80px;
+	width:80%;
 }
 .pigBG{
 	margin-left:0px;
@@ -121,6 +122,7 @@ $(document).ready(function(){
 		);
 	});//btn3
 	
+	//게시판
 	$(".btn4").click(function(){
 		$.ajax({
 				url:"board_main",
@@ -132,6 +134,7 @@ $(document).ready(function(){
 		});//ajax
 	})//btn4
 	
+	//로또번호뽑기
 	$(".btn5").click(function(){
 		$.ajax({
 				url:"random_main",
@@ -141,8 +144,9 @@ $(document).ready(function(){
 					$(".result").html(data);
 				}
 		});//ajax
-	})//btn4
+	})//btn5
 	
+	//슬메론
 	$(".btn6").click(function(){
 		$.ajax({
 				url:"loan_main",
@@ -152,7 +156,19 @@ $(document).ready(function(){
 					$(".result").html(data);
 				}
 		});//ajax
-	})//btn4
+	})//btn6
+	
+	//회원가입
+	$(".btn7").click(function(){
+		$.ajax({
+				url:"member_join",
+				type:"post",
+				dataType:"text",
+				success:function(data){
+					$(".result").html(data);
+				}
+		});//ajax
+	})//btn7
 	
 });
 </script>
@@ -173,6 +189,7 @@ $(document).ready(function(){
 		<img src="resources/img/smloan.png" class="smloan">
 		<span class="mainTitle">슬메론</span>
 	</div>
+	<div class="btn btn7">회원가입</div>
 </div>
 <div class="result">
 	<img src="resources/img/aboveTheMoney.png" class="aboveTheMoney">

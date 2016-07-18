@@ -1,7 +1,6 @@
 package com.ryulab.spring;
 
 
-import java.net.HttpURLConnection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -32,6 +31,11 @@ public class BoardController {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_main");
 		
+		//DB불러와지는지 테스트
+//		List<MemberDTO> list=boardDaoImp.getAllmember();
+//		for (int i = 0; i < list.size(); i++) {
+//			System.out.println("id : "+list.get(i).getMem_id()+" / nickname : "+list.get(i).getMem_nickname());
+//		}
 		return "board/board_main";
 	}
 	//////////////////////////////////////////////////////////////////
@@ -39,31 +43,28 @@ public class BoardController {
 	public String board_board(Model model, String page) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_board - page : "+page);
-		if (page.equals("[object Object]")) {
+		if ( page==null || page.equals("[object Object]")) {
 			page="1";
 		}//
 		
-		//json 불러오기
-		String json_mem=boardDaoImp.getHttpHTML("select * from member");//op 형태로 바꾸기
-		System.out.println("json_mem : "+json_mem);
-		List<MemberDTO> mem_list=boardDaoImp.getAllMember(json_mem);
+		//web DB방식 - heroku -> cafe24 못불러와서(400 bad request) 방식 교체.
+//		//json 불러오기
+//		String json_mem=boardDaoImp.getHttpHTML("select * from member");//op 형태로 바꾸기
+//		System.out.println("json_mem : "+json_mem);
+//		List<MemberDTO> mem_list=boardDaoImp.getAllMember(json_mem);
+//		
+//		//json_board 불러오기
+//		String json_board=boardDaoImp.getHttpHTML("select * from board order by board_num desc");
+//		System.out.println("json_board : "+json_board);
+//		List<BoardDTO> board_list=boardDaoImp.getBoardList(json_board);
 		
-		//json_board 불러오기
-		String json_board=boardDaoImp.getHttpHTML("select * from board order by board_num desc");
-		System.out.println("json_board : "+json_board);
-		List<BoardDTO> board_list=boardDaoImp.getBoardList(json_board);
-		
-//		//test
-//		List<MemberDTO> list_mem=boardDaoImp.getAllMember();
-//		for (int i = 0; i < list_mem.size(); i++) {
-//			System.out.println("list_mem.get "+i+" : "+list_mem.get(i).getMem_id());
-//		}//test
-		
-		//
+		//boardList 불러오기
+		List<BoardDTO> board_list=boardDaoImp.getBoardList();
+		boardDaoImp.getAllmember();
 		model.addAttribute("page",page);
-		model.addAttribute("json_board", json_board);
-		model.addAttribute("json_mem", json_mem);
-		model.addAttribute("mem_list",mem_list);
+//		model.addAttribute("json_board", json_board);
+//		model.addAttribute("json_mem", json_mem);
+//		model.addAttribute("mem_list",mem_list);
 		model.addAttribute("board_list",board_list);
 		return "board/board_board";
 	}
@@ -81,7 +82,10 @@ public class BoardController {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_write_save - board_dto. id : "+board_dto.getBoard_id()+" / title : "+board_dto.getBoard_title()+" / content : "+board_dto.getBoard_content());
 		//insert 하기
-		ModelAndView mav=new ModelAndView("/board_board");
+		board_dto.setBoard_id("admin");
+		boardDaoImp.addBoard(board_dto);
+		//*board_board로 넘겨주기
+		ModelAndView mav=new ModelAndView(board_board(model, "1"));//*중요
 		return mav;
 	}
 	//////////////////////////////////////////////////////////////////

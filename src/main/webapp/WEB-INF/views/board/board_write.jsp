@@ -63,7 +63,6 @@ $(document).ready(function(){
 	function submit(formObj) {
 	    // 에디터의 내용이 textarea에 적용된다.
 	    oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
-	    alert("2"+formObj.serialize());
 		$.ajax({
 			url:"board_write_save",
 			type:"post",

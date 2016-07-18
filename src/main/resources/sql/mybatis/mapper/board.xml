@@ -3,9 +3,15 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryulab.spring.mapper">
-	<select id="getAllMember" resultType="com.ryulab.spring.DTO.MemberDTO">
-		SELECT * FROM member
+	<select id="getBoardList" resultType="com.ryulab.spring.DTO.BoardDTO">
+		SELECT b.*,m.mem_nickname
+		FROM board b, member m
+		WHERE b.board_id=m.mem_id
+		ORDER BY b.board_num DESC
 	</select>
+	<insert id="addBoard">
+		INSERT INTO board VALUES(null,#{board_id},#{board_title},#{board_content},now(),0)
+	</insert>
 <!-- 	 <select id="cal_today" resultType="com.GoalMate.www.DTO.MatchDTO">
 		SELECT * FROM mat WHERE mat_date=#{today} ORDER BY mat_time
 	</select>
