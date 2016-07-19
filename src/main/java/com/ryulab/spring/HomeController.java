@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,8 +28,13 @@ public class HomeController {
 	
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String ajax1(Locale locale, Model model, String name,String age) {
-		
+	public String ajax1(Locale locale, Model model, String name,String age,HttpSession session) {
+		System.out.println("----------------------------------------------------------------");
+		System.out.println("main - session.mem_id : "+session.getAttribute("mem_id"));
+		if(session.getAttribute("mem_id")==null){
+			session.setAttribute("mem_id", "guest");
+		}
+		System.out.println("main - session.mem_id : "+session.getAttribute("mem_id"));
 		model.addAttribute("name",name);
 		model.addAttribute("age",age);
 		return "main";

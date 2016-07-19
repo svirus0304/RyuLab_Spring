@@ -7,8 +7,11 @@
 		SELECT * FROM member
 	</select>
 	<insert id="addMember">
-		INSERT INTO member VALUES(#{mem_id},#{mem_pw},#{mem_email},#{mem_nickname},1);
+		INSERT INTO member VALUES(#{mem_id},#{mem_pw},#{mem_email},#{mem_nickname},1,now());
 	</insert>
+	<select id="login" resultType="int">
+		SELECT COUNT(*) FROM member WHERE  mem_id=#{mem_id} AND mem_pw=#{mem_pw}
+	</select>
 <!-- 	 <select id="cal_today" resultType="com.GoalMate.www.DTO.MatchDTO">
 		SELECT * FROM mat WHERE mat_date=#{today} ORDER BY mat_time
 	</select>

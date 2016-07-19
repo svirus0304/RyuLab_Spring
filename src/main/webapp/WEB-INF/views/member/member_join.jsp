@@ -19,7 +19,7 @@
 	text-align: left;
 }
 .joinLegend{
-	text-align: left;
+	text-align: center;
 }
 .title{
 	width:100px;
@@ -28,34 +28,40 @@
 .submitDiv{
 	text-align: center;
 }
+.submitDiv button{
+	width:70px;
+}
 </style>
 <script>
-function GoSubmit(){
+function goSubmit(){
+	var data=$("#submitForm").serialize();
 	$.ajax({
 		url:"member_join_add",
 		type:"post",
 		dataType:"json",
-		data:$("#submitForm").serialize(),
-		success:function(data){
-			$(".boardDiv").html(data.result);
+		data:data,
+		success:function(res){
+			$(".joinDiv").text(res.result);
 		},
-		error:function(jqXHR){$(".boardDiv").html(jqXHR.responseText)}
+		error:function(jqXHR){
+			$(".joinDiv").html(jqXHR.status+"<br>"+jqXHR.responseText);
+		}
 	})
-}
+}//goSubmit()
 </script>
 </head>
 <body>
 <div class="joinDiv">
-	<form action="" method="post" id="submitForm">
 		<fieldset class="joinFieldSet">
-		<legend class="joinLegend">회원가입</legend><p>
-			<div class="title">아이디 :</div><input type="text" name="mem_id" style="width:100px;"><p>
-			<div class="title">패스워드 :</div><input type="password" name="mem_pw" style="width:100px;"><p> 
-			<div class="title">이메일 :</div><input type="email" name="mem_email" style="width:150px;"><p> 
-			<div class="title">별명 :</div><input type="text" name="mem_nickname" style="width:100px;"><p> 
-			<div class="submitDiv"><button onclick="GoSubmit()">가입</button></div> 
+		<legend class="joinLegend">회원가입</legend><br><br>
+			<form method="post" id="submitForm">
+				<div class="title">아이디 :</div><input type="text" name="mem_id" style="width:100px;"><p>
+				<div class="title">패스워드 :</div><input type="password" name="mem_pw" style="width:100px;"><p> 
+				<div class="title">이메일 :</div><input type="email" name="mem_email" style="width:150px;"><p> 
+				<div class="title">별명 :</div><input type="text" name="mem_nickname" style="width:100px;"><br><br><br> 
+			</form>
+			<div class="submitDiv"><button onclick="goSubmit()">가입</button></div> 
 		</fieldset>
-	</form>
 </div>
 </body>
 </html>

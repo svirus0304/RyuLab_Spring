@@ -11,7 +11,7 @@ h2{text-align:center;}
 
 .boardDiv{
 	margin:auto;
-	width:80%;
+	width:90%;
 	height:80%;
 }
 

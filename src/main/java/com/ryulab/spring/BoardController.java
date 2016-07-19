@@ -4,6 +4,7 @@ package com.ryulab.spring;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,11 +79,11 @@ public class BoardController {
 	}
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_write_save", method = RequestMethod.POST)
-	public ModelAndView board_write_save(Model model,BoardDTO board_dto) {
+	public ModelAndView board_write_save(Model model,BoardDTO board_dto,HttpSession session) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_write_save - board_dto. id : "+board_dto.getBoard_id()+" / title : "+board_dto.getBoard_title()+" / content : "+board_dto.getBoard_content());
 		//insert 하기
-		board_dto.setBoard_id("admin");
+		board_dto.setBoard_id((String)session.getAttribute("mem_id"));
 		boardDaoImp.addBoard(board_dto);
 		//*board_board로 넘겨주기
 		ModelAndView mav=new ModelAndView(board_board(model, "1"));//*중요

@@ -60,7 +60,7 @@ $(document).ready(function(){
 // 	    }//catch
 // 	}//submit
 	
-	function submit(formObj) {
+	function write_submit(formObj) {
 	    // 에디터의 내용이 textarea에 적용된다.
 	    oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
 		$.ajax({
@@ -78,7 +78,7 @@ $(document).ready(function(){
 	//////////////////////////////////////////////////
 	
 	$(".submitBtn").click(function(){
-		submit($("#writeForm"));
+		write_submit($("#writeForm"));
 	})
 	
 })//ready

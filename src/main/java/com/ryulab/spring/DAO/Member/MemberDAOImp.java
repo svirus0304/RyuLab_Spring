@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -42,6 +43,11 @@ public class MemberDAOImp implements MemberDAO {
 	public int addMember(MemberDTO memberDTO) {
 		int sel=sqlSession.insert("addMember", memberDTO);
 		return sel;
+	}
+
+	public int login(Map<String, String> map_login) {
+		int loginResult=sqlSession.selectOne("login", map_login);
+		return loginResult;
 	}
 	
 	

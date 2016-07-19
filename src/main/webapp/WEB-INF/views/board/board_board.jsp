@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="resources/js/board.js"></script>
 <style>
 .btnsDiv{
 	margin:auto;
@@ -35,7 +34,7 @@
 	width:5%;
 }
 .board_title{
-	width:55%;
+	width:50%;
 }
 .board_id{
 	width:10%;
@@ -44,7 +43,7 @@
 	width:5%;
 }
 .board_date{
-	width:15%;
+	width:20%;
 }
 .pageDiv{
 	margin:auto;
@@ -54,22 +53,30 @@
 </style>
 <script>
 $(document).ready(function(){
-	/* 
-	$.ajax({
-		url:"board_test",
-		type:"post",
-		dataType:"json",
-		data:{
-			sql:"select * from member;"
-		},
-		success:function(data){
-			$(".table").text(data.id);
-		},
-		error:function(jqXHR){
-			$(".table").html("board_board.jsp AJAX에러 : ["+jqXHR.status+"] "+jqXHR.responseText);
-		}//error
-	})//ajax
-	 */
+	
+	//글쓰기
+	function board_write(){
+		//@세션id 없으면 빠꾸시키기
+		$.ajax({
+			url:"board_write",
+			type:"post",
+			dataType:"text",
+			data:{
+				//mem_id:mem_id;//@세션id체크
+			},
+			success:function(data){
+				$(".boardDiv").html(data);
+			},
+			error:function(){alert("ajax에러");}
+		})
+	}//board_write()
+	
+/////////////////////////////////////////////////////////////////////////////
+	
+	//글쓰기 클릭시
+	$(".writeBtn").click(function(){
+		board_write();
+	})//click
 	
 })//ready
 </script>

@@ -1,7 +1,11 @@
 package com.ryulab.spring;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +23,7 @@ public class MemberController {
 	private MemberDAOImp memberDaoImp;
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	//////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/member_join", method = RequestMethod.POST)
+	@RequestMapping(value = "/member_join", method = RequestMethod.GET)
 	public String member_join(Model model) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/member_join");
@@ -37,10 +41,47 @@ public class MemberController {
 		}else if(sel==0){
 			result="회원가입실패...";
 		}
+		System.out.println("result : "+result);
 //		ModelAndView mav=new ModelAndView("member/member_join_result");
 //		mav.addObject("result", result);
 		model.addAttribute("result", result);
 		return "member/member_join_result";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/member_login", method = RequestMethod.POST)
+	public String member_login(Model model,String mem_id,String mem_pw,HttpSession session) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/member_login - mem_id :"+mem_id+" / mem_pw : "+mem_pw);
+		Map<String, String> map_login=new HashMap<String, String>();
+		map_login.put("mem_id", mem_id);
+		map_login.put("mem_pw", mem_pw);
+		String result="0";
+		String say="";
+		int loginResult=memberDaoImp.login(map_login);
+		if (loginResult==1) {
+			session.setAttribute("mem_id", mem_id);
+			result="1";
+			say="로그인 성공!";
+		}else if(loginResult==0){
+			say="로그인 실패...";
+		}else{
+			result="-1";
+			say="이건 뭔 경우고?? loginResult : "+loginResult;
+		}
+		System.out.println("result : "+result+" / say : "+say);
+		model.addAttribute("result", result);
+		model.addAttribute("say", say);
+		return "member/member_login";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/member_logout", method = RequestMethod.GET)
+	public String member_logout(Model model,HttpSession session) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/member_logout -session.mem_id : "+session.getAttribute("mem_id"));
+		session.invalidate();
+		model.addAttribute("result", "1");
+		model.addAttribute("say", "로그아웃 되었습니다.");
+		return "member/member_logout";
 	}
 	
 }//MemberController
