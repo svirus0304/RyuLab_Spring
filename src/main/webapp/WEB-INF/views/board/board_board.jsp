@@ -27,8 +27,8 @@
 	background-color: #E4F7BA;
 	height:50px;
 }
-.trTitle .board_num,.trTitle .board_view{
-	font-size: 12px;
+.trItem td{
+	padding: 5px;
 }
 .board_num{
 	width:5%;
@@ -48,15 +48,23 @@
 .pageDiv{
 	margin:auto;
 	text-align:center;
-	background-color: #FFB2D9;
+	background-color: none;
+}
+.currPage{
+	font-size: 25px;
+	font-style: bold;
+	color:red;
 }
 </style>
 <script>
 $(document).ready(function(){
+	//제목 정렬
+	$(".board_title:gt(0)").css("text-align","left").css("padding-left","20px");
+	///////////////////////////////////////////////////////////
 	
 	//글쓰기
 	function board_write(){
-		//@세션id 없으면 빠꾸시키기
+		//@세션id 없으면 빠꾸시키기 -> GUEST 로 쓰기
 		$.ajax({
 			url:"board_write",
 			type:"post",
@@ -71,12 +79,35 @@ $(document).ready(function(){
 		})
 	}//board_write()
 	
+	function board_content(board_num){
+		$.ajax({
+			url:"board_content",
+			type:"post",
+			dataType:"text",
+			data:{
+				board_num:board_num
+			},
+			success:function(res){
+				$(".boardDiv").html(res);
+			},
+			error:function(jqXHR){
+				$(".boardDiv").html(jqXHR.responseText);
+			}
+		})
+	}//board_view
+	
 /////////////////////////////////////////////////////////////////////////////
 	
 	//글쓰기 클릭시
 	$(".writeBtn").click(function(){
 		board_write();
 	})//click
+	
+	//제목 클릭시 -> 내용 보러 ㄱ
+	$(".board_title a").click(function(){
+		var board_num=$(this).parent().parent().find(".board_num").text();
+		board_content(board_num);
+	})
 	
 })//ready
 </script>
@@ -106,6 +137,17 @@ $(document).ready(function(){
 		</tr>
 	</c:forEach>
 </table>
-<div class="pageDiv"></div>
+<div class="pageDiv">
+	<c:forEach begin="1" end="${pagingDTO.totalBlock }" varStatus="idx">
+		<c:choose>
+			<c:when test="${idx.count==pagingDTO.currPage }">
+				<a class="pageSpan currPage" href="#">[${idx.count}]</a>
+			</c:when>
+			<c:otherwise>
+				<a class="pageSpan" href="#">[${idx.count}]</a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+</div>
 </body>
 </html>

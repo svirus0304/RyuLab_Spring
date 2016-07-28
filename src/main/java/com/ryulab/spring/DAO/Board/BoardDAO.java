@@ -1,18 +1,23 @@
 package com.ryulab.spring.DAO.Board;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ryulab.spring.DTO.BoardDTO;
 import com.ryulab.spring.DTO.MemberDTO;
+import com.ryulab.spring.DTO.PagingDTO;
 
 public interface BoardDAO {
 	
 	List<MemberDTO> getAllmember();
 //	List<MemberDTO> getAllMember(String json);//webDB방식
 //	String getHttpHTML(String op);//webDB방식때 http 연결메소드
-	List<BoardDTO> getBoardList();
+	List<BoardDTO> getAllBoardList();
+	List<BoardDTO> getBoardList(PagingDTO pagingDTO);
 //	List<BoardDTO> getBoardList(String json_board); //webDB방식
-	
+	void addBoard_view(String board_num);
+	BoardDTO getBoard(String board_num);
+	void modifyBoard(Map<String, String> map);
 	/*List<BannerDTO> bannerList();
 	BannerDTO bannerDto(String bann_num);
 	void imgModi(Map<String, String> map);

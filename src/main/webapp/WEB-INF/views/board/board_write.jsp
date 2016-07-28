@@ -75,11 +75,33 @@ $(document).ready(function(){
 		})//ajax
 	}//submit
 	
+	//
+	function board_board(page){
+		$.ajax({
+			url:"board_board",
+			type:"post",
+			dataType:"text",
+			data:{
+				page:page
+			},
+			success:function(res){
+				$(".boardDiv").html(res);
+			},
+			error:function(jqXHR){
+				$(".boardDiv").html(jqXHR.responseText);
+			}
+		})
+	}//goBoard_Board()
+	
 	//////////////////////////////////////////////////
 	
 	$(".submitBtn").click(function(){
 		write_submit($("#writeForm"));
 	})
+	$(".goBackBtn").click(function(){
+		board_board(null);
+	})
+	
 	
 })//ready
 </script>
@@ -94,13 +116,13 @@ $(document).ready(function(){
 			<td class="tdTitleText"><input type="text" name="board_title"></td>
 		</tr>		
 		<tr>
-			<td colspan=2><textarea name="board_content" id="board_content" rows="20" cols="100">내용을 입력하세요.</textarea></td>
+			<td colspan=2><textarea name="board_content" id="board_content" rows="20" cols="100"></textarea></td>
 		</tr>		
 	</table><br>
 </form>
 	<div class="submitDiv">
 		<button class="submitBtn">확인</button>
-		<button class="backBtn">돌아가기</button>
+		<button class="goBackBtn">돌아가기</button>
 	</div>
 </div>
 </body>

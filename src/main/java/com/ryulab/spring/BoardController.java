@@ -1,7 +1,9 @@
 package com.ryulab.spring;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ryulab.spring.DAO.Board.BoardDAOImp;
 import com.ryulab.spring.DTO.BoardDTO;
 import com.ryulab.spring.DTO.MemberDTO;
+import com.ryulab.spring.DTO.PagingDTO;
 
 /**
  * Handles requests for the application home page.
@@ -44,7 +47,7 @@ public class BoardController {
 	public String board_board(Model model, String page) {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("/board_board - page : "+page);
-		if ( page==null || page.equals("[object Object]")) {
+		if ( page==null || page.equals("") || page.equals("[object Object]")) {
 			page="1";
 		}//
 		
@@ -60,12 +63,19 @@ public class BoardController {
 //		List<BoardDTO> board_list=boardDaoImp.getBoardList(json_board);
 		
 		//boardList 불러오기
-		List<BoardDTO> board_list=boardDaoImp.getBoardList();
+		List<BoardDTO> board_list_all=boardDaoImp.getAllBoardList();
 		boardDaoImp.getAllmember();
+		
+		//페이징
+		PagingDTO pagingDTO=new PagingDTO(board_list_all.size(), 10, Integer.parseInt(page), 3);
+		System.out.println("pagingDTO.");
+		
+		//페이지의 boardList 불러오기
+		List<BoardDTO> board_list=boardDaoImp.getBoardList(pagingDTO);
+		System.out.println("board_list.size : "+board_list.size());
+		
+		model.addAttribute("pagingDTO",pagingDTO);
 		model.addAttribute("page",page);
-//		model.addAttribute("json_board", json_board);
-//		model.addAttribute("json_mem", json_mem);
-//		model.addAttribute("mem_list",mem_list);
 		model.addAttribute("board_list",board_list);
 		return "board/board_board";
 	}
@@ -88,6 +98,34 @@ public class BoardController {
 		//*board_board로 넘겨주기
 		ModelAndView mav=new ModelAndView(board_board(model, "1"));//*중요
 		return mav;
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_content", method = RequestMethod.POST)
+	public String board_content(Model model,String board_num,HttpSession session) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/board_content - board_num : "+board_num+" / session.mem_id : "+session.getAttribute("mem_id"));
+		//조회수 올려주기
+		boardDaoImp.addBoard_view(board_num);
+		//내용 불러오기
+		BoardDTO board_dto=boardDaoImp.getBoard(board_num);
+		System.out.println("board_dto.content : "+board_dto.getBoard_content());
+		
+		model.addAttribute("sessionID", session.getAttribute("mem_id"));
+		model.addAttribute("board_dto", board_dto);
+		return "board/board_content";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_modify", method = RequestMethod.POST)
+	public String board_modify(Model model,String board_num,String board_title,String board_content) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/board_modify - board_num : "+board_num+" / board_content : "+board_content);
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("board_num", board_num);
+		map.put("board_title", board_title);
+		map.put("board_content", board_content);
+		boardDaoImp.modifyBoard(map);
+		
+		return "board/board_test";
 	}
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_test", method = RequestMethod.POST)

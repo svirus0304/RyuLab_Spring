@@ -18,8 +18,9 @@ h2{text-align:center;}
 </style>
 
 <script>
-$(document).ready(function board(page){
+$(document).ready(function(){
 	//시작시 boardDiv에 첫페이지 불러온다.
+	var page=1;
 	$.ajax({
 		url:"board_board",
 		type:"post",

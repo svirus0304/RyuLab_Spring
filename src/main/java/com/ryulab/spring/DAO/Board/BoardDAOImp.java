@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -24,6 +25,7 @@ import org.json.simple.parser.ParseException;
 
 import com.ryulab.spring.DTO.BoardDTO;
 import com.ryulab.spring.DTO.MemberDTO;
+import com.ryulab.spring.DTO.PagingDTO;
 
 public class BoardDAOImp implements BoardDAO {
 
@@ -39,13 +41,31 @@ public class BoardDAOImp implements BoardDAO {
 		return mem_list;
 	}
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	public List<BoardDTO> getBoardList() {
-		List<BoardDTO> board_list=sqlSession.selectList("getBoardList");
+	public List<BoardDTO> getAllBoardList() {
+		List<BoardDTO> board_list=sqlSession.selectList("getAllBoardList");
 		return board_list;
 	}//getBoardList
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void addBoard(BoardDTO board_dto) {
 		sqlSession.insert("addBoard", board_dto);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void addBoard_view(String board_num) {
+		sqlSession.update("addBoard_view",board_num);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public BoardDTO getBoard(String board_num) {
+		BoardDTO board_dto=sqlSession.selectOne("getBoard", board_num);
+		return board_dto;
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void modifyBoard(Map<String, String> map) {
+		sqlSession.update("modifyBoard", map);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public List<BoardDTO> getBoardList(PagingDTO pagingDTO) {
+		List<BoardDTO> board_list=sqlSession.selectList("getBoardList", pagingDTO);
+		return board_list;
 	}
 	
 	
