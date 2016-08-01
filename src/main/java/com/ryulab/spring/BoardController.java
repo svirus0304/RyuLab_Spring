@@ -101,15 +101,16 @@ public class BoardController {
 	}
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_content", method = RequestMethod.POST)
-	public String board_content(Model model,String board_num,HttpSession session) {
+	public String board_content(Model model,String board_num,String page,HttpSession session) {
 		System.out.println("---------------------------------------------------------------");
-		System.out.println("/board_content - board_num : "+board_num+" / session.mem_id : "+session.getAttribute("mem_id"));
+		System.out.println("/board_content - board_num : "+board_num+" / page : "+page+" / session.mem_id : "+session.getAttribute("mem_id"));
 		//조회수 올려주기
 		boardDaoImp.addBoard_view(board_num);
 		//내용 불러오기
 		BoardDTO board_dto=boardDaoImp.getBoard(board_num);
 		System.out.println("board_dto.content : "+board_dto.getBoard_content());
 		
+		model.addAttribute("page", page);
 		model.addAttribute("sessionID", session.getAttribute("mem_id"));
 		model.addAttribute("board_dto", board_dto);
 		return "board/board_content";
@@ -124,6 +125,15 @@ public class BoardController {
 		map.put("board_title", board_title);
 		map.put("board_content", board_content);
 		boardDaoImp.modifyBoard(map);
+		
+		return "board/board_test";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_delete", method = RequestMethod.POST)
+	public String board_delete(Model model,String board_num) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/board_delete - board_num : "+board_num);
+		boardDaoImp.deleteBoard(board_num);
 		
 		return "board/board_test";
 	}

@@ -49,6 +49,11 @@ public class MemberDAOImp implements MemberDAO {
 		int loginResult=sqlSession.selectOne("login", map_login);
 		return loginResult;
 	}
+
+	public int idCheck(String mem_id) {
+		int idCheck=sqlSession.selectOne("idCheck", mem_id);
+		return idCheck;
+	}
 	
 	
 //	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------

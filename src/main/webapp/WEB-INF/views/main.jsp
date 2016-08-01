@@ -191,6 +191,7 @@ $(document).ready(function(){
 				dataType:"text",
 				success:function(data){
 					$(".result").html(data);
+					$("input[name=mem_id]").focus();
 				}
 		});//ajax
 	})//btn7
@@ -198,7 +199,22 @@ $(document).ready(function(){
 	//로그인 창
 	$(".btn8").click(function(){
 		$(".loginDiv").show();
+		$(".loginDiv input[name=mem_id]").focus();
 	})//btn8
+	
+	//패스워드에서 enter 시 -> 로그인버튼 클릭()
+	$("input[name=mem_pw]").on("keydown",function(e){
+		if (e.keyCode==13) {
+			$(".loginBtn").click();
+		}
+	})
+	
+	//로그인창에서 esc 시 -> 닫기
+	$(".loginDiv").on("keydown",function(e){
+		if(e.keyCode==27){
+			$(".loginCancelBtn").click();
+		}
+	})
 	
 	//로그인 버튼
 	$(".loginBtn").click(function(){

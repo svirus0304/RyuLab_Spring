@@ -63,6 +63,10 @@ public class BoardDAOImp implements BoardDAO {
 		sqlSession.update("modifyBoard", map);
 	}
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void deleteBoard(String board_num) {
+		sqlSession.update("deleteBoard", board_num);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public List<BoardDTO> getBoardList(PagingDTO pagingDTO) {
 		List<BoardDTO> board_list=sqlSession.selectList("getBoardList", pagingDTO);
 		return board_list;

@@ -32,6 +32,9 @@
 		UPDATE board SET board_title=#{board_title},board_content=#{board_content}
 		WHERE board_num=#{board_num}
 	</update>
+	<delete id="deleteBoard">
+		DELETE FROM board WHERE board_num=#{board_num}
+	</delete>
 <!-- 	 <select id="cal_today" resultType="com.GoalMate.www.DTO.MatchDTO">
 		SELECT * FROM mat WHERE mat_date=#{today} ORDER BY mat_time
 	</select>

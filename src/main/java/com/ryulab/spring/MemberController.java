@@ -30,6 +30,23 @@ public class MemberController {
 		return "member/member_join";
 	}
 	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/member_idCheck", method = RequestMethod.POST)
+	public String member_idCheck(Model model,String mem_id) {
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("/member_idCheck - mem_id : "+mem_id);
+		String result="0";
+		//db에서 개수 확인
+		int idCheck=memberDaoImp.idCheck(mem_id);
+		//0이면 사용가능 (result=1)
+		if (idCheck==0) {
+			result="1";
+		}
+		//1이면 사용불가 (result=0) : default
+		
+		model.addAttribute("result", result);
+		return "member/member_join_result";
+	}
+	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/member_join_add", method = RequestMethod.POST)
 	public String member_join_add(Model model,MemberDTO memberDTO) {
 		System.out.println("---------------------------------------------------------------");

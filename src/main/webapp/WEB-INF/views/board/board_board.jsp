@@ -79,13 +79,16 @@ $(document).ready(function(){
 		})
 	}//board_write()
 	
-	function board_content(board_num){
+	//제목 클릭 시
+	function board_content(board_num,page){
+		
 		$.ajax({
 			url:"board_content",
 			type:"post",
 			dataType:"text",
 			data:{
-				board_num:board_num
+				board_num:board_num,
+				page:page
 			},
 			success:function(res){
 				$(".boardDiv").html(res);
@@ -96,6 +99,20 @@ $(document).ready(function(){
 		})
 	}//board_view
 	
+	function board_board(page){
+		$.ajax({
+			url:"board_board",
+			type:"post",
+			dataType:"text",
+			data:{
+					page:page
+					},
+			success:function(data){
+				$(".boardDiv").html(data);
+			},
+			error:function(){alert("에러");}
+		});//ajax
+	}
 /////////////////////////////////////////////////////////////////////////////
 	
 	//글쓰기 클릭시
@@ -106,7 +123,14 @@ $(document).ready(function(){
 	//제목 클릭시 -> 내용 보러 ㄱ
 	$(".board_title a").click(function(){
 		var board_num=$(this).parent().parent().find(".board_num").text();
-		board_content(board_num);
+		var page=$("#page").text();
+		board_content(board_num,page);
+	})
+	
+	//페이지번호 클릭시
+	$(".pageA").click(function(){
+		var page=$(this).text();
+		board_board(page);
 	})
 	
 })//ready
@@ -116,7 +140,7 @@ $(document).ready(function(){
 <%-- <p>json_mem : ${json_mem }</p>
 <p>json_board : ${json_board }</p> --%>
 <div class="btnsDiv">
-	<span class="pageNum">page : ${page }</span>
+	<span class="pageNum">page : &nbsp;</span><span class="pageNum" id="page">${page }</span>
 	<span class="writeBtn"><a href="#">글쓰기</a></span>
 </div>
 <table border=1 class="boardTable">
@@ -141,10 +165,14 @@ $(document).ready(function(){
 	<c:forEach begin="1" end="${pagingDTO.totalBlock }" varStatus="idx">
 		<c:choose>
 			<c:when test="${idx.count==pagingDTO.currPage }">
-				<a class="pageSpan currPage" href="#">[${idx.count}]</a>
+				<span>[</span>
+				<a class="pageA currPage" href="#">${idx.count}</a>
+				<span>]</span>
 			</c:when>
 			<c:otherwise>
-				<a class="pageSpan" href="#">[${idx.count}]</a>
+				<span>[</span>
+				<a class="pageA" href="#">${idx.count}</a>
+				<span>]</span>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>

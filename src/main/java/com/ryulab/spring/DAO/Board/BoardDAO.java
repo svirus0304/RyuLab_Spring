@@ -18,6 +18,7 @@ public interface BoardDAO {
 	void addBoard_view(String board_num);
 	BoardDTO getBoard(String board_num);
 	void modifyBoard(Map<String, String> map);
+	void deleteBoard(String board_num);
 	/*List<BannerDTO> bannerList();
 	BannerDTO bannerDto(String bann_num);
 	void imgModi(Map<String, String> map);

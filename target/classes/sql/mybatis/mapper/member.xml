@@ -12,6 +12,9 @@
 	<select id="login" resultType="int">
 		SELECT COUNT(*) FROM member WHERE  mem_id=#{mem_id} AND mem_pw=#{mem_pw}
 	</select>
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM member WHERE mem_id=#{mem_id}
+	</select>
 <!-- 	 <select id="cal_today" resultType="com.GoalMate.www.DTO.MatchDTO">
 		SELECT * FROM mat WHERE mat_date=#{today} ORDER BY mat_time
 	</select>

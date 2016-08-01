@@ -73,21 +73,43 @@ $(document).ready(function(){
 				alert("수정 완료!");
 			},
 			error:function(jqXHR){
-				$(".boarDiv").html(jqXHR.responseText);
+				$(".boardDiv").html(jqXHR.responseText);
 			}
 		})//ajax
-		board_board(null);
+		board_board($("#page").val());
+	})
+	
+	//삭제버튼
+	$("#deleteBtn").click(function(){
+		var result=confirm("진짜 삭제 하시겠습니까?");
+		if(result==true){
+			$.ajax({
+				url:"board_delete",
+				type:"post",
+				dataType:"text",
+				data:{
+					board_num:$(".tdItem.board_num").text()
+				},
+				success:function(res){
+				},
+				error:function(jqXHR){
+					$(".boardDiv").html(jqXHR.responseText);
+				}
+			})//ajax
+			board_board($("#page").val());
+		}//if
 	})
 	
 	//돌아가기 버튼
 	$("#goBackBtn").click(function(){
-		board_board(null);
+		board_board($("#page").val());
 	})
 	
 })//ready
 </script>
 </head>
 <body>
+<input type="hidden" id="page" value="${page }">
 <table class="board_contentTable" border=1>
 	<tr>
 		<td class="tdTitle board_num">번호</td>
@@ -104,7 +126,7 @@ $(document).ready(function(){
 		<td class="tdItem board_title" colspan=7>
 			<c:choose>
 				<c:when test="${!sessionID.equals('guest') && board_dto.board_id.equals(sessionID) }">
-					<input type="text" name="board_title" value=${board_dto.board_title }>
+					<input type="text" name="board_title" value="${board_dto.board_title }">
 				</c:when>
 				<c:otherwise>
 					${board_dto.board_title }
@@ -138,6 +160,7 @@ $(document).ready(function(){
 <div class="btnDiv">
 	<c:if test="${!sessionID.equals('guest') && board_dto.board_id.equals(sessionID) }">
 		<button id="modifyBtn">수정</button>
+		<button id="deleteBtn">삭제</button>
 	</c:if>
 	<button id="goBackBtn">돌아가기</button>
 </div>

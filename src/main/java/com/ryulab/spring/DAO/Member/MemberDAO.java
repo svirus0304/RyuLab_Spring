@@ -11,5 +11,6 @@ public interface MemberDAO {
 	List<MemberDTO> getAllmember();
 	int addMember(MemberDTO memberDTO);
 	int login(Map<String, String> map_login);
+	int idCheck(String mem_id);
 	
 }//bannerDAO

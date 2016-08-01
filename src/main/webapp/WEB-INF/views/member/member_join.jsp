@@ -31,8 +31,28 @@
 .submitDiv button{
 	width:70px;
 }
+.idCheckResult{
+	font-size: 12px;
+}
 </style>
 <script>
+
+//null 체크
+function nullCheck(){
+	var flag=true;
+	$("#submitForm input").each(function(idx){
+		if ($(this).val().length<1) {
+			alert("빠짐없이 입력해주세요");
+			flag=false;
+			return false;
+		}//if
+	})//each
+	if (flag==true) {
+		goSubmit();
+	}
+}//nullCheck()
+
+//submit
 function goSubmit(){
 	var data=$("#submitForm").serialize();
 	$.ajax({
@@ -48,6 +68,31 @@ function goSubmit(){
 		}
 	})
 }//goSubmit()
+
+//아이디중복체크
+$("input[name=mem_id]").on("keyup",function(e){
+	var mem_id=$(this).val();
+	$.ajax({
+		url:"member_idCheck",
+		type:"post",
+		dataType:"json",
+		data:{
+			mem_id:mem_id
+		},
+		success:function(res){
+			if(res.result==1){
+				$(".idCheckResult").text("사용가능").css("color","#77FF70");
+				$("#joinBtn").prop("disabled",false);
+			}else if(res.result==0){
+				$(".idCheckResult").text("사용불가").css("color","#FF5A5A");
+				$("#joinBtn").prop("disabled",true);
+			}
+		},
+		error:function(jqXHR){
+			$(".boardDiv").html(jqXHR.responseText);
+		}
+	})
+})
 </script>
 </head>
 <body>
@@ -55,12 +100,12 @@ function goSubmit(){
 		<fieldset class="joinFieldSet">
 		<legend class="joinLegend">회원가입</legend><br><br>
 			<form method="post" id="submitForm">
-				<div class="title">아이디 :</div><input type="text" name="mem_id" style="width:100px;"><p>
+				<div class="title">아이디 :</div><input type="text" name="mem_id" style="width:100px;">&nbsp;&nbsp;&nbsp;<span class="idCheckResult"></span><p>
 				<div class="title">패스워드 :</div><input type="password" name="mem_pw" style="width:100px;"><p> 
 				<div class="title">이메일 :</div><input type="email" name="mem_email" style="width:150px;"><p> 
 				<div class="title">별명 :</div><input type="text" name="mem_nickname" style="width:100px;"><br><br><br> 
 			</form>
-			<div class="submitDiv"><button onclick="goSubmit()">가입</button></div> 
+			<div class="submitDiv"><button onclick="nullCheck()" id="joinBtn" disabled="disabled">가입</button></div> 
 		</fieldset>
 </div>
 </body>
