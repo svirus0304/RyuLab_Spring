@@ -9,6 +9,16 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="resources/smartEditor/js/HuskyEZCreator.js"></script>
+
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- 폰트어썸 -->
+<script src="https://use.fontawesome.com/a82b5b62b1.js"></script>
+
 <style>
 .board_contentTable{
 	width:80%;
@@ -163,6 +173,32 @@ $(document).ready(function(){
 		<button id="deleteBtn">삭제</button>
 	</c:if>
 	<button id="goBackBtn">돌아가기</button>
+</div><br>
+<div class="replyDiv" style="width:80%;text-align: left;margin:auto;">
+<!-- 	닉네임(아이디),사진, 내용, 시간, 좋아요, 싫어요, 답글 (몇개) -->
+
+	<div class="reply_write" style="border:1px solid gray;padding-top: 3px;padding-left: 3px;">
+		아이디<br><br>
+		<textarea rows="3" cols="100"></textarea>
+		<div style="text-align:right;border-top:1px solid lightgray;">
+			<button type="button" class="btn btn-default" style="initial;">등록</button>
+		</div>
+	</div>	
+	<hr style="border-color:gray;">
+	<i class="fa fa-user" aria-hidden="true">닉네임(아이디)</i><br><br>
+	내용내용내용내용내용<br><br>
+	(시간) | 신고<br>
+	<div style="border: 1px solid lightgray;width:100px;padding:2px;float:left;">답글(갯수)</div>
+	<div style="border: 1px solid lightgray;width:50px;padding:2px;float:right;">
+		<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+		(갯수)
+	</div>
+	<div style="border: 1px solid lightgray;width:50px;padding:2px;float:right;">
+		<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+		(갯수)
+	</div>
+	
+	
 </div>
 </body>
 </html>

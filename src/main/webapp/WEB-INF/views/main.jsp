@@ -9,7 +9,7 @@
 <title>Ryu Lab</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style type="text/css">
-.btnGroup {
+.smBtnGroup {
 	display:block;
 	border-radius:20px 20px 0px 0px;
 	margin:auto;
@@ -21,7 +21,7 @@
 	padding-left:10px;
 	padding-right:10px;
 }
-.btn {
+.smBtn {
 	border-radius:5px;
 	margin-top:5px;
 	margin-left:-2px;
@@ -33,16 +33,16 @@
 	text-align: center;
 	line-height: 50px;
 }
-.btnWrap{
+.smBtnWrap{
 	width: 100px;
 	height: 50px;
 	display:inline-block;
 }
-.btn:hover {
+.smBtn:hover {
 	cursor: pointer;
 	background-color: white;
 }
-.btn5{
+.smBtn5{
 	width:120px;
 }
 
@@ -117,11 +117,11 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	$(".btn1").click(function(){//버튼1 클릭 시
+	$(".smBtn1").click(function(){//버튼1 클릭 시
 		$(".result").html("<img src='resources/img/aboveTheMoney.png' class='aboveTheMoney'>")
-	});//btn1
+	});//smBtn1
 	
-	$(".btn2").click(function(){//버튼2 클릭시
+	$(".smBtn2").click(function(){//버튼2 클릭시
 		$.get(//post로는 json 못 불러오는듯..
 			"json",
 			{
@@ -133,9 +133,9 @@ $(document).ready(function(){
 			},//func
 			"json"
 		);
-	});//btn2
+	});//smBtn2
 	
-	$(".btn3").click(function(){//ajax2, ajax3버튼 클릭시(페이지전환(=템플릿가능))
+	$(".smBtn3").click(function(){//ajax2, ajax3버튼 클릭시(페이지전환(=템플릿가능))
 		$.post(//post형식으로 보낸다.
 			"changePage",//컨트롤러의 /chagePage 로 보낸다.
 			{
@@ -145,10 +145,10 @@ $(document).ready(function(){
 				$(".result").html(res);//성공시 result 클래스 div에 페이지 전체를 불러온다.
 			}//func
 		);
-	});//btn3
+	});//smBtn3
 	
 	//게시판
-	$(".btn4").click(function(){
+	$(".smBtn4").click(function(){
 		$.ajax({
 				url:"board_main",
 				type:"post",
@@ -157,10 +157,10 @@ $(document).ready(function(){
 					$(".result").html(data);
 				}
 		});//ajax
-	})//btn4
+	})//smBtn4
 	
 	//로또번호뽑기
-	$(".btn5").click(function(){
+	$(".smBtn5").click(function(){
 		$.ajax({
 				url:"random_main",
 				type:"get",
@@ -169,10 +169,10 @@ $(document).ready(function(){
 					$(".result").html(data);
 				}
 		});//ajax
-	})//btn5
+	})//smBtn5
 	
 	//슬메론
-	$(".btn6").click(function(){
+	$(".smBtn6").click(function(){
 		$.ajax({
 				url:"loan_main",
 				type:"get",
@@ -181,10 +181,10 @@ $(document).ready(function(){
 					$(".result").html(data);
 				}
 		});//ajax
-	})//btn6
+	})//smBtn6
 	
 	//회원가입
-	$(".btn7").click(function(){
+	$(".smBtn7").click(function(){
 		$.ajax({
 				url:"member_join",
 				type:"get",
@@ -194,30 +194,30 @@ $(document).ready(function(){
 					$("input[name=mem_id]").focus();
 				}
 		});//ajax
-	})//btn7
+	})//smBtn7
 	
 	//로그인 창
-	$(".btn8").click(function(){
+	$(".smBtn8").click(function(){
 		$(".loginDiv").show();
 		$(".loginDiv input[name=mem_id]").focus();
-	})//btn8
+	})//smBtn8
 	
 	//패스워드에서 enter 시 -> 로그인버튼 클릭()
 	$("input[name=mem_pw]").on("keydown",function(e){
 		if (e.keyCode==13) {
-			$(".loginBtn").click();
+			$(".loginsmBtn").click();
 		}
 	})
 	
 	//로그인창에서 esc 시 -> 닫기
 	$(".loginDiv").on("keydown",function(e){
 		if(e.keyCode==27){
-			$(".loginCancelBtn").click();
+			$(".loginCancelsmBtn").click();
 		}
 	})
 	
 	//로그인 버튼
-	$(".loginBtn").click(function(){
+	$(".loginsmBtn").click(function(){
 		var data=$("#loginForm").serialize();
 		$.ajax({
 				url:"member_login",
@@ -226,10 +226,10 @@ $(document).ready(function(){
 				data:data,
 				success:function(data){
 					$(".loginResultSpan").text(data.say);
-					$(".btn9").css("display","inline-block");//로그아웃버튼 활성화
+					$(".smBtn9").css("display","inline-block");//로그아웃버튼 활성화
 					if(data.result=="1"){//로그인성공시
-						$(".btn7").hide();//회원가입버튼 감춤
-						$(".btn8").hide();//로그인버튼 감춤
+						$(".smBtn7").hide();//회원가입버튼 감춤
+						$(".smBtn8").hide();//로그인버튼 감춤
 						$(".loginDiv input").val("");//아뒤비번 지움
 						$(".loginDiv span").text("");//상태지움
 						$(".loginDiv").hide();//self 감춤
@@ -239,56 +239,56 @@ $(document).ready(function(){
 					$(".result").html(jqXHR.status+"<br>"+jqXHR.responseText);
 				}
 		});//ajax
-	})//loginBtn
+	})//loginsmBtn
 	
 	//로그인 취소
-	$(".loginCancelBtn").click(function(){
+	$(".loginCancelsmBtn").click(function(){
 		$(".loginDiv").hide();
-	})//loginBtn
+	})//loginsmBtn
 	
 	//로그아웃
-	$(".btn9").click(function(){
+	$(".smBtn9").click(function(){
 		$.ajax({
 				url:"member_logout",
 				type:"get",
 				dataType:"json",
 				success:function(data){
-					$(".btn7").css("display","inline-block");//회원가입버튼 활성화
-					$(".btn9").hide();//로그아웃버튼 감춤
-					$(".btn8").css("display","inline-block");//로그인버튼 활성화
+					$(".smBtn7").css("display","inline-block");//회원가입버튼 활성화
+					$(".smBtn9").hide();//로그아웃버튼 감춤
+					$(".smBtn8").css("display","inline-block");//로그인버튼 활성화
 				}
 		});//ajax
-	})//btn9
+	})//smBtn9
 	
 });
 </script>
 </head>
 <body>
-<div class="btnGroup">
+<div class="smBtnGroup">
 <img src="resources/img/militaryMae.png" class="militaryMae">
-	<div class="btn btn1">버튼1</div>
-	<div class="btn btn2">버튼2</div>
-	<div class="btn btn3">ajax2</div>
-	<div class="btn btn3">ajax3</div>
-	<div class="btn btn4">게시판</div>
-	<div class="btn btn5">
+	<div class="smBtn smBtn1">버튼1</div>
+	<div class="smBtn smBtn2">버튼2</div>
+	<div class="smBtn smBtn3">ajax2</div>
+	<div class="smBtn smBtn3">ajax3</div>
+	<div class="smBtn smBtn4">게시판</div>
+	<div class="smBtn smBtn5">
 		<img src="resources/img/pigBG.png" class="pigBG">
 		<span class="mainTitle">로또번호뽑기</span>
 	</div>
-	<div class="btn btn6">
+	<div class="smBtn smBtn6">
 		<img src="resources/img/smloan.png" class="smloan">
 		<span class="mainTitle">슬메론</span>
 	</div>
 	<c:choose>
 		<c:when test="${mem_id.equals('guest') }">
-			<div class="btn btn7">회원가입</div>
-			<div class="btn btn8">로그인</div>
-			<div class="btn btn9" style="display:none;">로그아웃</div>
+			<div class="smBtn smBtn7">회원가입</div>
+			<div class="smBtn smBtn8">로그인</div>
+			<div class="smBtn smBtn9" style="display:none;">로그아웃</div>
 		</c:when>
 		<c:otherwise>
-			<div class="btn btn7" style="display:none;">회원가입</div>
-			<div class="btn btn8" style="display:none;">로그인</div>
-			<div class="btn btn9">로그아웃</div>
+			<div class="smBtn smBtn7" style="display:none;">회원가입</div>
+			<div class="smBtn smBtn8" style="display:none;">로그인</div>
+			<div class="smBtn smBtn9">로그아웃</div>
 		</c:otherwise>	
 	</c:choose>
 </div>
@@ -301,8 +301,8 @@ $(document).ready(function(){
 		</form>
 		<center>
 			<span class="loginResultSpan"></span><br>
-			<button class="loginBtn" style="width:100px">로그인</button>&nbsp;
-			<button class="loginCancelBtn" style="width:100px">취소</button>
+			<button class="loginsmBtn" style="width:100px">로그인</button>&nbsp;
+			<button class="loginCancelsmBtn" style="width:100px">취소</button>
 		</center>
 	</fieldset>
 </div>
