@@ -39,6 +39,10 @@ public class MemberDAOImp implements MemberDAO {
 		List<MemberDTO> mem_list=sqlSession.selectList("getAllMember");
 		return mem_list;
 	}
+	public MemberDTO getOneMember(String mem_id) {
+		MemberDTO member_dto=sqlSession.selectOne("getOneMember",mem_id);
+		return member_dto;
+	}
 
 	public int addMember(MemberDTO memberDTO) {
 		int sel=sqlSession.insert("addMember", memberDTO);

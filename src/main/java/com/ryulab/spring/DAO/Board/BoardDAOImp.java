@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,28 @@ public class BoardDAOImp implements BoardDAO {
 		List<BoardDTO> board_list=sqlSession.selectList("getBoardList", pagingDTO);
 		return board_list;
 	}
-	
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void addComment(Map<String, Object> map) {
+		sqlSession.insert("addComment", map);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public List<HashMap<String, String>> getAllComment(String board_num) {
+		List<HashMap<String, String>> comment_list=sqlSession.selectList("getAllComment",board_num);
+		return comment_list;
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public HashMap<String, Object> getOneComment(String comment_index) {
+		HashMap<String, Object> comment_map=sqlSession.selectOne("getOneComment",comment_index);
+		return comment_map;
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void addLike(String comment_index) {
+		sqlSession.update("addLike", comment_index);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void addDislike(String comment_index) {
+		sqlSession.update("addDislike", comment_index);
+	}
 	
 //	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //	public List<BoardDTO> getBoardList(String json_board) {

@@ -6,6 +6,9 @@
 	<select id="getAllMember" resultType="com.ryulab.spring.DTO.MemberDTO">
 		SELECT * FROM member
 	</select>
+	<select id="getOneMember" resultType="com.ryulab.spring.DTO.MemberDTO">
+		SELECT * FROM member WHERE mem_id=#{mem_id}
+	</select>
 	<insert id="addMember">
 		INSERT INTO member VALUES(#{mem_id},#{mem_pw},#{mem_email},#{mem_nickname},1,now());
 	</insert>

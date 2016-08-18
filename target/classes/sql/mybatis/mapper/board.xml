@@ -35,6 +35,29 @@
 	<delete id="deleteBoard">
 		DELETE FROM board WHERE board_num=#{board_num}
 	</delete>
+	<insert id="addComment">
+		INSERT INTO comment VALUES(null,#{comment_id},#{comment_content},now(),#{board_num},#{comment_parent_index},0,0)
+	</insert>
+	<select id="getAllComment" resultType="HashMap">
+		select c.*,m.mem_nickname
+		from comment c, member m
+		where c.comment_id=m.mem_id
+		and c.comment_board_num=#{board_num}
+	</select>
+	<select id="getOneComment" resultType="HashMap">
+		select c.*,m.mem_nickname
+		from comment c, member m
+		where c.comment_id=m.mem_id
+		and c.comment_index=#{comment_index}
+	</select>
+	<update id="addLike">
+		UPDATE comment SET comment_like=comment_like+1
+		WHERE comment_index=#{comment_index}
+	</update>
+	<update id="addDislike">
+		UPDATE comment SET comment_dislike=comment_dislike+1
+		WHERE comment_index=#{comment_index}
+	</update>
 <!-- 	 <select id="cal_today" resultType="com.GoalMate.www.DTO.MatchDTO">
 		SELECT * FROM mat WHERE mat_date=#{today} ORDER BY mat_time
 	</select>

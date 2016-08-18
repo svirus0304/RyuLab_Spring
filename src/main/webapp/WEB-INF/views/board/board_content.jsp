@@ -40,6 +40,9 @@
 .board_contentTable input,.board_contentTable textarea{
 	width:100%;
 }
+.recommentBtn,.likeBtn,.dislikeBtn:hover{
+	cursor:pointer;
+}
 </style>
 <script>
 	// 	초기화 - smartEditor 불러오기
@@ -64,6 +67,64 @@ $(document).ready(function(){
 			}
 		})
 	}//goBoard_Board()
+	function comment_reg(){
+		$.ajax({
+			url:"board_comment_reg",
+			type:"post",
+			dataType:"text",
+			data:{
+				page:$("#page").val(),
+				board_num:$(".tdItem.board_num").text(),
+				comment_id:$("#comment_id").text(),
+			    comment_content:$("#comment_content").val(),
+			    comment_parent_index:0
+			},
+			success:function(res){
+				$(".boardDiv").html(res);
+			},
+			error:function(jqXHR){
+				$(".boardDiv").html(jqXHR.responseText);
+			}
+		})//ajax
+	}
+	//좋아요
+	function comment_like(obj){
+		var comment_index=obj.parent().find("input[name=comment_index]").val();
+		$.ajax({
+			url:"board_comment_like",
+			type:"post",
+			dataType:"json",
+			data:{
+				comment_index:comment_index
+			},
+			success:function(res){
+				obj.find(".likeSpan").text(res.result);
+			},
+			error:function(jqXHR){
+				$(".boardDiv").html(jqXHR.responseText);
+			}
+		})//ajax
+	}//
+	//싫어요
+	function comment_dislike(obj){
+		var comment_index=obj.parent().find("input[name=comment_index]").val();
+		$.ajax({
+			url:"board_comment_dislike",
+			type:"post",
+			dataType:"json",
+			data:{
+				comment_index:comment_index
+			},
+			success:function(res){
+				obj.find(".dislikeSpan").text(res.result);
+			},
+			error:function(jqXHR){
+				$(".boardDiv").html(jqXHR.responseText);
+			}
+		})//ajax
+	}//
+	
+	
 	///////////////////////////////////////////////
 	//수정 버튼
 	$("#modifyBtn").click(function(){
@@ -114,7 +175,19 @@ $(document).ready(function(){
 	$("#goBackBtn").click(function(){
 		board_board($("#page").val());
 	})
-	
+	//등록 버튼(댓글)
+	$("#reply_reg_btn").click(function(){
+		comment_reg();
+	})
+	//좋아요 버튼
+	$(".likeBtn").click(function(){
+		comment_like($(this));
+	})
+	//싫어요 버튼
+	$(".dislikeBtn").click(function(){
+		comment_dislike($(this));
+	})
+	//싫어요 버튼
 })//ready
 </script>
 </head>
@@ -176,27 +249,34 @@ $(document).ready(function(){
 </div><br>
 <div class="replyDiv" style="width:80%;text-align: left;margin:auto;">
 <!-- 	닉네임(아이디),사진, 내용, 시간, 좋아요, 싫어요, 답글 (몇개) -->
-
-	<div class="reply_write" style="border:1px solid gray;padding-top: 3px;padding-left: 3px;">
-		아이디<br><br>
-		<textarea rows="3" cols="100"></textarea>
+	
+	<div class="reply_write" style="border:1px solid gray;padding-top: 3px;padding-left: 3px;text-align: center;">
+		<div style="text-align:left;padding-left: 15px;">${member_dto.mem_nickname }(<span id="comment_id">${member_dto.mem_id }</span>)</div>
+		<textarea rows="3" cols="105" style="resize:none;" id="comment_content"></textarea>
 		<div style="text-align:right;border-top:1px solid lightgray;">
-			<button type="button" class="btn btn-default" style="initial;">등록</button>
+			<button type="button" class="btn btn-default btn-sm" id="reply_reg_btn">등록</button>
 		</div>
 	</div>	
-	<hr style="border-color:gray;">
-	<i class="fa fa-user" aria-hidden="true">닉네임(아이디)</i><br><br>
-	내용내용내용내용내용<br><br>
-	(시간) | 신고<br>
-	<div style="border: 1px solid lightgray;width:100px;padding:2px;float:left;">답글(갯수)</div>
-	<div style="border: 1px solid lightgray;width:50px;padding:2px;float:right;">
-		<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-		(갯수)
-	</div>
-	<div style="border: 1px solid lightgray;width:50px;padding:2px;float:right;">
-		<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-		(갯수)
-	</div>
+	
+<!-- 	댓글들 -->
+	<c:forEach var="fors" items="${comment_list }">
+		<div>
+			<hr style="border-color:gray;">
+			<input type="hidden" name="comment_index" value="${fors.comment_index}">
+			<i class="fa fa-user" aria-hidden="true">${fors.mem_nickname }(${fors.comment_id })</i><br><br>
+			&nbsp;${fors.comment_content }<br><br>
+			${fors.comment_date } | 신고<br>
+			<div class="recommentBtn" style="border: 1px solid lightgray;width:60px;padding:2px;float:left;text-align: center;">답글()</div>
+			<div class="dislikeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
+				<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+				<span class="dislikeSpan">${fors.comment_dislike }</span>
+			</div>
+			<div class="likeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
+				<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+				<span class="likeSpan">${fors.comment_like }</span>
+			</div><br>
+		</div>
+	</c:forEach>
 	
 	
 </div>

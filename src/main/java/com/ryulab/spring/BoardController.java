@@ -14,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ryulab.spring.DAO.Board.BoardDAOImp;
+import com.ryulab.spring.DAO.Member.MemberDAOImp;
 import com.ryulab.spring.DTO.BoardDTO;
 import com.ryulab.spring.DTO.MemberDTO;
 import com.ryulab.spring.DTO.PagingDTO;
@@ -28,6 +30,8 @@ import com.ryulab.spring.DTO.PagingDTO;
 public class BoardController {
 	@Resource(name="boardDao")
 	private BoardDAOImp boardDaoImp;
+	@Resource(name="memberDao")
+	private MemberDAOImp memberDaoImp;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_main", method = RequestMethod.POST)
@@ -109,10 +113,17 @@ public class BoardController {
 		//내용 불러오기
 		BoardDTO board_dto=boardDaoImp.getBoard(board_num);
 		System.out.println("board_dto.content : "+board_dto.getBoard_content());
-		
+		//세션으로 회원 정보 불러오기
+		MemberDTO member_dto=memberDaoImp.getOneMember((String)session.getAttribute("mem_id"));
+		//댓글들 불러오기
+		List<HashMap<String, String>> comment_list=boardDaoImp.getAllComment(board_num);
+		logger.info("comment_list : {}",comment_list);
+		//
 		model.addAttribute("page", page);
 		model.addAttribute("sessionID", session.getAttribute("mem_id"));
+		model.addAttribute("member_dto", member_dto);
 		model.addAttribute("board_dto", board_dto);
+		model.addAttribute("comment_list", comment_list);
 		return "board/board_content";
 	}
 	//////////////////////////////////////////////////////////////////
@@ -136,6 +147,39 @@ public class BoardController {
 		boardDaoImp.deleteBoard(board_num);
 		
 		return "board/board_test";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_comment_reg", method = RequestMethod.POST)
+//	public String board_comment_reg(Model model,String page,String board_num,
+//			String comment_id,String comment_content,String comment_parent_index,HashMap<String, String> ) {
+	public ModelAndView board_comment_reg(Model model,@RequestParam Map<String,Object> map,HttpSession session) {
+		System.out.println("--------------------------------------------------------------");
+		logger.info("{}",map);
+		boardDaoImp.addComment(map);
+		ModelAndView mav=new ModelAndView(board_content(model, (String)map.get("board_num"), (String)map.get("page"),session));
+		return mav;
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_comment_like", method = RequestMethod.POST)
+	public String board_comment_like(Model model,String comment_index) {
+		System.out.println("---------------------------------------------------------------");
+		logger.info("comment_index : {}",comment_index);
+		boardDaoImp.addLike(comment_index);
+		HashMap<String, Object> comment_map=boardDaoImp.getOneComment(comment_index);
+		String like=comment_map.get("comment_like").toString();
+		model.addAttribute("result", like);
+		return "board/board_json";
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_comment_dislike", method = RequestMethod.POST)
+	public String board_comment_dislike(Model model,String comment_index) {
+		System.out.println("---------------------------------------------------------------");
+		logger.info("comment_index : {}",comment_index);
+		boardDaoImp.addDislike(comment_index);
+		HashMap<String, Object> comment_map=boardDaoImp.getOneComment(comment_index);
+		String dislike=comment_map.get("comment_dislike").toString();
+		model.addAttribute("result", dislike);
+		return "board/board_json";
 	}
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_test", method = RequestMethod.POST)
