@@ -36,13 +36,18 @@
 		DELETE FROM board WHERE board_num=#{board_num}
 	</delete>
 	<insert id="addComment">
-		INSERT INTO comment VALUES(null,#{comment_id},#{comment_content},now(),#{board_num},#{comment_parent_index},0,0)
+		INSERT INTO comment VALUES(null,#{comment_id},#{comment_content},now(),#{board_num},#{comment_parent_index},0,0,0)
 	</insert>
+	<update id="addCount">
+		UPDATE comment SET comment_recmt_count=comment_recmt_count+1
+		WHERE comment_index=#{comment_index}
+	</update>
 	<select id="getAllComment" resultType="HashMap">
 		select c.*,m.mem_nickname
 		from comment c, member m
 		where c.comment_id=m.mem_id
 		and c.comment_board_num=#{board_num}
+		order by c.comment_date asc
 	</select>
 	<select id="getOneComment" resultType="HashMap">
 		select c.*,m.mem_nickname
@@ -57,6 +62,19 @@
 	<update id="addDislike">
 		UPDATE comment SET comment_dislike=comment_dislike+1
 		WHERE comment_index=#{comment_index}
+	</update>
+	<select id="getCommentCount" resultType="int">
+		SELECT COUNT(*)
+		FROM comment
+		WHERE comment_board_num=#{board_num}
+		AND  comment_parent_index=0
+	</select>
+	<delete id="delComment">
+		DELETE FROM comment WHERE comment_index=#{comment_index}
+	</delete>
+	<update id="delCount">
+		UPDATE comment SET comment_recmt_count=comment_recmt_count-1
+		WHERE comment_index=#{comment_parent_index}
 	</update>
 <!-- 	 <select id="cal_today" resultType="com.GoalMate.www.DTO.MatchDTO">
 		SELECT * FROM mat WHERE mat_date=#{today} ORDER BY mat_time

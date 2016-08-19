@@ -1,6 +1,7 @@
 package com.ryulab.spring;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,6 @@ public class BoardController {
 		
 		//boardList 불러오기
 		List<BoardDTO> board_list_all=boardDaoImp.getAllBoardList();
-		boardDaoImp.getAllmember();
 		
 		//페이징
 		PagingDTO pagingDTO=new PagingDTO(board_list_all.size(), 10, Integer.parseInt(page), 3);
@@ -78,9 +78,17 @@ public class BoardController {
 		List<BoardDTO> board_list=boardDaoImp.getBoardList(pagingDTO);
 		System.out.println("board_list.size : "+board_list.size());
 		
+		//댓글갯수 뽑아내기
+		List<Integer> comment_count=new ArrayList<Integer>();
+		for(int i=0;i<board_list.size();i++){
+			int count=boardDaoImp.getComment_count(board_list.get(i).getBoard_num());
+			comment_count.add(count);
+		}
+		
 		model.addAttribute("pagingDTO",pagingDTO);
 		model.addAttribute("page",page);
 		model.addAttribute("board_list",board_list);
+		model.addAttribute("comment_count",comment_count);
 		return "board/board_board";
 	}
 	//////////////////////////////////////////////////////////////////
@@ -105,9 +113,9 @@ public class BoardController {
 	}
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_content", method = RequestMethod.POST)
-	public String board_content(Model model,String board_num,String page,HttpSession session) {
+	public String board_content(Model model,String board_num,String page,HttpSession session,String comment_parent_index) {
 		System.out.println("---------------------------------------------------------------");
-		System.out.println("/board_content - board_num : "+board_num+" / page : "+page+" / session.mem_id : "+session.getAttribute("mem_id"));
+		System.out.println("/board_content - board_num : "+board_num+" / page : "+page+" / session.mem_id : "+session.getAttribute("mem_id") + " / comment_parent_index : "+comment_parent_index);
 		//조회수 올려주기
 		boardDaoImp.addBoard_view(board_num);
 		//내용 불러오기
@@ -124,6 +132,11 @@ public class BoardController {
 		model.addAttribute("member_dto", member_dto);
 		model.addAttribute("board_dto", board_dto);
 		model.addAttribute("comment_list", comment_list);
+		
+		if(comment_parent_index != null && Integer.parseInt(comment_parent_index)!=0){
+			model.addAttribute("comment_parent_index", comment_parent_index);
+			return "board/board_recmt";
+		}
 		return "board/board_content";
 	}
 	//////////////////////////////////////////////////////////////////
@@ -150,13 +163,24 @@ public class BoardController {
 	}
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/board_comment_reg", method = RequestMethod.POST)
-//	public String board_comment_reg(Model model,String page,String board_num,
-//			String comment_id,String comment_content,String comment_parent_index,HashMap<String, String> ) {
 	public ModelAndView board_comment_reg(Model model,@RequestParam Map<String,Object> map,HttpSession session) {
 		System.out.println("--------------------------------------------------------------");
-		logger.info("{}",map);
+		logger.info("map : {}",map);
 		boardDaoImp.addComment(map);
-		ModelAndView mav=new ModelAndView(board_content(model, (String)map.get("board_num"), (String)map.get("page"),session));
+		boardDaoImp.addCount((String)map.get("comment_parent_index"));
+		ModelAndView mav=new ModelAndView(board_content(model, (String)map.get("board_num"), (String)map.get("page"),session,(String)map.get("comment_parent_index")));
+		return mav;
+	}
+	//////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/board_comment_del", method = RequestMethod.POST)
+	public ModelAndView board_comment_del(Model model,@RequestParam Map<String,Object> map,HttpSession session) {
+		System.out.println("---------------------------------    board_comment_del    -------------------------------------");
+		logger.info("map : {}",map);
+		boardDaoImp.delComment((String)map.get("comment_index"));
+		if(Integer.parseInt((String)map.get("comment_parent_index"))!=0){
+			boardDaoImp.delCount((String)map.get("comment_parent_index"));
+		}
+		ModelAndView mav=new ModelAndView(board_content(model, (String)map.get("board_num"), (String)map.get("page"),session,(String)map.get("comment_parent_index")));
 		return mav;
 	}
 	//////////////////////////////////////////////////////////////////

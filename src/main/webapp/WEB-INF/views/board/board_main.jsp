@@ -38,7 +38,7 @@ $(document).ready(function(){
 
 </head>
 <body>
-<h2>board_main.jsp</h2>
+<h2></h2>
 <div class="boardDiv"></div>
 </body>
 </html>

@@ -77,6 +77,10 @@ public class BoardDAOImp implements BoardDAO {
 		sqlSession.insert("addComment", map);
 	}
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void addCount(String comment_index) {
+		sqlSession.insert("addCount", comment_index);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public List<HashMap<String, String>> getAllComment(String board_num) {
 		List<HashMap<String, String>> comment_list=sqlSession.selectList("getAllComment",board_num);
 		return comment_list;
@@ -93,6 +97,19 @@ public class BoardDAOImp implements BoardDAO {
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void addDislike(String comment_index) {
 		sqlSession.update("addDislike", comment_index);
+	}
+
+	public int getComment_count(int board_num) {
+		int count=sqlSession.selectOne("getCommentCount", board_num);
+		return count;
+	}
+
+	public void delComment(String comment_index) {
+		sqlSession.delete("delComment",comment_index);
+	}
+
+	public void delCount(String comment_parent_index) {
+		sqlSession.update("delComment",comment_parent_index);
 	}
 	
 //	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------

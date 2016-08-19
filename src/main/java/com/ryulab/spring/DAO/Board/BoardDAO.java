@@ -22,9 +22,11 @@ public interface BoardDAO {
 	void deleteBoard(String board_num);
 	List<HashMap<String, String>> getAllComment(String board_num);
 	void addComment(Map<String, Object> map);
+	void addCount(String comment_index);
 	HashMap<String, Object> getOneComment(String comment_index);
 	void addLike(String comment_index);
 	void addDislike(String comment_index);
+	int getComment_count(int board_num);
 	/*List<BannerDTO> bannerList();
 	BannerDTO bannerDto(String bann_num);
 	void imgModi(Map<String, String> map);

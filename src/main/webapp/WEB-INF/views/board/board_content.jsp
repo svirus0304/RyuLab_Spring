@@ -19,6 +19,7 @@
 <!-- 폰트어썸 -->
 <script src="https://use.fontawesome.com/a82b5b62b1.js"></script>
 
+<script src="resources/js/board.js"></script>
 <style>
 .board_contentTable{
 	width:80%;
@@ -40,156 +41,13 @@
 .board_contentTable input,.board_contentTable textarea{
 	width:100%;
 }
-.recommentBtn,.likeBtn,.dislikeBtn:hover{
+.recmtBtn,.likeBtn,.dislikeBtn:hover{
+	cursor:pointer;
+}
+.cmt_del:hover{
 	cursor:pointer;
 }
 </style>
-<script>
-	// 	초기화 - smartEditor 불러오기
-	var oEditors = [];
-		
-$(document).ready(function(){
-
-	//
-	function board_board(page){
-		$.ajax({
-			url:"board_board",
-			type:"post",
-			dataType:"text",
-			data:{
-				page:page
-			},
-			success:function(res){
-				$(".boardDiv").html(res);
-			},
-			error:function(jqXHR){
-				$(".boardDiv").html(jqXHR.responseText);
-			}
-		})
-	}//goBoard_Board()
-	function comment_reg(){
-		$.ajax({
-			url:"board_comment_reg",
-			type:"post",
-			dataType:"text",
-			data:{
-				page:$("#page").val(),
-				board_num:$(".tdItem.board_num").text(),
-				comment_id:$("#comment_id").text(),
-			    comment_content:$("#comment_content").val(),
-			    comment_parent_index:0
-			},
-			success:function(res){
-				$(".boardDiv").html(res);
-			},
-			error:function(jqXHR){
-				$(".boardDiv").html(jqXHR.responseText);
-			}
-		})//ajax
-	}
-	//좋아요
-	function comment_like(obj){
-		var comment_index=obj.parent().find("input[name=comment_index]").val();
-		$.ajax({
-			url:"board_comment_like",
-			type:"post",
-			dataType:"json",
-			data:{
-				comment_index:comment_index
-			},
-			success:function(res){
-				obj.find(".likeSpan").text(res.result);
-			},
-			error:function(jqXHR){
-				$(".boardDiv").html(jqXHR.responseText);
-			}
-		})//ajax
-	}//
-	//싫어요
-	function comment_dislike(obj){
-		var comment_index=obj.parent().find("input[name=comment_index]").val();
-		$.ajax({
-			url:"board_comment_dislike",
-			type:"post",
-			dataType:"json",
-			data:{
-				comment_index:comment_index
-			},
-			success:function(res){
-				obj.find(".dislikeSpan").text(res.result);
-			},
-			error:function(jqXHR){
-				$(".boardDiv").html(jqXHR.responseText);
-			}
-		})//ajax
-	}//
-	
-	
-	///////////////////////////////////////////////
-	//수정 버튼
-	$("#modifyBtn").click(function(){
-		//smartEditor 내용을 textarea로 옮겨준다.
-		oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
-		//ajax로 업뎃
-		$.ajax({
-			url:"board_modify",
-			type:"post",
-			dataType:"text",
-			data:{
-				board_num:$(".tdItem.board_num").text(),
-				board_title:$("input[name=board_title]").val(),
-				board_content:$("#board_content").val()
-			},
-			success:function(res){
-				alert("수정 완료!");
-			},
-			error:function(jqXHR){
-				$(".boardDiv").html(jqXHR.responseText);
-			}
-		})//ajax
-		board_board($("#page").val());
-	})
-	
-	//삭제버튼
-	$("#deleteBtn").click(function(){
-		var result=confirm("진짜 삭제 하시겠습니까?");
-		if(result==true){
-			$.ajax({
-				url:"board_delete",
-				type:"post",
-				dataType:"text",
-				data:{
-					board_num:$(".tdItem.board_num").text()
-				},
-				success:function(res){
-				},
-				error:function(jqXHR){
-					$(".boardDiv").html(jqXHR.responseText);
-				}
-			})//ajax
-			board_board($("#page").val());
-		}//if
-	})
-	
-	//돌아가기 버튼
-	$("#goBackBtn").click(function(){
-		board_board($("#page").val());
-	})
-	//등록 버튼(댓글)
-	$("#reply_reg_btn").click(function(){
-		comment_reg();
-	})
-	//좋아요 버튼
-	$(".likeBtn").click(function(){
-		comment_like($(this));
-	})
-	//싫어요 버튼
-	$(".dislikeBtn").click(function(){
-		comment_dislike($(this));
-	})
-	//싫어요 버튼
-})//ready
-</script>
 </head>
 <body>
 <input type="hidden" id="page" value="${page }">
@@ -250,32 +108,84 @@ $(document).ready(function(){
 <div class="replyDiv" style="width:80%;text-align: left;margin:auto;">
 <!-- 	닉네임(아이디),사진, 내용, 시간, 좋아요, 싫어요, 답글 (몇개) -->
 	
+	<!-- 댓글쓰기 -->
 	<div class="reply_write" style="border:1px solid gray;padding-top: 3px;padding-left: 3px;text-align: center;">
 		<div style="text-align:left;padding-left: 15px;">${member_dto.mem_nickname }(<span id="comment_id">${member_dto.mem_id }</span>)</div>
-		<textarea rows="3" cols="105" style="resize:none;" id="comment_content"></textarea>
+		<textarea rows="3" cols="100" style="resize:none;width:99%;" class="comment_content"></textarea>
 		<div style="text-align:right;border-top:1px solid lightgray;">
 			<button type="button" class="btn btn-default btn-sm" id="reply_reg_btn">등록</button>
 		</div>
 	</div>	
 	
-<!-- 	댓글들 -->
+	<!-- 	댓글들 -->
+	<hr style="border-color:lightgray;">
 	<c:forEach var="fors" items="${comment_list }">
-		<div>
-			<hr style="border-color:gray;">
-			<input type="hidden" name="comment_index" value="${fors.comment_index}">
-			<i class="fa fa-user" aria-hidden="true">${fors.mem_nickname }(${fors.comment_id })</i><br><br>
-			&nbsp;${fors.comment_content }<br><br>
-			${fors.comment_date } | 신고<br>
-			<div class="recommentBtn" style="border: 1px solid lightgray;width:60px;padding:2px;float:left;text-align: center;">답글()</div>
-			<div class="dislikeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
-				<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-				<span class="dislikeSpan">${fors.comment_dislike }</span>
-			</div>
-			<div class="likeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
-				<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-				<span class="likeSpan">${fors.comment_like }</span>
-			</div><br>
-		</div>
+		<c:choose>
+			<c:when test="${fors.comment_parent_index==0 }">
+				<div>
+					<div>
+						<input type="hidden" name="comment_index" value="${fors.comment_index}">
+						<i class="fa fa-user" aria-hidden="true">${fors.mem_nickname }(${fors.comment_id })</i>
+						<!-- 만약 세션id와 같으면 '삭제'버튼 생기게 -->
+						<c:if test="${!sessionID.equals('guest') && sessionID.equals(fors.comment_id) }">
+							<div class="cmt_del" style="width:40px;float:right;text-align: center;border:1px solid lightgray;">
+								삭제
+							</div>
+						</c:if>
+						<br><br>
+						&nbsp;${fors.comment_content }<br><br>
+						<span style="color:gray;">${fors.comment_date }</span><br>
+						<div class="recmtBtn" style="border: 1px solid lightgray;width:60px;padding:2px;float:left;text-align: center;">답글(<span class="recmt_num">${fors.comment_recmt_count }</span>)</div>
+						<div class="dislikeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
+							<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+							<span class="dislikeSpan">${fors.comment_dislike }</span>
+						</div>
+						<div class="likeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
+							<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+							<span class="likeSpan">${fors.comment_like }</span>
+						</div><br>
+					</div>
+					<hr style="border-color:lightgray;">
+					
+					<!-- 대댓 -->
+					<div class="recmtDiv" style="display:none;background-color: #FCFCFC;padding-left:30px;margin-top:-20px;padding-top:20px;">
+						
+						<!-- 대댓들보기 -->
+						<c:forEach var="fors2" items="${comment_list }" varStatus="status">
+							<c:if test="${fors2.comment_parent_index == fors.comment_index}">
+								<div>
+									<input type="hidden" name="comment_index" value="${fors2.comment_index}">
+									<i class="fa fa-user" aria-hidden="true">${fors2.mem_nickname }(${fors2.comment_id })</i><br><br>
+									&nbsp;${fors2.comment_content }<br><br>
+									<span style="color:gray;">${fors2.comment_date }</span>
+									<div class="dislikeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
+										<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+										<span class="dislikeSpan">${fors2.comment_dislike }</span>
+									</div>
+									<div class="likeBtn" style="border: 1px solid lightgray;width:50px;padding:2px;float:right;text-align: center;">
+										<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+										<span class="likeSpan">${fors2.comment_like }</span>
+									</div><br>
+								</div>
+								<hr style="border-color:lightgray;">
+							</c:if>
+						</c:forEach>
+						
+						<!-- 대댓달기 -->
+						<div class="reply_write" style="border:1px solid gray;padding-top: 3px;padding-left: 3px;text-align: center;">
+						<div style="text-align:left;padding-left: 20px;">${member_dto.mem_nickname }(<span id="comment_id">${member_dto.mem_id }</span>)</div>
+							<textarea rows="3" cols="100" style="resize:none;width:99%" class="comment_content"></textarea>
+							<div style="text-align:right;border-top:1px solid lightgray;">
+								<button type="button" class="btn btn-default btn-sm recmt_reg_btn">등록</button>
+							</div>
+						</div>
+							
+					<hr style="border-color:lightgray;margin-left:-20px;">
+					</div>
+				<!--  -->			
+				</div>
+			</c:when>
+		</c:choose>
 	</c:forEach>
 	
 	

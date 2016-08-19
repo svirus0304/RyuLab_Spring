@@ -151,10 +151,15 @@ $(document).ready(function(){
 		<td class="board_view">조회수</td>
 		<td class="board_date">작성일</td>
 	</tr>
-	<c:forEach var="fors" items="${board_list }">
+	<c:forEach var="fors" items="${board_list }" varStatus="status">
 		<tr class="trItem">
 			<td class="board_num">${fors.board_num}</td>
-			<td class="board_title"><a href="#">${fors.board_title}</a></td>
+			<td class="board_title">
+				<a href="#">${fors.board_title}</a>
+				<c:if test="${comment_count[status.index] != 0 }"> 
+					<span style="">&nbsp;(${comment_count[status.index] })</span>
+				</c:if>
+			</td>
 			<td class="board_id">${fors.mem_nickname}</td>
 			<td class="board_view">${fors.board_view}</td>
 			<td class="board_date">${fors.board_date}</td>
